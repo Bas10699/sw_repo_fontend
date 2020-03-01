@@ -73,8 +73,7 @@ class ThemeSwitcher extends Component {
                     <th>ชื่อ</th>
                     <th>series number</th>
                     <th>ประเภท</th>
-                    <th>วันเกิด</th>
-                    <th>สถานที่เกิด</th>
+                    <th>สถานะ</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -87,7 +86,6 @@ class ThemeSwitcher extends Component {
                         <td>{element.item_series_number}</td>
                         <td>{element.item_type}</td>
                         <td>{moment(element.item_date_of_birth).format('DD/MM/YYYY')}</td>
-                        <td>{element.item_place_of_birth}</td>
                         <td><Button onClick={() => this.setState({ showModal: true, modelIndex: index })}>ดูรายละเอียด</Button></td>
                       </tr>
                     )

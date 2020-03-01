@@ -1,6 +1,7 @@
   $(function () {
     $("#example1").DataTable({
         "autoWidth": false,
+        "searching": false,
     });
     $('#example2').DataTable({
       "paging": true,

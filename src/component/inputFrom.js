@@ -134,7 +134,7 @@ class UserProfile extends Component {
                                                     </InputGroup.Prepend>
                                                     <Form.Control
                                                         type="text"
-                                                        placeholder="Username"
+                                                        placeholder=""
                                                         aria-describedby="inputGroupPrepend"
                                                         name="item_series_number"
                                                         onChange={this.handleChange}
