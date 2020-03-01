@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+div.img-resize img{
+
+  max-width:240px;
+  max-height:180px;
+  width: auto;
+  height: auto;
+  
+  }
+  div.img-resize {
+  width: 240px;
+  height: 180px;
+  overflow: hidden;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  background-color:#999;
+  }
+  
