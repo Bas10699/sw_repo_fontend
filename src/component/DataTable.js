@@ -49,6 +49,22 @@ class ThemeSwitcher extends Component {
     }
   }
 
+  status_item = (data) => {
+    let return_data
+    switch (data) {
+      case 1:
+        return_data = <div className="text-success">ติดตั้ง</div>
+        break;
+      case 2:
+        return_data = <div className="text-warning">พร้อมใช้งาน</div>
+        break;
+      case 3:
+        return_data = <div className="text-danger">ส่งซ่อม</div>
+
+    }
+    return return_data
+  }
+
   render() {
 
     const { theme, item_get_all, showModal, modelIndex } = this.state;
@@ -85,7 +101,7 @@ class ThemeSwitcher extends Component {
                         <td>{element.item_name}</td>
                         <td>{element.item_series_number}</td>
                         <td>{element.item_type}</td>
-                        <td>{moment(element.item_date_of_birth).format('DD/MM/YYYY')}</td>
+                        <td>{this.status_item(element.item_status)}</td>
                         <td><Button onClick={() => this.setState({ showModal: true, modelIndex: index })}>ดูรายละเอียด</Button></td>
                       </tr>
                     )
@@ -121,21 +137,21 @@ class ThemeSwitcher extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                  {item_get_all.map((element, index) => {
-                    return (
-                      <tr>
-                        <td>{index + 1}</td>
-                        <td>{element.item_name}</td>
-                        <td>{element.item_series_number}</td>
-                        <td>{element.item_type}</td>
-                        <td>{moment(element.item_date_of_birth).format('DD/MM/YYYY')}</td>
-                        <td>{element.item_place_of_birth}</td>
-                        <td><Button onClick={() => this.setState({ showModal: true, modelIndex: index })}>ดูรายละเอียด</Button></td>
-                      </tr>
-                    )
-                  })}
+                    {item_get_all.map((element, index) => {
+                      return (
+                        <tr>
+                          <td>{index + 1}</td>
+                          <td>{element.item_name}</td>
+                          <td>{element.item_series_number}</td>
+                          <td>{element.item_type}</td>
+                          <td>{moment(element.item_date_of_birth).format('DD/MM/YYYY')}</td>
+                          <td>{element.item_place_of_birth}</td>
+                          <td><Button onClick={() => this.setState({ showModal: true, modelIndex: index })}>ดูรายละเอียด</Button></td>
+                        </tr>
+                      )
+                    })}
                   </tbody>
-                  
+
                 </table>
               </div>
               {/* /.card-body */}
