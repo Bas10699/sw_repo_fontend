@@ -45,8 +45,8 @@ export default class FromTypeItem extends Component {
             <div className="container">
                 <div className="card shadow mb-4">
                     <div className="card-header py-3">
-                        <div class="row">
-                            <div class="col">
+                        <div className="row">
+                            <div className="col">
                                 <h6 className="m-0 font-weight-bold text-primary">ตารางแสดงประเภทของอุปกรณ์ทั้งหมด</h6>
                             </div>
                             {/* <button className="btn btn-primary">เพิ่ม</button> */}
@@ -54,7 +54,7 @@ export default class FromTypeItem extends Component {
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">
-                            <table className="table table-bordered" id="example1" width="100%" cellspacing="0">
+                            <table className="table table-bordered" id="example1" width="100%">
 
                                 <thead>
                                     <tr>
@@ -66,7 +66,7 @@ export default class FromTypeItem extends Component {
                                 <tbody>
                                     {get_data.map((element, index) => {
                                         return (
-                                            <tr>
+                                            <tr key={index}>
                                                 <td>{index + 1}</td>
                                                 <td>{element.item_type}</td>
                                                 <td>{element.count_item}</td>

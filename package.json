@@ -19,6 +19,7 @@
     "react-notification-system": "^0.3.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
+    "sweetalert": "^2.1.2",
     "sweetalert2": "^9.8.2"
   },
   "scripts": {

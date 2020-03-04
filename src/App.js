@@ -9,7 +9,7 @@ import Dashbord from './component/dashboard'
 import Header from './layout/Header';
 import Sideder from './layout/Sideder';
 
-import Calender from './component/Calender'
+import Calender from './component/calender/Calender'
 import FromTypeItem from './component/FromTypeItem';
 
 
@@ -22,10 +22,10 @@ export default class App extends Component {
         <Router exact path="/">
           <Header />
           <Sideder />
-          <div class="content-wrapper">
+          <div className="content-wrapper">
 
-            <div class="content-header">
-              <div class="container-fluid"></div>
+            <div className="content-header">
+              <div className="container-fluid"></div>
               <Route exact path='/' component={Dashbord} />
               <Route exact path='/InputFrom' component={InputFrom} />
               <Route exact path='/Calender' component={Calender} />

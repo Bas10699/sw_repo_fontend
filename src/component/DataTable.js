@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { get, ip } from '../service/service'
+import { get, ip, post } from '../service/service'
 import swal from 'sweetalert2'
 import moment from 'moment'
-import { Button, Modal, Image, Row, Col } from 'react-bootstrap';
+import { Button, Modal, Image, Row, Col, Form } from 'react-bootstrap';
 import "../App.css"
 
 class ThemeSwitcher extends Component {
@@ -12,6 +12,7 @@ class ThemeSwitcher extends Component {
       item_get_all: [],
       theme: null,
       showModal: false,
+      showedit: false,
       modelIndex: 0
     }
   }
@@ -40,12 +41,86 @@ class ThemeSwitcher extends Component {
           })
         }
         else {
-          swal("", result.error_message, "warning");
+          swal.fire("", result.error_message, "warning");
         }
       })
     }
     catch (error) {
       alert('get_item_all' + error)
+    }
+  }
+
+  delete_item = (data) => {
+    swal.fire({
+      title: 'Are you sure?',
+      text: "ต้องการลบ " + data.item_name + " หรือไม่?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      console.log(result)
+      if (result.value) {
+        this.delete_item_post(data)
+      }
+    })
+  }
+
+  delete_item_post = async (data) => {
+    try {
+
+      const obj = {
+        item_id: data.item_id
+      }
+      await post(obj, "item/delete_item").then((result) => {
+        if (result.success) {
+          swal.fire({
+            icon: 'success',
+            title: 'Your file has been deleted.',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => { window.location.reload() })
+        }
+      })
+
+
+
+    }
+    catch (error) {
+      alert("delete_item: " + error)
+    }
+  }
+
+
+  handleChange = (e) => {
+    console.log(e.target.value)
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  update_data = async () => {
+    const obj = {
+      item_name: this.state.item_name,
+      item_series_number: this.state.item_series_number,
+      item_type: this.state.item_type,
+      item_date_of_birth: this.state.item_date_of_birth,
+      item_place_of_birth: this.state.item_place_of_birth,
+    }
+    console.log(obj)
+    try {
+      await post(obj, "item/update").then((result) => {
+        if (result.success) {
+          window.location.reload()
+        }
+        else {
+          swal.fire("", result.error_message, "error")
+        }
+      })
+    }
+    catch (error) {
+      alert("add_data" + error)
     }
   }
 
@@ -67,7 +142,7 @@ class ThemeSwitcher extends Component {
 
   render() {
 
-    const { theme, item_get_all, showModal, modelIndex } = this.state;
+    const { theme, item_get_all, showModal, modelIndex, showedit } = this.state;
     const themeClass = theme ? theme.toLowerCase() : 'secondary';
     const itemModel = item_get_all[this.state.modelIndex]
     console.log(itemModel)
@@ -75,13 +150,13 @@ class ThemeSwitcher extends Component {
     return (
       <div>
 
-        <div class="card shadow mb-4">
-          <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        <div className="card shadow mb-4">
+          <div className="card-header py-3">
+            <h6 className="m-0 font-weight-bold text-primary">DataTables Example</h6>
           </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <div className="card-body">
+            <div className="table-responsive" >
+              <table className="table table-bordered" id="dataTable" width="100%" >
 
                 <thead>
                   <tr>
@@ -102,7 +177,13 @@ class ThemeSwitcher extends Component {
                         <td>{element.item_series_number}</td>
                         <td>{element.item_type}</td>
                         <td>{this.status_item(element.item_status)}</td>
-                        <td><Button onClick={() => this.setState({ showModal: true, modelIndex: index })}>ดูรายละเอียด</Button></td>
+                        <td><div className="btn-toolbar">
+                          <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"></link>
+                          <button onClick={() => this.setState({ showModal: true, modelIndex: index })} className=" btn btn-primary 	fa fa-search" />
+                          <button onClick={() => this.delete_item(element)} className=" btn btn-danger btn-sm	fas fa-trash-alt " />
+                          <button onClick={() => this.setState({ showedit: true, modelIndex: index })} className=" btn btn-primary  fa fa-pencil" /></div></td>
+
+                        {/* <td><Button onClick={() => this.setState({ showModal: true, modelIndex: index })}>ดูรายละเอียด</Button></td> */}
                       </tr>
                     )
                   })}
@@ -183,11 +264,29 @@ class ThemeSwitcher extends Component {
 
               </Col>
               <Col>
-                <div>{itemModel ? itemModel.item_name : ''}</div>
-                <div>{itemModel ? itemModel.series_number : ''}</div>
-                <div>{itemModel ? itemModel.item_type : ''}</div>
-                <div>{itemModel ? moment(itemModel.item_date_of_birth).format('DD/MM/YYYY') : ''}</div>
-                <div>{itemModel ? itemModel.item_place_of_birth : ''}</div>
+                <table>
+                  <td>
+                    <tr>ชื่อ </tr>
+                    <tr>ยี่ห้อ </tr>
+                    <tr>รุ่น </tr>
+                    <tr>ซีเรียล </tr>
+                    <tr>ประเภท </tr>
+                    <tr>วันที่นำเข้า </tr>
+                    <tr>นำเข้ามาจาก </tr>
+                    <tr>สถานะ </tr>
+                  </td>
+                  <td>
+                    {console.log(itemModel)}
+                    <tr>{itemModel ? itemModel.item_name : ''}</tr>
+                    <tr>{itemModel ? itemModel.item_brand : ''}</tr>
+                    <tr>{itemModel ? itemModel.item_gen : ''}</tr>
+                    <tr>{itemModel ? itemModel.item_series_number : ''}</tr>
+                    <tr>{itemModel ? itemModel.item_type : ''}</tr>
+                    <tr>{itemModel ? moment(itemModel.item_date_of_birth).format('DD/MM/YYYY') : ''}</tr>
+                    <tr>{itemModel ? itemModel.item_place_of_birth : ''}</tr>
+                    <tr>{itemModel ? itemModel.item_status : ''}</tr>
+                  </td>
+                </table>
                 <p>
                   หมายเหตุ...
               </p>
@@ -198,10 +297,100 @@ class ThemeSwitcher extends Component {
 
           </Modal.Body>
           <Modal.Footer>
+
             <Button onClick={() => this.setState({ showModal: false })}>Close</Button>
           </Modal.Footer>
         </Modal>
 
+        <Modal
+          show={showedit}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header >
+            <Modal.Title id="contained-modal-title-vcenter">
+              เเก้ไขข้อมูล
+        </Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <Form>
+              <Form.Row>
+                <Form.Group as={Col} >
+                  <Form.Label>ชื่อ</Form.Label>
+                  <Form.Control type="textarea" onChange={this.handleChange} id="item_name" ></Form.Control>
+                </Form.Group>
+              </Form.Row>
+            </Form>
+            <Form>
+              <Form.Row>
+                <Form.Group as={Col} >
+                  <Form.Label>series number</Form.Label>
+                  <Form.Control type="textarea" onChange={this.handleChange} id="item_series_number" />
+                </Form.Group>
+              </Form.Row>
+            </Form>
+
+            <Form>
+              <Form.Row>
+                <Form.Group as={Col} >
+                  <Form.Label>ประเภท</Form.Label>
+                  <Form.Control type="textarea" onChange={this.handleChange} id="item_type" />
+                </Form.Group>
+              </Form.Row>
+            </Form>
+            <Form>
+              <Form.Row>
+                <Form.Group as={Col} >
+                  <Form.Label>วันที่นำเข้า</Form.Label>
+                  <Form.Control type="date" onChange={this.handleChange} id="item_date_of_birth" />
+                </Form.Group>
+              </Form.Row>
+            </Form>
+            <Form>
+              <Form.Row>
+                <Form.Group as={Col} >
+                  <Form.Label>วันจำหน่าย</Form.Label>
+                  <Form.Control type="date" onChange={this.handleChange} id="item_place_of_birth" />
+                </Form.Group>
+              </Form.Row>
+            </Form>
+            <Form.Group as={Col} md="3" controlId="validationFormik05">
+              <Form.Label>สถานะอุปกรณ์</Form.Label>
+              <Col sm={10}>
+                <Form.Check
+                  type="radio"
+                  label="ติดตั้ง"
+                  name="item_status"
+                  value="1"
+                  onChange={this.handleChange}
+                />
+                <Form.Check
+                  type="radio"
+                  label="พร้อมใช้งาน"
+                  name="item_status"
+                  value="2"
+                  onChange={this.handleChange}
+                />
+                <Form.Check
+                  type="radio"
+                  label="ส่งซ่อม"
+                  name="item_status"
+                  value="3"
+                  onChange={this.handleChange}
+                />
+              </Col>
+            </Form.Group>
+
+
+          </Modal.Body>
+          <Modal.Footer>
+   
+            <Button onClick={() => this.update_item()}>Edit</Button>
+            <Button onClick={() => this.setState({ showedit: false })}>Close</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
 
 

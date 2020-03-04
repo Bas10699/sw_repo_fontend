@@ -101,7 +101,7 @@ class Dashboard extends Component {
           </Col>
           <Col>
             <CardDeck> */}
-        <div class="row">
+        <div className="row">
 
           {item_status.map((element) => {
             return this.render_status(element.item_status, element.count_status)

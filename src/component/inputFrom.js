@@ -25,6 +25,7 @@ class UserProfile extends Component {
     }
 
     handleChange = (e) => {
+
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -33,10 +34,13 @@ class UserProfile extends Component {
     addItem = async () => {
         const obj = {
             item_name: this.state.item_name,
+            item_brand: this.state.item_brand,
+            item_gen: this.state.item_gen,
             item_type: this.state.item_type,
             item_series_number: this.state.item_series_number,
             item_date_of_birth: this.state.item_date_of_birth,
             item_place_of_birth: this.state.item_place_of_birth,
+            item_status: this.state.item_status,
             item_image: this.state.item_image
         }
         console.log(obj)
@@ -48,8 +52,10 @@ class UserProfile extends Component {
                         title: 'ลงทะเบียนอุปกรณ์เรียบร้อย',
                         showConfirmButton: false,
                         timer: 1500
-                    });
-                    window.location.href = '/'
+                    }).then(() => {
+                        window.location.href = '/'
+                    })
+
                 }
                 else {
                     swal.fire("", result.error_message, "error");
@@ -83,7 +89,7 @@ class UserProfile extends Component {
     render() {
 
         const { item_image } = this.state
-
+        // console.log("gg",this.state.item_status)
         return (
             <Container fluid="true">
                 <br />
@@ -96,6 +102,17 @@ class UserProfile extends Component {
                                 <Card.Body>
                                     <Form noValidate >
                                         <Form.Row>
+                                            <Form.Group as={Col} md="4" controlId="validationFormik01">
+                                                <Form.Label>ชื่ออุปกรณ์</Form.Label>
+                                                <Form.Control
+                                                    type="text"
+                                                    name="item_name"
+                                                    
+                                                    onChange={this.handleChange}
+
+                                                />
+                                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                            </Form.Group>
                                             <Form.Group as={Col} md="4" controlId="validationFormik01">
                                                 <Form.Label>ยี่ห้อ</Form.Label>
                                                 <Form.Control
@@ -144,25 +161,11 @@ class UserProfile extends Component {
                                                     </Form.Control.Feedback>
                                                 </InputGroup>
                                             </Form.Group>
-                                        </Form.Row>
-                                        <Form.Row>
-                                            <Form.Group as={Col} md="6" controlId="validationFormik03">
 
-                                                <Form.Label></Form.Label>
-                                                <div className="img-resize">
-                                                    <Image src={item_image ? item_image : ImageDefault} rounded />
-                                                </div>
 
-                                                <Form.Control
-                                                    type="file" onChange={this.uploadpicture}
-                                                />
 
-                                                <Form.Control.Feedback type="invalid">
-
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                            <Form.Group as={Col} md="3" controlId="validationFormik04">
-                                                <Form.Label>วันเกิด</Form.Label>
+                                            <Form.Group as={Col} md="4" controlId="validationFormik04">
+                                                <Form.Label>วันที่นำเข้า</Form.Label>
                                                 <Form.Control
                                                     type="date"
                                                     name="item_date_of_birth"
@@ -172,8 +175,8 @@ class UserProfile extends Component {
 
                                                 </Form.Control.Feedback>
                                             </Form.Group>
-                                            <Form.Group as={Col} md="3" controlId="validationFormik05">
-                                                <Form.Label>สถานที่</Form.Label>
+                                            <Form.Group as={Col} md="4" controlId="validationFormik05">
+                                                <Form.Label>นำเข้าจาก</Form.Label>
                                                 <Form.Control
                                                     type="text"
                                                     placeholder="ขโมยมา"
@@ -185,6 +188,50 @@ class UserProfile extends Component {
 
                                                 </Form.Control.Feedback>
                                             </Form.Group>
+                                        </Form.Row>
+                                        <Form.Row>
+                                            <Form.Group as={Col} md="6" controlId="validationFormik03">
+
+                                                <Form.Label>รูปอุปกรณ์</Form.Label>
+                                                <div className="img-resize" style={{ opacity: '.5' }}>
+                                                    <Image src={item_image ? item_image : ImageDefault} rounded />
+                                                </div>
+
+                                                <Form.Control
+                                                    type="file" onChange={this.uploadpicture}
+                                                />
+
+                                                <Form.Control.Feedback type="invalid">
+
+                                                </Form.Control.Feedback>
+                                            </Form.Group>
+                                            <Form.Group as={Col} md="3" controlId="validationFormik05">
+                                                <Form.Label>สถานะอุปกรณ์</Form.Label>
+                                                <Col sm={10}>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        label="ติดตั้ง"
+                                                        name="item_status"
+                                                        value="1"
+                                                        onChange={this.handleChange}
+                                                    />
+                                                    <Form.Check
+                                                        type="radio"
+                                                        label="พร้อมใช้งาน"
+                                                        name="item_status"
+                                                        value="2"
+                                                        onChange={this.handleChange}
+                                                    />
+                                                    <Form.Check
+                                                        type="radio"
+                                                        label="ส่งซ่อม"
+                                                        name="item_status"
+                                                        value="3"
+                                                        onChange={this.handleChange}
+                                                    />
+                                                </Col>
+                                            </Form.Group>
+
                                         </Form.Row>
 
                                         <Button className='float-right' onClick={() => this.addItem()}>ลงทะเบียน</Button>

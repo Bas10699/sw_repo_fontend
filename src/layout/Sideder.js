@@ -9,10 +9,10 @@ class Sideder extends Component {
  {/* Main Sidebar Container */}
  <aside className="main-sidebar sidebar-dark-primary elevation-4">
     {/* Brand Logo */}
-    <a href="/" className="brand-link">
+    <NavLink exact to="/" className="brand-link">
       <img src={icon_sw} alt="SW Logo" className="brand-image img-circle elevation-3" style={{opacity: '.8'}} />
       <span className="brand-text font-weight-light">Secure Work</span>
-    </a>
+    </NavLink>
     {/* Sidebar */}
     <div className="sidebar">
       {/* Sidebar user panel (optional) */}
@@ -31,12 +31,12 @@ class Sideder extends Component {
               </p>
             </NavLink >
           </li>
-          <li className="nav-header">ลงทะเบียนอุปกรณ์</li>
+          <li className="nav-header">Device</li>
           
               <li className="nav-item">
                 <NavLink exact to="/InputFrom" activeClassName="active" className="nav-link ">
                   <i className="nav-icon fas fa-warehouse" />
-                  <p>กล้อง</p>
+                  <p>Register device</p>
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -47,7 +47,7 @@ class Sideder extends Component {
               </li>
           
           <li className="nav-item has-treeview">
-            <NavLink exact to="/InputFrom" activeClassName="active" className="nav-link">
+            <NavLink exact to="/g" activeClassName="active" className="nav-link">
               <i className="nav-icon fas fa-table" />
               <p>
                 รายการอุปกรณ์
@@ -56,19 +56,19 @@ class Sideder extends Component {
             </NavLink>
             <ul className="nav nav-treeview">
               <li className="nav-item">
-                <NavLink exact to="/InputFrom" activeClassName="active" className="nav-link">
+                <NavLink exact to="/ggg" activeClassName="active" className="nav-link">
                   <i className="far fa-circle nav-icon" />
                   <p>Simple Tables</p>
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink exact to="/InputFrom" activeClassName="active" className="nav-link">
+                <NavLink exact to="/ggg" activeClassName="active" className="nav-link">
                   <i className="far fa-circle nav-icon" />
                   <p>DataTables</p>
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink exact to="/InputFrom" activeClassName="active" className="nav-link">
+                <NavLink exact to="/gg" activeClassName="active" className="nav-link">
                   <i className="far fa-circle nav-icon" />
                   <p>jsGrid</p>
                 </NavLink>

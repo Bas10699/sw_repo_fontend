@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import dateFns from "date-fns";
 import isEqual from 'date-fns/is_equal'
+import isBefore from 'date-fns/is_equal'
 import "./Calender.css"
-import { get } from '../service/service'
+import { Button, Modal, Row, Col } from 'react-bootstrap';
+import { get } from '../../service/service'
+import AddCalender from './AddCalender';
 
 class Calendar extends Component {
   constructor(props) {
@@ -10,7 +13,9 @@ class Calendar extends Component {
     this.state = {
       currentMonth: new Date(),
       selectedDate: new Date(),
-      data_calernder: []
+      data_calernder: [],
+      showModal: false,
+      showModalAdd: false,
     };
   }
 
@@ -25,6 +30,7 @@ class Calendar extends Component {
           this.setState({
             data_calernder: result.result
           })
+          console.log(result.result)
         }
         else {
           alert(result.error_message)
@@ -106,14 +112,19 @@ class Calendar extends Component {
             <span className="number">{formattedDate}</span>
             <span className="bg">{formattedDate}</span>
             {data_db.map((element) => {
-              if (isEqual(dateFns.format(element.cn_date, "DD,MM,YYYY"), dateFns.format(day, "DD,MM,YYYY"))) {
-                return <div>
-                  <div className="badge badge-pill badge-success">{element.cn_notes}</div>
+              // console.log("1dd",dateFns.format(day, "DD/MM/YYYY"))
+
+              if (dateFns.format(element.cn_date, "DD/MM/YYYY") === dateFns.format(day, "DD/MM/YYYY")) {
+                // console.log("ff",dateFns.format(element.cn_date, "DD/MM/YYYY"))
+
+                return <div onClick={() => this.setState({ showModal: true })}>
+                  <div className="badge badge-pill badge-success" >{element.cn_notes}</div>
                   {/* <div className="badge badge-pill badge-secondary">55555</div> */}
+
                 </div>
               }
             })}
-            
+
           </div>
         );
         day = dateFns.addDays(day, 1);
@@ -148,12 +159,62 @@ class Calendar extends Component {
     });
   };
 
+  renderModel() {
+    const { showModal } = this.state
+    return (
+      <Modal
+        show={showModal}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header >
+          <Modal.Title id="contained-modal-title-vcenter">
+            รายละเอียดอุปกรณ์
+        </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Row>
+            <Col>
+              <div >
+                ss
+              </div>
+
+            </Col>
+            <Col>
+              <p>
+                หมายเหตุ...
+              </p>
+            </Col>
+          </Row>
+
+
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => this.setState({ showModal: false })}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    )
+  }
+
+
+  changeshowModalAdd = (status) => {
+    this.setState({ showModalAdd: status });
+    //fetch a data
+    //or update a query to get data
+  };
+
+
   render() {
     return (
-      <div className="calendar container py-5">
+      <div className="calendar container py-3">
+        <Button className='float-right' onClick={() => this.setState({ showModalAdd: true })}> เพิ่ม</Button>
         {this.renderHeader()}
         {this.renderDays()}
         {this.renderCells()}
+        {this.renderModel()}
+        <AddCalender showModal={this.state.showModalAdd} changeshowModalAdd={this.changeshowModalAdd} />
       </div>
     );
   }
