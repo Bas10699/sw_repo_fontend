@@ -151,6 +151,9 @@ class ThemeSwitcher extends Component {
       item_gen: this.state.item_gen,
       item_brand: this.state.item_brand,
       item_image: this.state.item_image,
+
+      item_airport: this.state.item_brand,
+      item_airport_date: this.state.item_image,
     };
 
     console.log("gg", obj);
@@ -211,7 +214,7 @@ class ThemeSwitcher extends Component {
     console.log(itemModel);
     const { item_image } = this.state
     return (
-      <div>
+      <div >
         <div className="card shadow mb-4">
           <div className="card-header py-3">
             <h6 className="m-0 font-weight-bold text-primary">
@@ -219,7 +222,7 @@ class ThemeSwitcher extends Component {
             </h6>
           </div>
           <div className="card-body">
-            <div className="table-responsive">
+            <div className="table-responsive text-center">
               <table
                 className="table table-bordered"
                 id="dataTable"
@@ -284,6 +287,7 @@ class ThemeSwitcher extends Component {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
+          
         >
           <Modal.Header>
             <Modal.Title id="contained-modal-title-vcenter">
@@ -316,6 +320,8 @@ class ThemeSwitcher extends Component {
                     <tr>{itemModel ? itemModel.item_gen : ""}</tr>
                     <tr>{itemModel ? itemModel.item_series_number : ""}</tr>
                     <tr>{itemModel ? itemModel.item_type : ""}</tr>
+                    <tr>{itemModel ? itemModel.item_p : ""}</tr>
+                    <tr>{itemModel ? itemModel.item_type : ""}</tr>
                     <tr>
                       {itemModel
                         ? moment(itemModel.item_date_of_birth).format(
@@ -339,6 +345,7 @@ class ThemeSwitcher extends Component {
         </Modal>
 
         <Modal
+        
           show={showedit}
           size="xl"
           aria-labelledby="contained-modal-title-vcenter"
@@ -358,7 +365,7 @@ class ThemeSwitcher extends Component {
           </Modal.Header>
 
 
-          <Container fluid="true">
+          <Container fluid="true" >
             <br />
             <Row>
               <Col sm={2}>
@@ -368,7 +375,7 @@ class ThemeSwitcher extends Component {
                   <Card border="info">
                     <Card.Body>
                       <Form noValidate >
-                        <Form.Row>
+                        <Form.Row  className="text-center">
                           <Form.Group as={Col} md="4" >
                             <Form.Label>ชื่ออุปกรณ์</Form.Label>
                             <Form.Control
@@ -411,6 +418,7 @@ class ThemeSwitcher extends Component {
                           <Form.Group as={Col} md="4" >
                             <Form.Label>ประเภท</Form.Label>
                             <Form.Control as="select" id="TN_id" onChange={this.select_type}>
+                            <option >กรุณาเลือกประเภท</option>
                               {item_get_type.map((element, index) => {
                                 return <option value={element.TN_id} key={index}>{element.TN_name}</option>
                               })}
@@ -483,37 +491,35 @@ class ThemeSwitcher extends Component {
                             </Form.Control.Feedback>
                           </Form.Group>
 
-                          <Col xl={3}>
+                          <Col >
 
-                            <Form.Group xl={Col} md="3" controlId="validationFormik05">
+                            <Form.Group as={Col}  sl="5" controlId="validationFormik05">
                               <Form.Label>สถานะอุปกรณ์</Form.Label>
                               <Col sm={10}>
                                 <Form.Check
-                                  type="radio"
-                                  label="ติดตั้ง"
-                                  id="item_status"
-                                  value="1"
+                                 type="radio"
+                                 label="ติดตั้ง"
+                                 name="item_status"
+                                 value="1"
                                   onChange={this.handleChange}
                                 />
                                 <Form.Check
                                   type="radio"
                                   label="พร้อมใช้งาน"
-                                  id="item_status"
+                                  name="item_status"
                                   value="2"
                                   onChange={this.handleChange}
                                 />
                                 <Form.Check
-                                  type="radio"
-                                  label="ส่งซ่อม"
-                                  id="item_status"
-                                  value="3"
+                                   type="radio"
+                                   label="ส่งซ่อม"
+                                   name="item_status"
+                                   value="3"
                                   onChange={this.handleChange}
                                 />
                               </Col>
                             </Form.Group>
                           </Col>
-
-
                         </Form.Row>
 
                         <Button className='float-right btn  fa fa-pencil' onClick={() => this.update_item(itemModel.item_id)}>เเก้ไขข้อมูล</Button>
