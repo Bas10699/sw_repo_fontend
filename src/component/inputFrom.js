@@ -178,7 +178,7 @@ class UserProfile extends Component {
                                             <Form.Group as={Col} md="4" controlId="validationFormik05">
                                                 <Form.Label>นำเข้าจาก</Form.Label>
                                                 <Form.Control
-                                                    type="text"
+                                                    type="date"
                                                     placeholder="ขโมยมา"
                                                     name="item_place_of_birth"
                                                     onChange={this.handleChange}
