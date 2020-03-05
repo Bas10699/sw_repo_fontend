@@ -68,8 +68,8 @@ class UserProfile extends Component {
             item_image: this.state.item_image,
 
 
-            item_airport:this.state.item_buit_in,
-            item_airport_date:this.state.item_day_place,
+            item_airport:this.state.item_airport,
+            item_airport_date:this.state.item_airport_date,
 
         }
         console.log(obj)
