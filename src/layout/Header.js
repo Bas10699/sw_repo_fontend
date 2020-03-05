@@ -31,8 +31,7 @@ export default class Header extends Component {
                         </div>
                     </form>
                     {/* Right navbar links */}
-                    <ul className="navbar-nav ml-auto">
-                        {/* Messages Dropdown Menu */}
+                    {/* <ul className="navbar-nav ml-auto">
                         <li className="nav-item dropdown">
                             <a className="nav-link" data-toggle="dropdown" href="/">
                                 <i className="far fa-comments" />
@@ -40,7 +39,7 @@ export default class Header extends Component {
                             </a>
                             <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                 <a href="/" className="dropdown-item">
-                                    {/* Message Start */}
+                                
                                     <div className="media">
                                         <img src="dist/img/user1-128x128.jpg" alt="User" className="img-size-50 mr-3 img-circle" />
                                         <div className="media-body">
@@ -52,11 +51,11 @@ export default class Header extends Component {
                                             <p className="text-sm text-muted"><i className="far fa-clock mr-1" /> 4 Hours Ago</p>
                                         </div>
                                     </div>
-                                    {/* Message End */}
+                                  
                                 </a>
                                 <div className="dropdown-divider" />
                                 <a href="/" className="dropdown-item">
-                                    {/* Message Start */}
+                                
                                     <div className="media">
                                         <img src="dist/img/user8-128x128.jpg" alt="User" className="img-size-50 img-circle mr-3" />
                                         <div className="media-body">
@@ -68,11 +67,11 @@ export default class Header extends Component {
                                             <p className="text-sm text-muted"><i className="far fa-clock mr-1" /> 4 Hours Ago</p>
                                         </div>
                                     </div>
-                                    {/* Message End */}
+                                
                                 </a>
                                 <div className="dropdown-divider" />
                                 <a href="/" className="dropdown-item">
-                                    {/* Message Start */}
+                             
                                     <div className="media">
                                         <img src="dist/img/user3-128x128.jpg" alt="User" className="img-size-50 img-circle mr-3" />
                                         <div className="media-body">
@@ -84,13 +83,13 @@ export default class Header extends Component {
                                             <p className="text-sm text-muted"><i className="far fa-clock mr-1" /> 4 Hours Ago</p>
                                         </div>
                                     </div>
-                                    {/* Message End */}
+                               
                                 </a>
                                 <div className="dropdown-divider" />
                                 <a href="/" className="dropdown-item dropdown-footer">See All Messages</a>
                             </div>
                         </li>
-                        {/* Notifications Dropdown Menu */}
+                   
                         <li className="nav-item dropdown">
                             <a className="nav-link" data-toggle="dropdown" href="/">
                                 <i className="far fa-bell" />
@@ -122,7 +121,7 @@ export default class Header extends Component {
                                 <i className="fas fa-th-large" />
                             </a>
                         </li>
-                    </ul>
+                    </ul> */}
                 </nav>
                 {/* /.navbar */}
             </div>

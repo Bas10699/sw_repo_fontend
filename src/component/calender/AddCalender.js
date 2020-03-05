@@ -10,7 +10,8 @@ export default class AddCalender extends Component {
         super(props)
         this.state = {
 
-            dateNow: new Date(),
+            cn_date: dateFns.format(new Date(), "YYYY-MM-DD"),
+            cn_time: dateFns.format(new Date(), "HH:mm"),
             date: null,
             time: null,
             detail: null,
@@ -35,7 +36,15 @@ export default class AddCalender extends Component {
         try {
             await post(obj, "calender/add_canlender").then((result) => {
                 if (result.success) {
-                    window.location.reload()
+                    swal.fire({
+                        icon: 'success',
+                        title: 'เพิ่มข้อมูลสำเร็จ',
+                        showConfirmButton: false,
+                        timer: 1200
+                    }).then(() => {
+                        window.location.reload()
+                    })
+
                 }
                 else {
                     swal.fire("", result.error_message, "error")
@@ -48,7 +57,7 @@ export default class AddCalender extends Component {
     }
 
     render() {
-        const { dateNow } = this.state
+        const { cn_date, cn_time } = this.state
         let showModal = this.props.showModal
 
         return (
@@ -70,12 +79,12 @@ export default class AddCalender extends Component {
                             <Form.Row>
                                 <Form.Group as={Col} >
                                     <Form.Label>วันที่</Form.Label>
-                                    <Form.Control type="date" onChange={this.handleChange} id="cn_date" />
+                                    <Form.Control type="date" onChange={this.handleChange} id="cn_date" value={cn_date} />
                                 </Form.Group>
 
                                 <Form.Group as={Col} >
                                     <Form.Label>เวลา</Form.Label>
-                                    <Form.Control type="time" onChange={this.handleChange} id="cn_time" />
+                                    <Form.Control type="time" onChange={this.handleChange} id="cn_time" value={cn_time} />
                                 </Form.Group>
                             </Form.Row>
 

@@ -275,3 +275,10 @@ ul.timelineSet > li.bdC-success:before {
   height: 20px;
   z-index: 400;
 }
+
+.color-0 {
+  color: #ffc107;
+}
+.color-1 {
+  color: #22c0e8;
+}
