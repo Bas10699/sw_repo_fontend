@@ -252,8 +252,8 @@ class UserProfile extends Component {
                                                 <Form.Control
                                                     type="text"
                                                     placeholder="AirportSakon"
-                                                    name="item_buit_in"
-                                                    id="item_buit_in"
+                                                    name="item_airport"
+                                                    id="item_airport"
 
                                                     onChange={this.handleChange}
                                                 />
@@ -268,8 +268,8 @@ class UserProfile extends Component {
                                                 <Form.Control
                                                     type="date"
                                                     placeholder="AirportSakon"
-                                                    name="item_day_place"
-                                                    id="item_day_place"
+                                                    name="item_airport_date"
+                                                    id="item_airport_date"
                                                     onChange={this.handleChange}
                                                 />
 
