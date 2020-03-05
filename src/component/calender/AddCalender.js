@@ -29,6 +29,7 @@ export default class AddCalender extends Component {
             cn_date: this.state.cn_date,
             cn_time: this.state.cn_time,
             cn_notes: this.state.cn_notes,
+            cn_head: this.state.cn_head,
         }
         console.log(obj)
         try {
@@ -36,8 +37,8 @@ export default class AddCalender extends Component {
                 if (result.success) {
                     window.location.reload()
                 }
-                else{
-                    swal.fire("",result.error_message,"error")
+                else {
+                    swal.fire("", result.error_message, "error")
                 }
             })
         }
@@ -78,10 +79,10 @@ export default class AddCalender extends Component {
                                 </Form.Group>
                             </Form.Row>
 
-                            {/* <Form.Group controlId="formGridAddress1">
-                                <Form.Label>Address</Form.Label>
-                                <Form.Control placeholder="" value={dateFns.format(dateNow, "DD/MM/YYYY")} />
-                            </Form.Group> */}
+                            <Form.Group controlId="formGridAddress1">
+                                <Form.Label>ชื่อเรื่อง</Form.Label>
+                                <Form.Control onChange={this.handleChange} id="cn_head" />
+                            </Form.Group>
 
                             <Form.Group >
                                 <Form.Label>บันทึกรายละเอียด</Form.Label>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Modal, Col, Form } from 'react-bootstrap';
+
 import swal from 'sweetalert2'
 
 export default class UpdateItemCalender extends Component {
@@ -27,6 +28,7 @@ export default class UpdateItemCalender extends Component {
             cn_time: this.state.cn_time,
             cn_notes: this.state.cn_notes,
         }
+        swal.fire("GG","gggggg","success")
         console.log(obj)
 
     }

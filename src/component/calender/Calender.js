@@ -4,9 +4,10 @@ import isEqual from 'date-fns/is_equal'
 import isBefore from 'date-fns/is_equal'
 import "./Calender.css"
 import { Button, Modal, Row, Col } from 'react-bootstrap';
-import { get } from '../../service/service'
+import { get, post } from '../../service/service'
 import AddCalender from './AddCalender';
 import UpdateItemCalender from './UpdateItemCalender';
+import swal from 'sweetalert2'
 
 class Calendar extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Calendar extends Component {
       showModal: false,
       showModalAdd: false,
       showModalItem: false,
+      dataFilter: []
     };
   }
 
@@ -119,8 +121,8 @@ class Calendar extends Component {
               if (dateFns.format(element.cn_date, "DD/MM/YYYY") === dateFns.format(day, "DD/MM/YYYY")) {
                 // console.log("ff",dateFns.format(element.cn_date, "DD/MM/YYYY"))
 
-                return <div onClick={() => this.setState({ showModal: true })}>
-                  <div className="badge badge-pill badge-success" >{element.cn_notes}</div>
+                return <div >
+                  <div className="badge badge-pill badge-success" >0</div>
                   {/* <div className="badge badge-pill badge-secondary">55555</div> */}
 
                 </div>
@@ -141,11 +143,25 @@ class Calendar extends Component {
     return <div className="body">{rows}</div>;
   }
 
+  getDataDate = async (date) => {
+    const dateSearch = dateFns.format(date, "YYYY-MM-DD")
+
+    var updatedList = this.state.data_calernder;
+    updatedList = updatedList.filter(function (item) {
+      return dateFns.format(item.cn_date, "YYYY-MM-DD").search(dateSearch) !== -1;
+    });
+    this.setState({
+      dataFilter: updatedList,
+    });
+
+  }
+
   onDateClick = day => {
     this.setState({
-      selectedDate: day
+      selectedDate: day,
+      showModal: true
     });
-    console.log("gg", dateFns.format(day, "DD/MM/YYYY"))
+    this.getDataDate(day)
 
   };
 
@@ -161,8 +177,32 @@ class Calendar extends Component {
     });
   };
 
+  alertDelete = data => {
+    swal
+      .fire({
+        title: "คุณแน่ใจไหม?",
+        text: "คุณต้องการลบ " + data + " หรือไม่?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      })
+      .then(result => {
+        console.log(result);
+        if (result.value) {
+          this.delete(data);
+        }
+      });
+  };
+
+
+  delete = (head) => {
+
+  }
+
   renderModel() {
-    const { showModal } = this.state
+    const { showModal, selectedDate, dataFilter } = this.state
     return (
       <Modal
         show={showModal}
@@ -172,24 +212,28 @@ class Calendar extends Component {
       >
         <Modal.Header >
           <Modal.Title id="contained-modal-title-vcenter">
-            รายละเอียดอุปกรณ์
-        </Modal.Title>
+            รายละเอียดวันที่ {dateFns.format(selectedDate, "DD/MM/YYYY")}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Row>
-            <Col>
-              <div >
-                ss
+          <div className="container mt-5 mb-5">
+            <div className="row">
+              <div className="col-md-9 offset-md-1">
+                <h4>Latest News</h4>
+                <ul className="timelineSet">
+                  {dataFilter.map((element, index) => {
+                    return <li>
+                      <a href="#" >{element.cn_time}</a>
+                      <button className="btn btn-danger btn-sm float-right" onClick={() => this.alertDelete(element.cn_head)}>ลบ</button>
+                      <h5>{element.cn_head}</h5>
+                      <p>{element.cn_notes}</p>
+                    </li>
+
+                  })}
+                </ul>
               </div>
-
-            </Col>
-            <Col>
-              <p>
-                หมายเหตุ...
-              </p>
-            </Col>
-          </Row>
-
+            </div>
+          </div>
 
 
         </Modal.Body>
