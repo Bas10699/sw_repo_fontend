@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { get, ip, post } from "../service/service";
 import swal from "sweetalert2";
 import moment from "moment";
-import { Button, Modal, Image, Row, Col, Form } from "react-bootstrap";
+import { Button, Modal, Image, Row, Col, Form, Dropdown, DropdownButton, Container, Card, InputGroup, CardDeck } from "react-bootstrap";
 import "../App.css";
 import ImageDefault from '../const/images.png'
 
@@ -11,9 +11,11 @@ class ThemeSwitcher extends Component {
     super();
     this.state = {
       item_get_all: [],
+      item_image: null,
       theme: null,
       showModal: false,
       showedit: false,
+      item_get_type: [],
       modelIndex: 0
     };
   }
@@ -30,6 +32,7 @@ class ThemeSwitcher extends Component {
 
   componentWillMount() {
     this.get_item_all();
+    this.get_item_type()
   }
 
   get_item_all = async () => {
@@ -47,6 +50,7 @@ class ThemeSwitcher extends Component {
       alert("get_item_all" + error);
     }
   };
+
 
   delete_item = data => {
     swal
@@ -72,6 +76,7 @@ class ThemeSwitcher extends Component {
       const obj = {
         item_id: data.item_id
       };
+
       await post(obj, "item/delete_item").then(result => {
         if (result.success) {
           swal
@@ -91,37 +96,79 @@ class ThemeSwitcher extends Component {
     }
   };
 
+
+
+  select_type = e => {
+
+
+    console.log(e.target.value);
+    this.setState({
+      selecttype: e.target.value
+    });
+    console.log(this.state.selecttype);
+  };
+
+
+  get_item_type = async () => {
+    try {
+      await get("typeName/get_typeName_select").then(result => {
+        if (result.success) {
+          this.setState({
+            item_get_type: result.result
+          });
+          console.log(this.state.item_get_type);
+        } else {
+          swal.fire("", result.error_message, "warning");
+        }
+      });
+    } catch (error) {
+      alert("get_item_all" + error);
+    }
+  };
+
+
+
   handleChange = e => {
+
+
     console.log(e.target.value);
     this.setState({
       [e.target.id]: e.target.value
     });
-    console.log(e.target.id);
+    console.log(e.target.value);
   };
 
-  update_item = async () => {
+  update_item = async (item_id) => {
     const obj = {
-      item_image: this.state.item_imag,
-      item_id: this.state.item_id,
+
+      item_id: item_id,
       item_name: this.state.item_name,
       item_series_number: this.state.item_series_number,
-      item_type: this.state.item_type,
+      item_type: this.state.selecttype,
       item_date_of_birth: this.state.item_date_of_birth,
       item_place_of_birth: this.state.item_place_of_birth,
       item_status: this.state.item_status,
       item_gen: this.state.item_gen,
-      item_brand: this.state.item_brand
+      item_brand: this.state.item_brand,
+      item_image: this.state.item_image,
     };
 
-    console.log(obj);
+    console.log("gg", obj);
     try {
+
       await post(obj, "item/update_item").then(result => {
         if (result.success) {
+
+
           window.location.reload();
-        } else {
+
+        }
+        else {
           swal.fire("", result.error_message, "error");
         }
+
       });
+
     } catch (error) {
       alert("add_data" + error);
     }
@@ -158,7 +205,7 @@ class ThemeSwitcher extends Component {
     }
   };
   render() {
-    const { theme, item_get_all, showModal, modelIndex, showedit } = this.state;
+    const { theme, item_get_all, showModal, modelIndex, showedit, item_get_type } = this.state;
     const themeClass = theme ? theme.toLowerCase() : "secondary";
     const itemModel = item_get_all[this.state.modelIndex];
     console.log(itemModel);
@@ -191,11 +238,12 @@ class ThemeSwitcher extends Component {
                 <tbody>
                   {item_get_all.map((element, index) => {
                     return (
-                      <tr>
-                        <td>{index + 1}</td>
+                      <tr key={index}>
+                        <td>{element.item_id}</td>
+
                         <td>{element.item_name}</td>
                         <td>{element.item_series_number}</td>
-                        <td>{element.item_type}</td>
+                        <td>{element.TN_name}</td>
                         <td>{this.status_item(element.item_status)}</td>
                         <td>
                           <div className="btn-toolbar">
@@ -216,16 +264,8 @@ class ThemeSwitcher extends Component {
                               onClick={() => this.delete_item(element)}
                               className=" btn btn-danger btn-sm	fas fa-trash-alt "
                             />
-                            <button
-                              onClick={() => this.update_item(element)}
-                              onClick={() =>
-                                this.setState({
-                                  showedit: true,
-                                  modelIndex: index
-                                })
-                              }
-                              className=" btn btn-primary  fa fa-pencil"
-                            />
+                            <button onClick={() => this.get_item_type} onClick={() => this.setState({ showedit: true, modelIndex: index })} className=" btn btn-primary  fa fa-pencil" />
+
                           </div>
                         </td>
 
@@ -238,70 +278,6 @@ class ThemeSwitcher extends Component {
             </div>
           </div>
         </div>
-
-        <div className="row">
-          <div className="col-12">
-            {/* /.card */}
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">DataTable with default features</h3>
-              </div>
-              {/* /.card-header */}
-              <div className="card-body table-responsive">
-                <table
-                  id="example1"
-                  className="table table-bordered table-striped"
-                >
-                  <thead>
-                    <tr>
-                      <th>ลำดับ</th>
-                      <th>ชื่อ</th>
-                      <th>series number</th>
-                      <th>ประเภท</th>
-                      <th>วันเกิด</th>
-                      <th>สถานที่เกิด</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {item_get_all.map((element, index) => {
-                      return (
-                        <tr>
-                          <td>{index + 1}</td>
-                          <td>{element.item_name}</td>
-                          <td>{element.item_series_number}</td>
-                          <td>{element.item_type}</td>
-                          <td>
-                            {moment(element.item_date_of_birth).format(
-                              "DD/MM/YYYY"
-                            )}
-                          </td>
-                          <td>{element.item_place_of_birth}</td>
-                          <td>
-                            <Button
-                              onClick={() =>
-                                this.setState({
-                                  showModal: true,
-                                  modelIndex: index
-                                })
-                              }
-                            >
-                              ดูรายละเอียด
-                            </Button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-              {/* /.card-body */}
-            </div>
-            {/* /.card */}
-          </div>
-          {/* /.col */}
-        </div>
-        {/* /.row */}
 
         <Modal
           show={showModal}
@@ -343,8 +319,8 @@ class ThemeSwitcher extends Component {
                     <tr>
                       {itemModel
                         ? moment(itemModel.item_date_of_birth).format(
-                            "DD/MM/YYYY"
-                          )
+                          "DD/MM/YYYY"
+                        )
                         : ""}
                     </tr>
                     <tr>{itemModel ? itemModel.item_place_of_birth : ""}</tr>
@@ -364,160 +340,195 @@ class ThemeSwitcher extends Component {
 
         <Modal
           show={showedit}
-          size="lg"
+          size="xl"
           aria-labelledby="contained-modal-title-vcenter"
           centered
+
+        
         >
           <Modal.Header>
+
             <Modal.Title id="contained-modal-title-vcenter">
               เเก้ไขข้อมูล
+
             </Modal.Title>
+            <button type="button" class="close" aria-label="Close" onClick={() => this.setState({ showedit: false })}>
+              <span aria-hidden="true" >×</span>
+            </button>
           </Modal.Header>
 
-          <Modal.Body>
-            <Form>
-              <Form.Row>
-                <Form.Group as={Col}>
-                  <Form.Label>ID</Form.Label>
-                  <Form.Control
-                    type="textarea"
-                    onChange={this.handleChange}
-                    id="item_id"
-                    defaultValue={itemModel ? itemModel.item_id : ""}
-                  ></Form.Control>
-                </Form.Group>
-              </Form.Row>
-            </Form>
-            <Form>
-              <Form.Row>
-                <Form.Group as={Col}>
-                  <Form.Label>ชื่อ</Form.Label>
-                  <Form.Control
-                    type="textarea"
-                    onChange={this.handleChange}
-                    id="item_name"
-                    defaultValue={itemModel ? itemModel.item_name : ""}
-                  ></Form.Control>
-                </Form.Group>
-              </Form.Row>
-            </Form>
-            <Form>
-              <Form.Row>
-                <Form.Group as={Col}>
-                  <Form.Label>series number</Form.Label>
-                  <Form.Control
-                    type="textarea"
-                    onChange={this.handleChange}
-                    id="item_series_number"
-                    defaultValue={itemModel ? itemModel.item_series_number : ""}
-                  />
-                </Form.Group>
-              </Form.Row>
-            </Form>
 
-            <Form>
-              <Form.Row>
-                <Form.Group as={Col}>
-                  <Form.Label>ประเภท</Form.Label>
-                  <Form.Control
-                    type="textarea"
-                    onChange={this.handleChange}
-                    id="item_type"
-                    defaultValue={itemModel ? itemModel.item_type : ""}
-                  />
-                </Form.Group>
-              </Form.Row>
-            </Form>
-            <Form>
-              <Form.Row>
-                <Form.Group as={Col}>
-                  <Form.Label>วันที่นำเข้า</Form.Label>
-                  <Form.Control
-                    type="date"
-                    onChange={this.handleChange}
-                    id="item_date_of_birth"
-                  />
-                </Form.Group>
-              </Form.Row>
-            </Form>
-            <Form>
-              <Form.Row>
-                <Form.Group as={Col}>
-                  <Form.Label>วันจำหน่าย</Form.Label>
-                  <Form.Control
-                    type="date"
-                    onChange={this.handleChange}
-                    id="item_place_of_birth"
-                  />
-                </Form.Group>
-              </Form.Row>
-              <Form.Row>
-                <Form.Group as={Col}>
-                  <Form.Label>รุ่น</Form.Label>
-                  <Form.Control
-                    type="textare"
-                    onChange={this.handleChange}
-                    id="item_gen"
-                  />
-                </Form.Group>
-              </Form.Row>
-              <Form.Row>
-                <Form.Group as={Col}>
-                  <Form.Label>ยี่ห้อ</Form.Label>
-                  <Form.Control
-                    type="textare"
-                    onChange={this.handleChange}
-                    id="item_brand"
-                  />
-                </Form.Group>
-              </Form.Row>
-              <Form.Group as={Col} md="6" controlId="validationFormik03">
-                <Form.Label>รูปอุปกรณ์</Form.Label>
-                <div className="img-resize" style={{ opacity: ".5" }}>
-                  <Image src={item_image ? item_image : ImageDefault} rounded />
-                </div>
-
-                <Form.Control type="file" onChange={this.uploadpicture} />
-
-                <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
-              </Form.Group>
-            </Form>
-            <Form.Group as={Col} md="3" controlId="item_status">
-              <Form.Label>สถานะอุปกรณ์</Form.Label>
-              <Col sm={10}>
-                <Form.Check
-                  type="radio"
-                  label="ติดตั้ง"
-                  name="item_status"
-                  id="item_status"
-                  value="1"
-                  onChange={this.handleChange}
-                />
-                <Form.Check
-                  type="radio"
-                  label="พร้อมใช้งาน"
-                  name="item_status"
-                  id="item_status"
-                  value="2"
-                  onChange={this.handleChange}
-                />
-                <Form.Check
-                  type="radio"
-                  label="ส่งซ่อม"
-                  name="item_status"
-                  id="item_status"
-                  value="3"
-                  onChange={this.handleChange}
-                />
+          <Container fluid="true">
+            <br />
+            <Row>
+              <Col sm={2}>
               </Col>
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={() => this.update_item()}>Edit</Button>
-            <Button onClick={() => this.setState({ showedit: false })}>
-              Close
-            </Button>
-          </Modal.Footer>
+              <Col>
+                <CardDeck>
+                  <Card border="info">
+                    <Card.Body>
+                      <Form noValidate >
+                        <Form.Row>
+                          <Form.Group as={Col} md="4" >
+                            <Form.Label>ชื่ออุปกรณ์</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="item_name"
+                              onChange={this.handleChange}
+                              id="item_name"
+                              defaultValue={itemModel ? itemModel.item_name : ""}
+
+
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                          </Form.Group>
+                          <Form.Group as={Col} md="4" >
+                            <Form.Label>ยี่ห้อ</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="item_brand"
+                              onChange={this.handleChange}
+                              id="item_brand"
+                              defaultValue={itemModel ? itemModel.item_brand : ""}
+
+
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                          </Form.Group>
+                          <Form.Group as={Col} md="4" >
+                            <Form.Label>รุ่น</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="item_gen"
+
+                              id="item_gen"
+                              defaultValue={itemModel ? itemModel.item_gen : ""}
+                              onChange={this.handleChange}
+
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                          </Form.Group>
+                          <Form.Group as={Col} md="4" >
+                            <Form.Label>ประเภท</Form.Label>
+                            <Form.Control as="select" id="TN_id" onChange={this.select_type}>
+                              {item_get_type.map((element, index) => {
+                                return <option value={element.TN_id} key={index}>{element.TN_name}</option>
+                              })}
+
+
+                            </Form.Control>
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                          </Form.Group>
+                          <Form.Group as={Col} md="4" >
+                            <Form.Label>Series Number</Form.Label>
+                            <InputGroup >
+                              <InputGroup.Prepend>
+                                <InputGroup.Text id="inputGroupPrepend">S/N</InputGroup.Text>
+                              </InputGroup.Prepend>
+                              <Form.Control
+                                type="text"
+                                placeholder=""
+                                aria-describedby="inputGroupPrepend"
+                                name="item_series_number"
+                                onChange={this.handleChange}
+
+                                id="item_series_number"
+                                defaultValue={itemModel ? itemModel.item_series_number : ""}
+                              />
+                              <Form.Control.Feedback type="invalid">
+
+                              </Form.Control.Feedback>
+                            </InputGroup>
+                          </Form.Group>
+
+
+                          <Form.Group as={Col} md="4" >
+                            <Form.Label>วันจำหน่าย</Form.Label>
+                            <Form.Control
+                              type="date"
+                              onChange={this.handleChange}
+                              id="item_place_of_birth"
+                            />
+                          </Form.Group>
+
+
+                          <Form.Group as={Col} md="4" >
+                            <Form.Label>วันที่นำเข้า</Form.Label>
+                            <Form.Control
+                              type="date"
+
+                              onChange={this.handleChange}
+                              id="item_date_of_birth"
+                            />
+                            <Form.Control.Feedback type="invalid">
+
+                            </Form.Control.Feedback>
+                          </Form.Group>
+
+                        </Form.Row>
+                        <Form.Row>
+                          <Form.Group as={Col} md="6" >
+
+                            <Form.Label>รูปอุปกรณ์</Form.Label>
+                            <div className="img-resize" style={{ opacity: '.5' }}>
+                              <Image src={item_image ? item_image : ImageDefault} rounded />
+                            </div>
+
+                            <Form.Control
+                              type="file" onChange={this.uploadpicture}
+                            />
+
+                            <Form.Control.Feedback type="invalid">
+
+                            </Form.Control.Feedback>
+                          </Form.Group>
+
+                          <Col xl={3}>
+
+                            <Form.Group xl={Col} md="3" controlId="validationFormik05">
+                              <Form.Label>สถานะอุปกรณ์</Form.Label>
+                              <Col sm={10}>
+                                <Form.Check
+                                  type="radio"
+                                  label="ติดตั้ง"
+                                  id="item_status"
+                                  value="1"
+                                  onChange={this.handleChange}
+                                />
+                                <Form.Check
+                                  type="radio"
+                                  label="พร้อมใช้งาน"
+                                  id="item_status"
+                                  value="2"
+                                  onChange={this.handleChange}
+                                />
+                                <Form.Check
+                                  type="radio"
+                                  label="ส่งซ่อม"
+                                  id="item_status"
+                                  value="3"
+                                  onChange={this.handleChange}
+                                />
+                              </Col>
+                            </Form.Group>
+                          </Col>
+
+
+                        </Form.Row>
+
+                        <Button className='float-right btn  fa fa-pencil' onClick={() => this.update_item(itemModel.item_id)}>เเก้ไขข้อมูล</Button>
+                      </Form>
+
+                    </Card.Body>
+                  </Card>
+                </CardDeck>
+              </Col>
+              <Col sm={2}>
+              </Col>
+            </Row>
+          </Container>
+
+
         </Modal>
       </div>
     );

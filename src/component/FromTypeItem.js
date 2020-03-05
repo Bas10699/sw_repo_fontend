@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { get, post } from '../service/service'
 import swal from 'sweetalert2'
-import { Modal } from 'react-bootstrap'
+import { Modal, Card, Row, Col, Container, CardGroup, CardDeck, FormControl, Button } from 'react-bootstrap'
 
 export default class FromTypeItem extends Component {
     constructor(props) {
@@ -11,13 +11,16 @@ export default class FromTypeItem extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const script = document.createElement("script")
         script.src = 'js/content.js'
         script.async = true
-    
+
         document.body.appendChild(script)
-      }
+    }
+
+
+
 
     componentWillMount() {
         this.get_type_item()
@@ -29,7 +32,10 @@ export default class FromTypeItem extends Component {
                     this.setState({
                         get_data: result.result
                     })
+                    console.log(this.state.get_data);
+                    
                 }
+                
                 else {
                     swal("", "", "error")
                 }
@@ -39,47 +45,145 @@ export default class FromTypeItem extends Component {
             alert("get_type_item: " + error)
         }
     }
+
+    handleChange = e => {
+
+    
+        console.log(e.target.value);
+        this.setState({
+          itemtype: e.target.value
+        });
+        console.log(this.state.itemtype);
+      };
+    
+
+
+      additem = ()=> {
+        swal
+          .fire({
+            title: "Are you sure?",
+            text: "ต้องการเพิ่ม " + this.state.itemtype+ " หรือไม่?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, add it!"
+          })
+          .then(result => {
+            console.log(result);
+            if (result.value) {
+              this.add_type_item();
+            }
+          });
+      };
+    add_type_item = async () => {
+        const obj = {
+       
+            TN_name: this.state.itemtype,
+        }
+        console.log(obj)
+        try {
+            await post(obj, 'typeName/add_typeName').then((result) => {
+                if (result.success) {
+                    swal.fire({
+                        icon: 'success',
+                        title: 'เพิ่มประเภทข้อมูล',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.reload()
+                    })
+
+                }
+                else {
+                    swal.fire("", result.error_message, "error");
+                }
+            })
+        }
+        catch (error) {
+            alert('add_type_item' + error)
+        }
+    }
+
     render() {
-        const {get_data} =this.state
+        const { get_data } = this.state
         return (
-            <div className="container">
-                <div className="card shadow mb-4">
-                    <div className="card-header py-3">
-                        <div className="row">
-                            <div className="col">
-                                <h6 className="m-0 font-weight-bold text-primary">ตารางแสดงประเภทของอุปกรณ์ทั้งหมด</h6>
-                            </div>
-                            {/* <button className="btn btn-primary">เพิ่ม</button> */}
-                        </div>
-                    </div>
-                    <div className="card-body">
-                        <div className="table-responsive">
-                            <table className="table table-bordered" id="example1" width="100%">
+            <Container>
+            <Row className="justify-content-md-center" >
+              
+                    <CardDeck className="text-center">
+                        <Card  >
+                            <Card className="card-header py-3">
+                                <div >
+                                    <div className="col">
+                                        <h6 className="m-0 font-weight-bold text-primary">ตารางแสดงประเภทของอุปกรณ์ทั้งหมด</h6>
+                                    </div>
+                                    <br/>
+                                    {/* <button className="btn btn-primary">เพิ่ม</button> */}
+                                </div>
+                            </Card>
+                            <div className="card-body">
+                                <div className="table-responsive">
+                                    <table className="table table-bordered" width="auto">
 
-                                <thead>
-                                    <tr>
-                                        <th>ลำดับ</th>
-                                        <th>ชื่อประเภท</th>
-                                        <th>จำนวนทั้งหมด</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {get_data.map((element, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{element.item_type}</td>
-                                                <td>{element.count_item}</td>
+                                        <thead>
+                                            <tr>
+                                                <th>ลำดับ</th>
+                                                <th>ชื่อประเภท</th>
+                                                <th>จำนวนทั้งหมด</th>
                                             </tr>
-                                        )
-                                    })}
+                                        </thead>
+                                        <tbody>
 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                              {this.state.get_data.map((element,index) => {
+                                                return (
+                                                    <tr >
+                                                        <td>{index+1}</td>
+                                                        <td>{element.TN_name}</td>
+                                                        <td>{element.count_id}</td>
+                                                    </tr>
+                                                )
+                                            })}
+
+                                         
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </Card>
+                    </CardDeck>
+                    <CardDeck className="text-center">
+                        <Card>
+                            <div className="card-header py-3">
+
+                                <div className="col">
+                                    <h6 className="m-0 font-weight-bold text-primary" >เพิ่มประเภทของอุปกรณ์</h6>
+                                </div>
+                                {/* <button className="btn btn-primary">เพิ่ม</button> */}
+
+                            </div>
+                            <Card.Body>
+                                <FormControl type="test" id="item_type"  onChange={this.handleChange}>
+
+                                </FormControl>
+                                <br />
+                                <link
+                              href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+                              rel="stylesheet"
+                            ></link>
+                                <Button variant="primary " className =" fa fa-plus" onClick={()=>this.additem()} size="lg"></Button>
+                            </Card.Body>
+                        </Card>
+
+                    </CardDeck>
+
+              
+                </Row>
+            </Container>
+
+
+
+
         )
     }
 }
