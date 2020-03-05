@@ -6,6 +6,7 @@ import "./Calender.css"
 import { Button, Modal, Row, Col } from 'react-bootstrap';
 import { get } from '../../service/service'
 import AddCalender from './AddCalender';
+import UpdateItemCalender from './UpdateItemCalender';
 
 class Calendar extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class Calendar extends Component {
       data_calernder: [],
       showModal: false,
       showModalAdd: false,
+      showModalItem: false,
     };
   }
 
@@ -205,16 +207,24 @@ class Calendar extends Component {
     //or update a query to get data
   };
 
+  changeshowModalItem = (status) => {
+    this.setState({ showModalItem: status });
+    //fetch a data
+    //or update a query to get data
+  };
+
 
   render() {
     return (
       <div className="calendar container py-3">
-        <Button className='float-right' onClick={() => this.setState({ showModalAdd: true })}> เพิ่ม</Button>
+        <Button className=' btn btn-primary' onClick={() => this.setState({ showModalItem: true })}>+item</Button>
+        <Button className='float-right btn btn-success' onClick={() => this.setState({ showModalAdd: true })}>+Note</Button>
         {this.renderHeader()}
         {this.renderDays()}
         {this.renderCells()}
         {this.renderModel()}
         <AddCalender showModal={this.state.showModalAdd} changeshowModalAdd={this.changeshowModalAdd} />
+        <UpdateItemCalender showModal={this.state.showModalItem} changeshowModalItem={this.changeshowModalItem} />
       </div>
     );
   }
