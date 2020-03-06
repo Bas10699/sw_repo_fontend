@@ -270,6 +270,7 @@ select_ap= e => {
                     <th>series number</th>
                     <th>ประเภท</th>
                     <th>สถานะ</th>
+                    <th>สถานที่ติดตั้ง></th>th>
                     <th>ตัวเลือก</th>
                   </tr>
                 </thead>
@@ -282,6 +283,7 @@ select_ap= e => {
                         <td>{element.item_name}</td>
                         <td>{element.item_series_number}</td>
                         <td>{element.TN_name}</td>
+                        <td>{element.item_airport}</td>
                         <td>{this.status_item(element.item_status)}</td>
                         <td>
                           <div className="btn-toolbar">
@@ -571,7 +573,7 @@ select_ap= e => {
                             <Form.Label>รูปอุปกรณ์</Form.Label>
                             <div
                               className="img-resize"
-                              style={{ opacity: ".5" }}
+                            
                             >
                               <Image
                                 src={item_image ? item_image : ImageDefault}

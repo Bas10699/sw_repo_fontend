@@ -105,6 +105,49 @@ export default class FromLocation extends Component {
     }
   };
 
+  delete_item = data => {
+    swal
+      .fire({
+        title: "Are you sure?",
+        text: "ต้องการลบ " + data.item_name + " หรือไม่?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      })
+      .then(result => {
+        console.log(result);
+        if (result.value) {
+          this.delete_item_post(data);
+        }
+      });
+  };
+
+  delete_item_post = async data => {
+    try {
+      const obj = {
+        ap_id: data.ap_id
+      };
+
+      await post(obj, "airport/delete_airport").then(result => {
+        if (result.success) {
+          swal
+            .fire({
+              icon: "success",
+              title: "Your file has been deleted.",
+              showConfirmButton: false,
+              timer: 1500
+            })
+            .then(() => {
+              window.location.reload();
+            });
+        }
+      });
+    } catch (error) {
+      alert("delete_item: " + error);
+    }
+  };
 
     render() {
         const { get_data } = this.state;
@@ -153,7 +196,7 @@ export default class FromLocation extends Component {
                                                             ></link>
 
                                                             <button
-                                                                onClick={() => this.delete_type(element)}
+                                                                onClick={() => this.delete_item(element)}
                                                                 className=" btn btn-danger btn-sm	fas fa-trash-alt "
                                                             />
                                                         </div>

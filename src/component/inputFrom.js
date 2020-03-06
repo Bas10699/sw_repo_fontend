@@ -315,7 +315,7 @@ class UserProfile extends Component {
                                             <Form.Group as={Col} md="6" controlId="validationFormik03">
 
                                                 <Form.Label>รูปอุปกรณ์</Form.Label>
-                                                <div className="img-resize" style={{ opacity: '.5' }}>
+                                                <div className="img-resize" >
                                                     <Image src={item_image ? item_image : ImageDefault} rounded />
                                                 </div>
 
