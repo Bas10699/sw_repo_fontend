@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Col, Form, InputGroup, Image, Container, Row, CardDeck, Card } from "react-bootstrap";
 import { Formik } from 'formik';
-import { post ,get} from '../service/service'
+import { post, get } from '../service/service'
 import swal from 'sweetalert2'
 import ImageDefault from '../const/images.png'
 // const { Formik } = formik;
@@ -22,6 +22,7 @@ class UserProfile extends Component {
         this.state = {
             item_image: null,
             item_get_type: [],
+            get_data:[],
         }
     }
 
@@ -32,27 +33,31 @@ class UserProfile extends Component {
         })
     }
 
-    
-  componentWillMount() {
-    this.get_item_all();
-    this.get_item_type()
-  }
 
-  get_item_all = async () => {
-    try {
-      await get("item/get_item_all").then(result => {
-        if (result.success) {
-          this.setState({
-            item_get_all: result.result
-          });
-        } else {
-          swal.fire("", result.error_message, "warning");
-        }
-      });
-    } catch (error) {
-      alert("get_item_all" + error);
+    componentWillMount() {
+        this.get_item_all();
+        this.get_item_type()
+        this.get_location();
     }
-  };
+
+
+
+
+    get_item_all = async () => {
+        try {
+            await get("item/get_item_all").then(result => {
+                if (result.success) {
+                    this.setState({
+                        item_get_all: result.result
+                    });
+                } else {
+                    swal.fire("", result.error_message, "warning");
+                }
+            });
+        } catch (error) {
+            alert("get_item_all" + error);
+        }
+    };
 
 
     addItem = async () => {
@@ -68,8 +73,8 @@ class UserProfile extends Component {
             item_image: this.state.item_image,
 
 
-            item_airport:this.state.item_airport,
-            item_airport_date:this.state.item_airport_date,
+            item_airport: this.state.selectap,
+            item_airport_date: this.state.item_airport_date,
 
         }
         console.log(obj)
@@ -114,37 +119,66 @@ class UserProfile extends Component {
         }
 
     }
+    
+    get_location = async () => {
+        try {
+            await get("airport/get_airport").then(result => {
+                if (result.success) {
+                    this.setState({
+                        get_data: result.result
+                    });
+                    console.log(this.state.get_data);
+                } else {
+                    swal("", "", "error");
+                }
+            });
+        } catch (error) {
+            alert("get_location: " + error);
+        }
+    };
+
+    select_ap= e => {
+
+
+        console.log(e.target.value);
+        this.setState({
+            selectap: e.target.value
+        });
+        console.log(this.state.selectap);
+    };
+
+
 
     select_type = e => {
 
 
         console.log(e.target.value);
         this.setState({
-          selecttype: e.target.value
+            selecttype: e.target.value
         });
         console.log(this.state.selecttype);
-      };
+    };
 
     get_item_type = async () => {
         try {
-          await get("typeName/get_typeName_select").then(result => {
-            if (result.success) {
-              this.setState({
-                item_get_type: result.result
-              });
-              console.log(this.state.item_get_type);
-            } else {
-              swal.fire("", result.error_message, "warning");
-            }
-          });
+            await get("typeName/get_typeName_select").then(result => {
+                if (result.success) {
+                    this.setState({
+                        item_get_type: result.result
+                    });
+                    console.log(this.state.item_get_type);
+                } else {
+                    swal.fire("", result.error_message, "warning");
+                }
+            });
         } catch (error) {
-          alert("get_item_all" + error);
+            alert("get_item_all" + error);
         }
-      };
-    
+    };
+
     render() {
 
-        const { item_image , item_get_type} = this.state
+        const { item_image, item_get_type,get_data } = this.state
         // console.log("gg",this.state.item_status)
         return (
             <Container fluid="true">
@@ -163,7 +197,7 @@ class UserProfile extends Component {
                                                 <Form.Control
                                                     type="text"
                                                     name="item_name"
-                                                    
+
                                                     onChange={this.handleChange}
 
                                                 />
@@ -192,12 +226,12 @@ class UserProfile extends Component {
                                             <Form.Group as={Col} md="4" controlId="validationFormik02">
                                                 <Form.Label>ประเภท</Form.Label>
                                                 <Form.Control as="select" id="TN_id" onChange={this.select_type}>
-                                                <option >กรุณาเลือกประเภท</option>
-                              {item_get_type.map((element, index) => {
-                                return <option value={element.TN_id} key={index}>{element.TN_name}</option>
-                              })}
+                                                    <option >กรุณาเลือกประเภท</option>
+                                                    {item_get_type.map((element, index) => {
+                                                        return <option value={element.TN_id} key={index}>{element.TN_name}</option>
+                                                    })}
 
-                            </Form.Control>
+                                                </Form.Control>
 
                                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                             </Form.Group>
@@ -249,14 +283,13 @@ class UserProfile extends Component {
 
                                             <Form.Group as={Col} md="4" controlId="validationFormik05">
                                                 <Form.Label>สถานที่ติดตั้ง</Form.Label>
-                                                <Form.Control
-                                                    type="text"
-                                                    placeholder="AirportSakon"
-                                                    name="item_airport"
-                                                    id="item_airport"
+                                                <Form.Control as="select" id="ap_name" onChange={this.select_ap}>
+                                                    <option >กรุณาเลือกสถานที่ติดตั้ง</option>
+                                                    {get_data.map((element, index) => {
+                                                        return <option value={element.ap_id} key={index}>{element.ap_name}</option>
+                                                    })}
 
-                                                    onChange={this.handleChange}
-                                                />
+                                                </Form.Control>
 
                                                 <Form.Control.Feedback type="invalid">
 

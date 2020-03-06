@@ -10,6 +10,7 @@ import Header from './layout/Header';
 import Sideder from './layout/Sideder';
 
 import Calender from './component/calender/Calender'
+import FromLocation from './component/FromLocation'
 import FromTypeItem from './component/FromTypeItem';
 
 
@@ -30,6 +31,7 @@ export default class App extends Component {
               <Route exact path='/InputFrom' component={InputFrom} />
               <Route exact path='/Calender' component={Calender} />
               <Route exact path='/FromTypeItem' component={FromTypeItem} />
+              <Route exact path='/FromLocation' component={FromLocation} />
         
             </div>
           </div>

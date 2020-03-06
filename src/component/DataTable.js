@@ -14,7 +14,8 @@ import {
   Container,
   Card,
   InputGroup,
-  CardDeck
+  CardDeck,
+  ButtonGroup
 } from "react-bootstrap";
 import "../App.css";
 import ImageDefault from "../const/images.png";
@@ -29,7 +30,8 @@ class ThemeSwitcher extends Component {
       showModal: false,
       showedit: false,
       item_get_type: [],
-      modelIndex: 0
+      modelIndex: 0,
+      get_data:[],
     };
   }
 
@@ -46,6 +48,7 @@ class ThemeSwitcher extends Component {
   componentWillMount() {
     this.get_item_all();
     this.get_item_type();
+    this.get_location();
   }
 
   get_item_all = async () => {
@@ -108,6 +111,34 @@ class ThemeSwitcher extends Component {
     }
   };
 
+  get_location = async () => {
+    try {
+        await get("airport/get_airport").then(result => {
+            if (result.success) {
+                this.setState({
+                    get_data: result.result
+                });
+                console.log(this.state.get_data);
+            } else {
+                swal("", "", "error");
+            }
+        });
+    } catch (error) {
+        alert("get_location: " + error);
+    }
+};
+
+select_ap= e => {
+
+
+    console.log(e.target.value);
+    this.setState({
+        selectap: e.target.value
+    });
+    console.log(this.state.selectap);
+};
+
+
   select_type = e => {
     console.log(e.target.value);
     this.setState({
@@ -153,8 +184,9 @@ class ThemeSwitcher extends Component {
             item_place_of_birth: this.state.item_place_of_birth,
             item_status: this.state.item_status,
             item_image: this.state.item_image,
-            item_airport:this.state.item_airport,
-            item_airport_date:this.state.item_airport_date,
+          
+            item_airport: this.state.selectap,
+            item_airport_date: this.state.item_airport_date,
 
     };
 
@@ -210,6 +242,7 @@ class ThemeSwitcher extends Component {
       modelIndex,
       showedit,
       item_get_type
+      ,get_data
     } = this.state;
     const themeClass = theme ? theme.toLowerCase() : "secondary";
     const itemModel = item_get_all[this.state.modelIndex];
@@ -237,7 +270,7 @@ class ThemeSwitcher extends Component {
                     <th>series number</th>
                     <th>ประเภท</th>
                     <th>สถานะ</th>
-                    <th></th>
+                    <th>ตัวเลือก</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -256,6 +289,7 @@ class ThemeSwitcher extends Component {
                               href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
                               rel="stylesheet"
                             ></link>
+                            <ButtonGroup>
                             <button
                               onClick={() =>
                                 this.setState({
@@ -279,6 +313,7 @@ class ThemeSwitcher extends Component {
                               }
                               className=" btn btn-primary  fa fa-pencil"
                             />
+                            </ButtonGroup>
                           </div>
                         </td>
 
@@ -310,7 +345,7 @@ class ThemeSwitcher extends Component {
                   <img src={itemModel ? ip + itemModel.item_image : ""} />
                 </div>
               </Col>
-              <Col>
+             
                 <table>
                   <td>
                     <tr>ชื่อ </tr>
@@ -344,9 +379,13 @@ class ThemeSwitcher extends Component {
                     <tr>{itemModel ? itemModel.item_status : ""}</tr>
                   </td>
                 </table>
-                <p>หมายเหตุ...</p>
-              </Col>
+                
+             
             </Row>
+            <br/>
+            <Card>
+            <p>  หมายเหตุ...</p>
+            </Card>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={() => this.setState({ showModal: false })}>
@@ -473,12 +512,13 @@ class ThemeSwitcher extends Component {
 
                           <Form.Group as={Col} md="4">
                             <Form.Label>สถานที่จำหน่าย</Form.Label>
-                            <Form.Control
-                              type="text"
-                              placeholder="America"
-                              onChange={this.handleChange}
-                              id="item_place_of_birth"
-                            />
+                            <Form.Control as="select" id="ap_name" onChange={this.select_ap}>
+                                                    <option >กรุณาเลือกสถานที่ติดตั้ง</option>
+                                                    {get_data.map((element, index) => {
+                                                        return <option value={element.ap_id} key={index}>{element.ap_name}</option>
+                                                    })}
+
+                                                </Form.Control>
                           </Form.Group>
 
                           <Form.Group as={Col} md="4">

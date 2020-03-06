@@ -46,7 +46,7 @@ class Dashboard extends Component {
     switch (name) {
       case 1: return_page = <div className="col-lg-4 ">
         {/* small box */}
-        <div className="small-box bg-success">
+        <div className="small-box bg-warning">
           <div className="inner">
             <h3>{count}</h3>
             <p>ติดตั้ง</p>
@@ -54,13 +54,13 @@ class Dashboard extends Component {
           <div className="icon">
             <i className="ion ion-paper-airplane" />
           </div>
-          <a href="#" className="small-box-footer">More info <i className="fas fa-arrow-circle-right" /></a>
+         
         </div>
       </div>
         break;
       case 2: return_page = <div className="col-lg-4">
         {/* small box */}
-        <div className="small-box bg-warning">
+        <div className="small-box bg-success">
           <div className="inner">
             <h3>{count}</h3>
             <p>พร้อมใช้งาน</p>
@@ -68,7 +68,7 @@ class Dashboard extends Component {
           <div className="icon">
             <i className="ion ion-ios-home-outline" />
           </div>
-          <a href="#" className="small-box-footer">More info <i className="fas fa-arrow-circle-right" /></a>
+          
         </div>
       </div>
         break;
@@ -83,7 +83,6 @@ class Dashboard extends Component {
             <div className="icon">
               <i className="fas fa-cog" />
             </div>
-            <a href="#" className="small-box-footer">More info <i className="fas fa-arrow-circle-right" /></a>
           </div>
         </div>
         break;

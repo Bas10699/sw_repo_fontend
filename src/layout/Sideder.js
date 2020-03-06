@@ -46,6 +46,13 @@ class Sideder extends Component {
                 </NavLink>
               </li>
           
+              <li className="nav-item">
+                <NavLink exact to="/FromLocation" activeClassName="active" className="nav-link ">
+                  <i className="nav-icon fas fa-edit" />
+                  <p>สถานที่ติดติดตั้งอุปกรณ์</p>
+                </NavLink>
+              </li>
+          
           <li className="nav-item has-treeview">
             <NavLink exact to="/g" activeClassName="active" className="nav-link">
               <i className="nav-icon fas fa-table" />
