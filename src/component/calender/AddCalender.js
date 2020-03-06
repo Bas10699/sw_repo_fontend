@@ -34,7 +34,7 @@ export default class AddCalender extends Component {
         }
         console.log(obj)
         try {
-            await post(obj, "calender/add_canlender").then((result) => {
+            await post(obj, "calender/add_calender").then((result) => {
                 if (result.success) {
                     swal.fire({
                         icon: 'success',
