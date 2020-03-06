@@ -224,9 +224,9 @@ class ThemeSwitcher extends Component {
             </h6>
           </div>
           <div className="card-body">
-            <div className="table-responsive text-center">
+            {/* <div className="table table-bordered table-striped"> */}
               <table
-                className="table table-bordered"
+                className="table table-bordered table-striped"
                 id="dataTable"
                 width="100%"
               >
@@ -244,7 +244,7 @@ class ThemeSwitcher extends Component {
                   {item_get_all.map((element, index) => {
                     return (
                       <tr key={index}>
-                        <td>{element.item_id}</td>
+                        <td>{index+1}</td>
 
                         <td>{element.item_name}</td>
                         <td>{element.item_series_number}</td>
@@ -288,7 +288,7 @@ class ThemeSwitcher extends Component {
                   })}
                 </tbody>
               </table>
-            </div>
+            {/* </div> */}
           </div>
         </div>
 

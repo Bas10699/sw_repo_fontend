@@ -94,7 +94,7 @@ class Dashboard extends Component {
   render() {
     const { item_status } = this.state
     return (
-      <Container >
+      <Container fluid={true}>
         
         {/* <Row>
           <Col sm={1}>

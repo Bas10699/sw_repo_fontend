@@ -3,6 +3,10 @@
         "autoWidth": false,
         "searching": false,
     });
+    $("#dataTable").DataTable({
+      "autoWidth": false,
+      "searching": false,
+  });
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
