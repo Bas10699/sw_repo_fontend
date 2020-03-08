@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 
-import Nevbars from './component/nevbars'
+// import Nevbars from './component/nevbars'
 import InputFrom from './component/inputFrom'
 import Dashbord from './component/dashboard'
 import Header from './layout/Header';
@@ -12,6 +12,7 @@ import Sideder from './layout/Sideder';
 import Calender from './component/calender/Calender'
 import FromLocation from './component/FromLocation'
 import FromTypeItem from './component/FromTypeItem';
+import EditDataItem from './component/EditDataItem';
 
 
 
@@ -19,6 +20,7 @@ export default class App extends Component {
 
   render() {
     return (
+      <div className="bg-rias">
       <div className="wrapper">
         <Router exact path="/">
           <Header />
@@ -32,6 +34,7 @@ export default class App extends Component {
               <Route exact path='/Calender' component={Calender} />
               <Route exact path='/FromTypeItem' component={FromTypeItem} />
               <Route exact path='/FromLocation' component={FromLocation} />
+              <Route exact path='/editdata/:id' component={EditDataItem} />
         
             </div>
           </div>
@@ -41,6 +44,7 @@ export default class App extends Component {
           </aside>
           {/* /.control-sidebar */}
         </Router>
+      </div >
       </div >
 
     )

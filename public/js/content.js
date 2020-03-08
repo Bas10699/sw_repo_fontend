@@ -5,7 +5,11 @@
     });
     $("#dataTable").DataTable({
       "autoWidth": false,
-      "searching": false,
+      // "ordering": false,
+      // "paging": false,
+      // "lengthChange": false,
+      // "info": false,
+      // "searching": false,
   });
     $('#example2').DataTable({
       "paging": true,

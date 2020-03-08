@@ -190,7 +190,7 @@ class UserProfile extends Component {
                         <CardDeck>
                             <Card border="info">
                                 <Card.Body>
-                                    <Form noValidate >
+                                    <Form noValidate  >
                                         <Form.Row>
                                             <Form.Group as={Col} md="4" controlId="validationFormik01">
                                                 <Form.Label>ชื่ออุปกรณ์</Form.Label>
@@ -203,7 +203,7 @@ class UserProfile extends Component {
                                                 />
                                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                             </Form.Group>
-                                            <Form.Group as={Col} md="4" controlId="validationFormik01">
+                                            <Form.Group as={Col} md="4" controlId="validationFormik02">
                                                 <Form.Label>ยี่ห้อ</Form.Label>
                                                 <Form.Control
                                                     type="text"

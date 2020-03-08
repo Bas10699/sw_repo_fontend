@@ -5,20 +5,13 @@ import moment from "moment";
 import {
   Button,
   Modal,
-  Image,
   Row,
   Col,
-  Form,
-  Dropdown,
-  DropdownButton,
-  Container,
   Card,
-  InputGroup,
-  CardDeck,
   ButtonGroup
 } from "react-bootstrap";
 import "../App.css";
-import ImageDefault from "../const/images.png";
+import { NavLink } from 'react-router-dom'
 
 class ThemeSwitcher extends Component {
   constructor() {
@@ -31,7 +24,7 @@ class ThemeSwitcher extends Component {
       showedit: false,
       item_get_type: [],
       modelIndex: 0,
-      get_data:[],
+      get_data: [],
     };
   }
 
@@ -113,30 +106,30 @@ class ThemeSwitcher extends Component {
 
   get_location = async () => {
     try {
-        await get("airport/get_airport").then(result => {
-            if (result.success) {
-                this.setState({
-                    get_data: result.result
-                });
-                console.log(this.state.get_data);
-            } else {
-                swal("", "", "error");
-            }
-        });
+      await get("airport/get_airport").then(result => {
+        if (result.success) {
+          this.setState({
+            get_data: result.result
+          });
+          console.log(this.state.get_data);
+        } else {
+          swal("", "", "error");
+        }
+      });
     } catch (error) {
-        alert("get_location: " + error);
+      alert("get_location: " + error);
     }
-};
+  };
 
-select_ap= e => {
+  select_ap = e => {
 
 
     console.log(e.target.value);
     this.setState({
-        selectap: e.target.value
+      selectap: e.target.value
     });
     console.log(this.state.selectap);
-};
+  };
 
 
   select_type = e => {
@@ -176,17 +169,17 @@ select_ap= e => {
     const obj = {
       item_id: item_id,
       item_name: this.state.item_name,
-            item_brand: this.state.item_brand,
-            item_gen: this.state.item_gen,
-            item_type: this.state.selecttype,
-            item_series_number: this.state.item_series_number,
-            item_date_of_birth: this.state.item_date_of_birth,
-            item_place_of_birth: this.state.item_place_of_birth,
-            item_status: this.state.item_status,
-            item_image: this.state.item_image,
-          
-            item_airport: this.state.selectap,
-            item_airport_date: this.state.item_airport_date,
+      item_brand: this.state.item_brand,
+      item_gen: this.state.item_gen,
+      item_type: this.state.selecttype,
+      item_series_number: this.state.item_series_number,
+      item_date_of_birth: this.state.item_date_of_birth,
+      item_place_of_birth: this.state.item_place_of_birth,
+      item_status: this.state.item_status,
+      item_image: this.state.item_image,
+
+      item_airport: this.state.selectap,
+      item_airport_date: this.state.item_airport_date,
 
     };
 
@@ -234,15 +227,17 @@ select_ap= e => {
       };
     }
   };
+
+  handleClose = () => {
+    this.setState({
+      showModal: false
+    })
+  }
   render() {
     const {
       theme,
       item_get_all,
-      showModal,
-      modelIndex,
-      showedit,
-      item_get_type
-      ,get_data
+      showModal
     } = this.state;
     const themeClass = theme ? theme.toLowerCase() : "secondary";
     const itemModel = item_get_all[this.state.modelIndex];
@@ -250,48 +245,48 @@ select_ap= e => {
     const { item_image } = this.state;
     return (
       <div>
-        <div className="card shadow mb-4">
-          <div className="card-header py-3">
+        <div className="">
+          {/* <div className="card-header py-3">
             <h6 className="m-0 font-weight-bold text-primary">
               DataTables Example
             </h6>
-          </div>
-          <div className="card-body">
-            {/* <div className="table table-bordered table-striped"> */}
-              <table
-                className="table table-bordered table-striped"
-                id="dataTable"
-                width="100%"
-              >
-                <thead>
-                  <tr>
-                    <th>ลำดับ</th>
-                    <th>ชื่อ</th>
-                    <th>series number</th>
-                    <th>ประเภท</th>
-                    <th>สถานะ</th>
-                    <th>สถานที่ติดตั้ง></th>th>
+          </div> */}
+          {/* <div className="card-body"> */}
+          <div className="table-responsive">
+            <table
+              className="table table-bordered table-striped"
+              id="dataTable"
+              width="100%"
+            >
+              <thead>
+                <tr>
+                  <th>ลำดับ</th>
+                  <th>ชื่อ</th>
+                  <th>series number</th>
+                  <th>ประเภท</th>
+                  <th>สถานะ</th>
+                  <th>สถานที่ติดตั้ง></th>th>
                     <th>ตัวเลือก</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {item_get_all.map((element, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{index+1}</td>
+                </tr>
+              </thead>
+              <tbody>
+                {item_get_all.map((element, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
 
-                        <td>{element.item_name}</td>
-                        <td>{element.item_series_number}</td>
-                        <td>{element.TN_name}</td>
-                        <td>{element.item_airport}</td>
-                        <td>{this.status_item(element.item_status)}</td>
-                        <td>
-                          <div className="btn-toolbar">
-                            <link
-                              href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
-                              rel="stylesheet"
-                            ></link>
-                            <ButtonGroup>
+                      <td>{element.item_name}</td>
+                      <td>{element.item_series_number}</td>
+                      <td>{element.TN_name}</td>
+                      <td>{element.item_airport}</td>
+                      <td>{this.status_item(element.item_status)}</td>
+                      <td>
+                        <div className="btn-toolbar">
+                          <link
+                            href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+                            rel="stylesheet"
+                          ></link>
+                          <ButtonGroup>
                             <button
                               onClick={() =>
                                 this.setState({
@@ -305,26 +300,20 @@ select_ap= e => {
                               onClick={() => this.delete_item(element)}
                               className=" btn btn-danger btn-sm	fas fa-trash-alt "
                             />
-                            <button
-                              onClick={() => this.get_item_type}
-                              onClick={() =>
-                                this.setState({
-                                  showedit: true,
-                                  modelIndex: index
-                                })
-                              }
-                              className=" btn btn-primary  fa fa-pencil"
-                            />
-                            </ButtonGroup>
-                          </div>
-                        </td>
+                            {/* <button className=" btn btn-primary  fa fa-pencil"> */}
+                            <NavLink to={"/editdata/item?item_id="+element.item_id} className=" btn btn-primary  fa fa-pencil"/>
+                            {/* </button> */}
+                            
+                          </ButtonGroup>
+                        </div>
+                      </td>
 
-                        {/* <td><Button onClick={() => this.setState({ showModal: true, modelIndex: index })}>ดูรายละเอียด</Button></td> */}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                      {/* <td><Button onClick={() => this.setState({ showModal: true, modelIndex: index })}>ดูรายละเอียด</Button></td> */}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
             {/* </div> */}
           </div>
         </div>
@@ -334,10 +323,12 @@ select_ap= e => {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
+          onHide={this.handleClose}
         >
-          <Modal.Header>
+          <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
               รายละเอียดอุปกรณ์
+
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -347,301 +338,56 @@ select_ap= e => {
                   <img src={itemModel ? ip + itemModel.item_image : ""} />
                 </div>
               </Col>
-             
-                <table>
-                  <td>
-                    <tr>ชื่อ </tr>
-                    <tr>ยี่ห้อ </tr>
-                    <tr>รุ่น </tr>
-                    <tr>ซีเรียล </tr>
-                    <tr>ประเภท </tr>
-                    <tr>สถานที่ติดตั้ง </tr>
-                    <tr>วันที่ติดตั้ง </tr>
-                    <tr>วันที่นำเข้า </tr>
-                    <tr>นำเข้ามาจาก </tr>
-                    <tr>สถานะ </tr>
-                  </td>
-                  <td>
-                    {console.log(itemModel)}
-                    <tr>{itemModel ? itemModel.item_name : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_brand : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_gen : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_series_number : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_type : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_airport : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_airport_date : ""}</tr>
-                    <tr>
-                      {itemModel
-                        ? moment(itemModel.item_date_of_birth).format(
-                            "DD/MM/YYYY"
-                          )
-                        : ""}
-                    </tr>
-                    <tr>{itemModel ? itemModel.item_place_of_birth : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_status : ""}</tr>
-                  </td>
-                </table>
-                
-             
+
+              <table>
+                <td>
+                  <tr>ชื่อ </tr>
+                  <tr>ยี่ห้อ </tr>
+                  <tr>รุ่น </tr>
+                  <tr>ซีเรียล </tr>
+                  <tr>ประเภท </tr>
+                  <tr>สถานที่ติดตั้ง </tr>
+                  <tr>วันที่ติดตั้ง </tr>
+                  <tr>วันที่นำเข้า </tr>
+                  <tr>นำเข้ามาจาก </tr>
+                  <tr>สถานะ </tr>
+                </td>
+                <td>
+                  {console.log(itemModel)}
+                  <tr>{itemModel ? itemModel.item_name : ""}</tr>
+                  <tr>{itemModel ? itemModel.item_brand : ""}</tr>
+                  <tr>{itemModel ? itemModel.item_gen : ""}</tr>
+                  <tr>{itemModel ? itemModel.item_series_number : ""}</tr>
+                  <tr>{itemModel ? itemModel.item_type : ""}</tr>
+                  <tr>{itemModel ? itemModel.item_airport : ""}</tr>
+                  <tr>{itemModel ? itemModel.item_airport_date : ""}</tr>
+                  <tr>
+                    {itemModel
+                      ? moment(itemModel.item_date_of_birth).format(
+                        "DD/MM/YYYY"
+                      )
+                      : ""}
+                  </tr>
+                  <tr>{itemModel ? itemModel.item_place_of_birth : ""}</tr>
+                  <tr>{itemModel ? itemModel.item_status : ""}</tr>
+                </td>
+              </table>
+
+
             </Row>
-            <br/>
+            <br />
             <Card>
-            <p>  หมายเหตุ...</p>
+              <p>  หมายเหตุ...</p>
             </Card>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={() => this.setState({ showModal: false })}>
               Close
             </Button>
+
           </Modal.Footer>
         </Modal>
 
-        <Modal
-          show={showedit}
-          size="xl"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-          <Modal.Header>
-            <Modal.Title id="contained-modal-title-vcenter">
-              เเก้ไขข้อมูล
-            </Modal.Title>
-            <button
-              type="button"
-              class="close"
-              aria-label="Close"
-              onClick={() => this.setState({ showedit: false })}
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </Modal.Header>
-
-          <Container fluid="true">
-            <br />
-            <Row>
-              <Col sm={2}></Col>
-              <Col>
-                <CardDeck>
-                  <Card border="info">
-                    <Card.Body>
-                      <Form noValidate>
-                        <Form.Row className="text-center">
-                          <Form.Group as={Col} md="4">
-                            <Form.Label>ชื่ออุปกรณ์</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="item_name"
-                              onChange={this.handleChange}
-                              id="item_name"
-                              defaultValue={
-                                itemModel ? itemModel.item_name : ""
-                              }
-                            />
-                            <Form.Control.Feedback>
-                              Looks good!
-                            </Form.Control.Feedback>
-                          </Form.Group>
-                          <Form.Group as={Col} md="4">
-                            <Form.Label>ยี่ห้อ</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="item_brand"
-                              onChange={this.handleChange}
-                              id="item_brand"
-                              defaultValue={
-                                itemModel ? itemModel.item_brand : ""
-                              }
-                            />
-                            <Form.Control.Feedback>
-                              Looks good!
-                            </Form.Control.Feedback>
-                          </Form.Group>
-                          <Form.Group as={Col} md="4">
-                            <Form.Label>รุ่น</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="item_gen"
-                              id="item_gen"
-                              defaultValue={itemModel ? itemModel.item_gen : ""}
-                              onChange={this.handleChange}
-                            />
-                            <Form.Control.Feedback>
-                              Looks good!
-                            </Form.Control.Feedback>
-                          </Form.Group>
-                          <Form.Group as={Col} md="4">
-                            <Form.Label>ประเภท</Form.Label>
-                            <Form.Control
-                              as="select"
-                              id="TN_id"
-                              onChange={this.select_type}
-                            >
-                              <option>กรุณาเลือกประเภท</option>
-                              {item_get_type.map((element, index) => {
-                                return (
-                                  <option value={element.TN_id} key={index}>
-                                    {element.TN_name}
-                                  </option>
-                                );
-                              })}
-                            </Form.Control>
-                            <Form.Control.Feedback>
-                              Looks good!
-                            </Form.Control.Feedback>
-                          </Form.Group>
-                          <Form.Group as={Col} md="4">
-                            <Form.Label>Series Number</Form.Label>
-                            <InputGroup>
-                              <InputGroup.Prepend>
-                                <InputGroup.Text id="inputGroupPrepend">
-                                  S/N
-                                </InputGroup.Text>
-                              </InputGroup.Prepend>
-                              <Form.Control
-                                type="text"
-                                placeholder=""
-                                aria-describedby="inputGroupPrepend"
-                                name="item_series_number"
-                                onChange={this.handleChange}
-                                id="item_series_number"
-                                defaultValue={
-                                  itemModel ? itemModel.item_series_number : ""
-                                }
-                              />
-                              <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
-                            </InputGroup>
-                          </Form.Group>
-
-                          <Form.Group as={Col} md="4">
-                            <Form.Label>สถานที่จำหน่าย</Form.Label>
-                            <Form.Control as="select" id="ap_name" onChange={this.select_ap}>
-                                                    <option >กรุณาเลือกสถานที่ติดตั้ง</option>
-                                                    {get_data.map((element, index) => {
-                                                        return <option value={element.ap_id} key={index}>{element.ap_name}</option>
-                                                    })}
-
-                                                </Form.Control>
-                          </Form.Group>
-
-                          <Form.Group as={Col} md="4">
-                            <Form.Label>นำเข้ามาวันที่</Form.Label>
-                            <Form.Control
-                              type="date"
-                              
-                              onChange={this.handleChange}
-                              id="item_date_of_birth"
-                            />
-                            <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
-                          </Form.Group>
-
-                          <Form.Group
-                            as={Col}
-                            md="4"
-                            controlId="validationFormik05"
-                          >
-                            <Form.Label>สถานที่ติดตั้ง</Form.Label>
-                            <Form.Control
-                              type="text"
-                              placeholder="AirportSakon"
-                              name="item_airport"
-                              id="item_airport"
-                              onChange={this.handleChange}
-                            />
-
-                            <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
-                          </Form.Group>
-
-                          <Form.Group
-                            as={Col}
-                            md="4"
-                            controlId="validationFormik05"
-                          >
-                            <Form.Label>วันที่ติดตั้ง</Form.Label>
-                            <Form.Control
-                              type="date"
-                              placeholder="AirportSakon"
-                              name="item_airport_date"
-                              id="item_airport_date"
-                              onChange={this.handleChange}
-                            />
-
-                            <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
-                          </Form.Group>
-                        </Form.Row>
-                        <Form.Row>
-                          <Form.Group as={Col} md="6">
-                            <Form.Label>รูปอุปกรณ์</Form.Label>
-                            <div
-                              className="img-resize"
-                            
-                            >
-                              <Image
-                                src={item_image ? item_image : ImageDefault}
-                                rounded
-                              />
-                            </div>
-
-                            <Form.Control
-                              type="file"
-                              onChange={this.uploadpicture}
-                            />
-
-                            <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
-                          </Form.Group>
-
-                          <Col>
-                            <Form.Group
-                              as={Col}
-                              sl="5"
-                              controlId="validationFormik05"
-                             
-                            >
-                              <Form.Label>สถานะอุปกรณ์</Form.Label>
-                              <Col sm={10}>
-                                <Form.Check
-                                  type="radio"
-                                  label="ติดตั้ง"
-                                  name="item_status"
-                                  value="1"
-                                  id="item_status"
-                                  onChange={this.handleChange}
-                                />
-                                <Form.Check
-                                  type="radio"
-                                  label="พร้อมใช้งาน"
-                                  name="item_status"
-                                  value="2"
-                                  id="item_status"
-                                  onChange={this.handleChange}
-                                />
-                                <Form.Check
-                                  type="radio"
-                                  label="ส่งซ่อม"
-                                  name="item_status"
-                                  value="3"
-                                  id="item_status"
-                                  onChange={this.handleChange}
-                                />
-                              </Col>
-                            </Form.Group>
-                          </Col>
-                        </Form.Row>
-
-                        <Button
-                          className="float-right btn  fa fa-pencil"
-                          onClick={() => this.update_item(itemModel.item_id)}
-                        >
-                          เเก้ไขข้อมูล
-                        </Button>
-                      </Form>
-                    </Card.Body>
-                  </Card>
-                </CardDeck>
-              </Col>
-              <Col sm={2}></Col>
-            </Row>
-          </Container>
-        </Modal>
       </div>
     );
   }
