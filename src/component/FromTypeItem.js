@@ -212,13 +212,16 @@ export default class FromTypeItem extends Component {
             </Card>
           </Col>
           <Col className="text-center">
-            <Card className="bg-info">
+            <Card >
+              <Card.Header  className=" bg-info">
               <h3 className="m-0 font-weight-bold text-dark ">
                 ตารางแสดงประเภทของอุปกรณ์ทั้งหมด
               </h3>
-            </Card>
+              </Card.Header>
+             
+           <Card.Body>
 
-            <Table striped bordered hover variant="info">
+           <Table striped bordered hover variant="info">
               <thead>
                 <tr>
                   <th>ลำดับ</th>
@@ -280,26 +283,7 @@ export default class FromTypeItem extends Component {
                               </OverlayTrigger>
                             ))}
                           </ButtonToolbar>
-                          {/* <Accordion defaultActiveKey="0">
-                            <Accordion.Toggle
-                              as={Button}
-                              variant="link"
-                              eventKey="1"
-                            >
-                              <Button className=" btn btn-primary btn-lg fa fa-pencil "></Button>
-                            </Accordion.Toggle>
-
-                            <Accordion.Collapse eventKey="1">
-                              <Form.Group controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>รายละเอียด</Form.Label>
-                                <Form.Control
-                                  as="textarea"
-                                  rows="3"
-                                  id="cn_notes"
-                                />
-                              </Form.Group>
-                            </Accordion.Collapse>
-                          </Accordion> */}
+                    
                         </div>
                       </td>
                     </tr>
@@ -307,6 +291,10 @@ export default class FromTypeItem extends Component {
                 })}
               </tbody>
             </Table>
+           </Card.Body>
+            
+            </Card>
+
           </Col>
         </Row>
       </Container>

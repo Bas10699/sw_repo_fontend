@@ -9,9 +9,9 @@ class Sideder extends Component {
  {/* Main Sidebar Container */}
  <aside className="main-sidebar sidebar-dark-primary elevation-4">
     {/* Brand Logo */}
-    <NavLink exact to="/" className="brand-link">
-      <img src={icon_sw} alt="SW Logo" className="brand-image img-circle elevation-3" style={{opacity: '.8'}} />
-      <span className="brand-text font-weight-light">Secure Work</span>
+    <NavLink exact to="/" className="brand-link " md="5">
+      <img src={icon_sw} alt="SW Logo"  className="brand-image img-Circle  elevation-3 " style={{opacity: '.8' }} />
+      <br></br>
     </NavLink>
     {/* Sidebar */}
     <div className="sidebar">
