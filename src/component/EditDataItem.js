@@ -419,7 +419,14 @@ export default class EditDataItem extends Component {
                             </Form.Group>
                         </Form>
                     </Col>
+
                 </Row>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+
             </Container >
                 :
                 <div style={{ textAlign: "center", marginTop: "20%" }}>

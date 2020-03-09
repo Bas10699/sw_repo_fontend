@@ -218,7 +218,7 @@ class ThemeSwitcher extends Component {
                   <th>series number</th>
                   <th>ประเภท</th>
                   <th>สถานะ</th>
-                  <th>สถานที่ติดตั้ง></th>th>
+                  <th>สถานที่ติดตั้ง</th>
                     <th>ตัวเลือก</th>
                 </tr>
               </thead>

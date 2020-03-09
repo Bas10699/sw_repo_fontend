@@ -26,8 +26,8 @@ export default class App extends Component {
           <Sideder />
           <div className="content-wrapper">
 
-            <div className="content-header">
-              <div className="container-fluid"></div>
+            {/* <div className="content-header"> */}
+              {/* <div className="container-fluid"></div> */}
               <Route exact path='/' component={Dashbord} />
               <Route exact path='/InputFrom' component={InputFrom} />
               <Route exact path='/Calender' component={Calender} />
@@ -35,7 +35,7 @@ export default class App extends Component {
               <Route exact path='/FromLocation' component={FromLocation} />
               <Route exact path='/editdata/:id' component={EditDataItem} />
         
-            </div>
+            {/* </div> */}
           </div>
           {/* Control Sidebar */}
           <aside className="control-sidebar control-sidebar-dark">

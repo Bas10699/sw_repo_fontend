@@ -1,12 +1,23 @@
 .bg-rias {
 	
-    background-image: url("../const/rias1.png");
-    height: 100vh;
-    background-position: center;
+	background-image: url("../const/rias1.png");
+	height: 100%;
+    background-position: center top;
     background-repeat: no-repeat;
 	background-size: cover;
+
 	color: rgb(238, 233, 164);
 	}
+	.bg-akeno {
+	
+		background-image: url("../const/akeno.png");
+		height: 100%;
+		background-position: center top;
+		background-repeat: no-repeat;
+		background-size: cover;
+	
+		color: rgb(255, 255, 255);
+		}
 
     
 	.bg-fix{
