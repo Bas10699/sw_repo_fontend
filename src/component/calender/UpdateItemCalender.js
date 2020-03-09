@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Modal, Col, Form } from 'react-bootstrap';
-import { get } from '../../service/service'
+import { get, post } from '../../service/service'
 import swal from 'sweetalert2'
 import dateFns from "date-fns";
 
@@ -16,7 +16,8 @@ export default class UpdateItemCalender extends Component {
             detail: null,
             item_get: [],
             snFilter: [],
-            FTSn:false
+            FTSn: false,
+            itemName: []
         }
     }
 
@@ -34,14 +35,52 @@ export default class UpdateItemCalender extends Component {
             cn_date: this.state.cn_date,
             cn_time: this.state.cn_time,
             cn_notes: this.state.cn_notes,
+            cn_item_id: this.state.item_id,
+            cn_head:this.state.cn_head,
+            cn_color: 1
         }
-        swal.fire("GG", "gggggg", "success")
-        console.log(obj)
+        try {
+            await post(obj, 'calender/add_calender').then((result) => {
+                if (result.success) {
+                    swal.fire({
+                        icon: 'success',
+                        title: 'เพิ่มข้อมูลสำเร็จ',
+                        showConfirmButton: false,
+                        timer: 1200
+                    }).then(() => {
+                        window.location.reload()
+                    })
+                }
+                else {
+                    swal.fire("", result.error_message, "warning");
+                }
+            })
+        }
+        catch (error) {
+            alert('add_data: ' + error)
+        }
 
     }
 
     componentWillMount() {
         this.get_item()
+        this.get_calender_itemName()
+    }
+
+    get_calender_itemName = async () => {
+        try {
+            await get("calender/get_calender_itemName").then(result => {
+                if (result.success) {
+                    this.setState({
+                        itemName: result.result
+                    });
+                } else {
+                    swal.fire("", result.error_message, "warning");
+                }
+            });
+        } catch (error) {
+            alert("get_item_all" + error);
+        }
     }
 
     get_item = async () => {
@@ -77,7 +116,7 @@ export default class UpdateItemCalender extends Component {
         });
         this.setState({
             snFilter: updatedList,
-            FTSn:true
+            FTSn: true
         });
 
     }
@@ -91,7 +130,7 @@ export default class UpdateItemCalender extends Component {
 
 
     render() {
-        const { item_get, snFilter, cn_date, cn_time, FTSn } = this.state
+        const { item_get, snFilter, cn_date, cn_time, FTSn, itemName } = this.state
         let showModal = this.props.showModal
 
         return (
@@ -124,8 +163,9 @@ export default class UpdateItemCalender extends Component {
                             <Form.Row>
                                 <Form.Group as={Col}>
                                     <Form.Label>ชื่ออุปกรณ์</Form.Label>
-                                    <Form.Control as="select" onChange={this.selectName} id="item_name">
-                                        {item_get.map((element, index) => {
+                                    <Form.Control as="select" onChange={this.selectName} id="cn_head">
+                                        <option ></option>
+                                        {itemName.map((element, index) => {
                                             return <option key={index} >{element.item_name}</option>
                                         })}
                                     </Form.Control>
@@ -133,7 +173,8 @@ export default class UpdateItemCalender extends Component {
 
                                 <Form.Group as={Col}>
                                     <Form.Label>series number</Form.Label>
-                                    <Form.Control as="select" onChange={this.selectSn} id="item_series_number">
+                                    <Form.Control as="select" onChange={this.selectSn} id="item_id">
+                                        <option ></option>
                                         {FTSn ? snFilter.map((element, index) => {
                                             return <option key={index} value={element.item_id} >{element.item_series_number}</option>
                                         }) : item_get.map((element, index) => {

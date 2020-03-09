@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import '../App.css';
 import { NavDropdown, Navbar, Nav, Card, CardGroup, CardDeck, Container, Row, Col, Tab } from 'react-bootstrap';
 import TestBoostarp from './DataTable'
+import imagedefal from '../const/fix.jpg'
 import { get, post } from '../service/service'
+import './bg.css'
 
 class Dashboard extends Component {
   constructor(props) {
@@ -94,8 +96,8 @@ class Dashboard extends Component {
   render() {
     const { item_status } = this.state
     return (
-      <Container >
-        
+      <Container fluid={true } className="bg-akeno">
+        <br/>
         {/* <Row>
           <Col sm={1}>
           </Col>
