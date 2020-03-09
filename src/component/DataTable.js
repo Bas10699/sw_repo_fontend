@@ -40,7 +40,6 @@ class ThemeSwitcher extends Component {
 
   componentWillMount() {
     this.get_item_all();
-    this.get_item_type();
     this.get_location();
   }
 
@@ -140,22 +139,7 @@ class ThemeSwitcher extends Component {
     console.log(this.state.selecttype);
   };
 
-  get_item_type = async () => {
-    try {
-      await get("typeName/get_typeName_select").then(result => {
-        if (result.success) {
-          this.setState({
-            item_get_type: result.result
-          });
-          console.log(this.state.item_get_type);
-        } else {
-          swal.fire("", result.error_message, "warning");
-        }
-      });
-    } catch (error) {
-      alert("get_item_all" + error);
-    }
-  };
+ 
 
   handleChange = e => {
     console.log(e.target.value);
@@ -165,38 +149,7 @@ class ThemeSwitcher extends Component {
     console.log(e.target.value);
   };
 
-  update_item = async item_id => {
-    const obj = {
-      item_id: item_id,
-      item_name: this.state.item_name,
-      item_brand: this.state.item_brand,
-      item_gen: this.state.item_gen,
-      item_type: this.state.selecttype,
-      item_series_number: this.state.item_series_number,
-      item_date_of_birth: this.state.item_date_of_birth,
-      item_place_of_birth: this.state.item_place_of_birth,
-      item_status: this.state.item_status,
-      item_image: this.state.item_image,
-
-      item_airport: this.state.selectap,
-      item_airport_date: this.state.item_airport_date,
-
-    };
-
-    console.log("gg", obj);
-    try {
-      await post(obj, "item/update_item").then(result => {
-        if (result.success) {
-          window.location.reload();
-        } else {
-          swal.fire("", result.error_message, "error");
-        }
-      });
-    } catch (error) {
-      alert("add_data" + error);
-    }
-  };
-
+  
   status_item = data => {
     let return_data;
     switch (data) {
@@ -244,7 +197,7 @@ class ThemeSwitcher extends Component {
     console.log(itemModel);
     const { item_image } = this.state;
     return (
-      <div>
+      <div >
         <div className="">
           {/* <div className="card-header py-3">
             <h6 className="m-0 font-weight-bold text-primary">

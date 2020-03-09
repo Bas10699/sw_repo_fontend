@@ -1,12 +1,26 @@
 .bg-rias {
-    background-image: url("../const/bg-rias.jpg");
+	
+    background-image: url("../const/rias1.png");
     height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
-    }
+	background-size: cover;
+	color: rgb(238, 233, 164);
+	}
+
     
-  
+	.bg-fix{
+	
+		background-image: url("../const/fix.jpg");
+		height: 100vh;
+		background-position: center;
+		background-repeat: no-repeat;
+	  background-size: cover;
+	  font-size: 20px;
+		color: rgb(10, 17, 19)
+		}
+	  
+	  
 
 
 .file-upload {

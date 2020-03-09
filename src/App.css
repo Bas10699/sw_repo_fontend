@@ -2,6 +2,17 @@
   text-align: center;
 }
 
+.bg-fix{
+	
+  background-image: url("./const/fix.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+background-size: cover;
+  color: rgb(27, 180, 207);
+  }
+
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -55,3 +66,12 @@ div.img-resize img{
   background-color:#999;
   }
   
+  .bg-rias {
+    background-image: url("./const/bg-rias.jpg");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+    
+ 

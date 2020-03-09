@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Col, Form, InputGroup, Image, Container, Row, CardDeck, Card } from "react-bootstrap";
+import { ProgressBar, Button, Col, Form, InputGroup, Image, Container, Row, CardDeck, Card } from "react-bootstrap";
 import { Formik } from 'formik';
 import { post, get } from '../service/service'
 import swal from 'sweetalert2'
@@ -22,7 +22,7 @@ class UserProfile extends Component {
         this.state = {
             item_image: null,
             item_get_type: [],
-            get_data:[],
+            get_data: [],
         }
     }
 
@@ -57,6 +57,9 @@ class UserProfile extends Component {
         } catch (error) {
             alert("get_item_all" + error);
         }
+        this.setState({
+            progress: 0
+        })
     };
 
 
@@ -77,6 +80,7 @@ class UserProfile extends Component {
             item_airport_date: this.state.item_airport_date,
 
         }
+        
         console.log(obj)
         try {
             await post(obj, 'item/add_item').then((result) => {
@@ -119,7 +123,7 @@ class UserProfile extends Component {
         }
 
     }
-    
+
     get_location = async () => {
         try {
             await get("airport/get_airport").then(result => {
@@ -137,7 +141,7 @@ class UserProfile extends Component {
         }
     };
 
-    select_ap= e => {
+    select_ap = e => {
 
 
         console.log(e.target.value);
@@ -178,10 +182,14 @@ class UserProfile extends Component {
 
     render() {
 
-        const { item_image, item_get_type,get_data } = this.state
+        const { item_image, item_get_type, get_data } = this.state
         // console.log("gg",this.state.item_status)
         return (
             <Container fluid="true">
+                <ProgressBar>
+
+                    <ProgressBar striped variant="success" now={this.state.progress} key={1} />
+                </ProgressBar>
                 <br />
                 <Row>
                     <Col sm={2}>
@@ -197,10 +205,11 @@ class UserProfile extends Component {
                                                 <Form.Control
                                                     type="text"
                                                     name="item_name"
-
+                                                    
                                                     onChange={this.handleChange}
 
                                                 />
+                                                {(this.state.progress=10)}
                                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                             </Form.Group>
                                             <Form.Group as={Col} md="4" controlId="validationFormik02">
@@ -210,7 +219,7 @@ class UserProfile extends Component {
                                                     name="item_brand"
                                                     onChange={this.handleChange}
 
-                                                />
+                                                /> {(this.state.progress=15)}
                                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                             </Form.Group>
                                             <Form.Group as={Col} md="4" controlId="validationFormik01">
@@ -220,13 +229,15 @@ class UserProfile extends Component {
                                                     name="item_gen"
                                                     onChange={this.handleChange}
 
-                                                />
+                                                /> {(this.state.progress=20)}
                                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                             </Form.Group>
                                             <Form.Group as={Col} md="4" controlId="validationFormik02">
                                                 <Form.Label>ประเภท</Form.Label>
-                                                <Form.Control as="select" id="TN_id" onChange={this.select_type}>
+                                                <Form.Control as="select" id="TN_id" onChange={this.select_type} >
+
                                                     <option >กรุณาเลือกประเภท</option>
+                                                    
                                                     {item_get_type.map((element, index) => {
                                                         return <option value={element.TN_id} key={index}>{element.TN_name}</option>
                                                     })}
@@ -366,6 +377,7 @@ class UserProfile extends Component {
                     </Col>
                 </Row>
             </Container>
+
 
         );
     }

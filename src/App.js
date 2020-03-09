@@ -20,7 +20,6 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="bg-rias">
       <div className="wrapper">
         <Router exact path="/">
           <Header />
@@ -44,7 +43,6 @@ export default class App extends Component {
           </aside>
           {/* /.control-sidebar */}
         </Router>
-      </div >
       </div >
 
     )

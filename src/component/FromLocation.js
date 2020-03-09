@@ -12,6 +12,7 @@ import {
     FormControl,
     Button
 } from "react-bootstrap";
+import '../App.css'
 
 export default class FromLocation extends Component {
     constructor(props) {
@@ -152,8 +153,8 @@ export default class FromLocation extends Component {
     render() {
         const { get_data } = this.state;
         return (
-            <Container>
-                <Row className="justify-content-md-center">
+            <Container >
+                <Row className="justify-content-md-center " >
                     <CardDeck className="text-center">
                         <Card>
                             <Card className="card-header py-3">
@@ -216,7 +217,7 @@ export default class FromLocation extends Component {
                     </CardDeck>
                     <CardDeck className="text-center">
             <Card>
-              <div className="card-header py-3">
+              <div className="card-header py-3 " >
                 <div className="col">
                   <h6 className="m-0 font-weight-bold text-primary">
                     เพิ่มสถานที่ติดตั้ง
