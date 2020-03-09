@@ -31,7 +31,17 @@
 		color: rgb(10, 17, 19)
 		}
 	  
-	  
+		.bg-local{
+	
+			background-image: url("../const/local.jpg");
+			height: 100vh;
+			background-position: center;
+			background-repeat: no-repeat;
+		  background-size: cover;
+		  font-size: 20px;
+			color: rgb(10, 17, 19)
+			}
+		  
 
 
 .file-upload {

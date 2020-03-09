@@ -212,12 +212,11 @@ export default class FromTypeItem extends Component {
             </Card>
           </Col>
           <Col className="text-center">
-            <Card className="bg-info">
+            <Card >
               <h3 className="m-0 font-weight-bold text-dark ">
                 ตารางแสดงประเภทของอุปกรณ์ทั้งหมด
               </h3>
-            </Card>
-
+           
             <Table striped bordered hover variant="info">
               <thead>
                 <tr>
@@ -307,6 +306,8 @@ export default class FromTypeItem extends Component {
                 })}
               </tbody>
             </Table>
+            </Card>
+
           </Col>
         </Row>
       </Container>
