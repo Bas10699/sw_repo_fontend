@@ -14,8 +14,8 @@ import "../App.css";
 import { NavLink } from 'react-router-dom'
 
 class ThemeSwitcher extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       item_get_all: [],
       item_image: null,
@@ -41,6 +41,7 @@ class ThemeSwitcher extends Component {
   componentWillMount() {
     this.get_item_all();
     this.get_location();
+    
   }
 
   get_item_all = async () => {
@@ -186,7 +187,9 @@ class ThemeSwitcher extends Component {
       showModal: false
     })
   }
+  
   render() {
+    console.log("status_props",this.state.status_props)
     const {
       theme,
       item_get_all,

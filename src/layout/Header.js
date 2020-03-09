@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 
 export default class Header extends Component {
+    settoken = () =>{
+        const token = localStorage.getItem('user_token')+1
+        localStorage.setItem("user_token", token);
+    }
     render() {
         return (
             <div>
@@ -30,6 +34,9 @@ export default class Header extends Component {
                             </div>
                         </div>
                     </form>
+                    <ul className="navbar-nav ml-auto">
+                    <button className="btn btn-primary btn-sm float-right" onClick={()=>this.settoken()}>สี</button>
+                    </ul>
                     {/* Right navbar links */}
                     {/* <ul className="navbar-nav ml-auto">
                         <li className="nav-item dropdown">
