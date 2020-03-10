@@ -36,7 +36,7 @@ export default class FromLocation extends Component {
           this.setState({
             get_data: result.result
           });
-          console.log(this.state.get_data);
+          console.log("getdatais"+this.state.get_data);
         } else {
           swal("", "", "error");
         }
@@ -107,7 +107,7 @@ try {
     swal
       .fire({
         title: "Are you sure?",
-        text: "ต้องการลบ " + data.item_name + " หรือไม่?",
+        text: "ต้องการลบ " + data.ap_name + " หรือไม่?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -149,6 +149,25 @@ try {
 
 
   
+  updateloca = (data) => {
+    swal
+      .fire({
+        title: "Are you sure?",
+        text: "ต้องการอัพเดท " + data.ap_name + " เป็น"+this.state.airport,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, add it!"
+      })
+      .then(result => {
+        console.log("DATAis");
+        if (result.value) {
+          this.update_airport();
+        }
+      });
+    };
+    
 
   update_airport = async (data) => {
 
@@ -226,7 +245,7 @@ try {
                                       <Popover
                                         id={`popover-positioned-${placement}`}
                                       >
-                                        <Popover.Title as="h3">
+                                        <Popover.Title as="h3" className=" bg-warning " >
                                           เเก้ไขชื่่อประเภท
                                         </Popover.Title>
                                         <Popover.Content>
@@ -238,10 +257,10 @@ try {
                                           ></input>
                                           <Button
                                             variant="primary "
-                                            className=" fa fa-plus bg-dark"
+                                            className=" fa fa-plus bg-warning"
                                             id="TN_id"
                                             onClick={() =>
-                                              this.update_airport(element)
+                                              this.updateloca(element)
                                             }
                                             size="20"
                                           ></Button>

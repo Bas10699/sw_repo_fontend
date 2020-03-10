@@ -41,7 +41,17 @@
 		  font-size: 20px;
 			color: rgb(10, 17, 19)
 			}
-		  
+			.bg-insert{
+	
+				background-image: url(https://media2.giphy.com/media/ekNgxh1qaPey4/giphy.gif?cid=790b7611de749580a26aaa7b7872fca11942a126113916d7&rid=giphy.gif);
+				height: 100vh;
+				background-position: center;
+				background-repeat: no-repeat;
+			  background-size: cover;
+			  
+				color: rgb(10, 17, 19)
+				}
+
 
 
 .file-upload {
@@ -84,3 +94,66 @@
   width:220px;
 	padding-right: 0;
 }   
+
+html, body {
+	height: 100%;
+  }
+  
+  body {
+	background-color: #000000;
+	font-family: 'Baloo Bhaina', cursive;
+	line-height: 1.25em;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+  }
+  
+  .textlight {
+	height: 50%;
+	padding: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+  }
+  
+  .light {
+	background: url(https://gifimage.net/wp-content/uploads/2018/04/rainbow-gif-tumblr-6.gif);
+	background-size: cover;
+	background-position: center;
+	-webkit-background-clip: text;
+	color: transparent;
+	width: 300px;
+	height: 50px;
+	box-sizing: border-box;
+	font-size:90px;
+	font-weight: bolder;
+	line-height: 100px;
+	flex-shrink: 0;
+  }
+  
+  .textcol {
+	height: 50%;
+	padding: 5px;
+
+  }
+  
+  .collight {
+	background: url(https://66.media.tumblr.com/7015f97c0e8b3a60ec385b16ae31489a/tumblr_nqkblfsksM1ruw1vso1_500.gifv);
+	background-size: cover;
+	background-position: center;
+	font-size: 22px;
+	-webkit-background-clip: text;
+	color: transparent;
+
+  }
+  
+
+  .collight2 {
+	background: url(https://media2.giphy.com/media/I2sZ6qckkhfLG/giphy.webp?cid=ecf05e47d5419204f3ddd6622897c93c32ab98577fb0eda9&rid=giphy.webp);
+	background-size: cover;
+	background-position: center;
+	font-size: 22px;
+	-webkit-background-clip: text;
+	color: transparent;
+
+  }

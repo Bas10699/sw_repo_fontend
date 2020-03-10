@@ -64,7 +64,7 @@ export default class FromTypeItem extends Component {
     swal
       .fire({
         title: "Are you sure?",
-        text: "ต้องการลบ " + data.TN_name + " หรือไม่?",
+        text: "ต้องการลบ " +data.TN_name+ " หรือไม่?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -151,7 +151,26 @@ export default class FromTypeItem extends Component {
   };
 
 
+  updatetype = data => {
+    console.log(data);
 
+    swal
+      .fire({
+        title: "Are you sure?",
+        text: "ต้องการเปลี่ยน " +data.TN_name + " เป็นชื่อ?"+this.state.itemtype ,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      })
+      .then(result => {
+        if (result.value) {
+          this.update_type(data);
+        }
+      });
+  };
+ 
   update_type = async (data) => {
 
     const obj = {
@@ -259,7 +278,7 @@ export default class FromTypeItem extends Component {
                                   <Popover
                                     id={`popover-positioned-${placement}`}
                                   >
-                                    <Popover.Title as="h3">
+                                    <Popover.Title as="h6" className=" bg-info " >
                                       เเก้ไขชื่่อประเภท
                                     </Popover.Title>
                                     <Popover.Content>
@@ -270,9 +289,9 @@ export default class FromTypeItem extends Component {
                                       ></input>
                                       <Button
                                         variant="primary "
-                                        className=" fa fa-plus bg-dark"
+                                        className=" fa fa-plus bg-info"
                                         id="TN_id"
-                                        onClick={() => this.update_type(element)}
+                                        onClick={() => this.updatetype(element)}
                                         size="20"
                                       ></Button>
                                     </Popover.Content>
