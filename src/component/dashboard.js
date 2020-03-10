@@ -25,7 +25,8 @@ class Dashboard extends Component {
       item_get_type: [],
       modelIndex: 0,
       get_data: [],
-      item_filter_status: []
+      item_filter_status: [],
+      data_calender:[]
     }
   }
 
@@ -150,6 +151,28 @@ class Dashboard extends Component {
     }
   };
 
+  get_calender = async (id) => {
+    try {
+        const obj = {
+          item_id : id
+        }
+        await post(obj, "calender/get_calender_item").then((result) => {
+            if (result.success) {
+                this.setState({
+                    data_calender: result.result,
+                })
+                console.log(result.result)
+            }
+            else {
+                swal.fire("", result.error_message, "error");
+            }
+        })
+    }
+    catch (error) {
+        alert("get_canlender: " + error)
+    }
+}
+
   select_ap = e => {
 
 
@@ -210,6 +233,14 @@ class Dashboard extends Component {
       };
     }
   };
+
+  setModel = (id,index) =>{
+    this.setState({
+      showModal: true,
+      modelIndex: index
+    })
+    this.get_calender(id)
+  }
 
   handleClose = () => {
     this.setState({
@@ -298,6 +329,36 @@ class Dashboard extends Component {
     }
     return return_page
   }
+
+  renderModel() {
+    const { data_calender } = this.state
+
+    return (
+
+        <div className="container mt-1 mb-5">
+            <div className="row">
+                <div className="col-md-12">
+
+                    {data_calender[0] ?
+                        <ul className="timelineSet">
+                            {data_calender.map((element, index) => {
+                                return <li key={index}>
+                                    <h5 href="#" >{moment(element.cn_date).format("DD/MM/YYYY") }</h5>
+                                    {/* <button className="btn btn-danger btn-sm float-right" onClick={() => this.alertDelete(element)}>ลบ</button> */}
+                                    {/* <h5>{element.cn_head}</h5> */}
+                                    <p>{element.cn_notes}</p>
+                                </li>
+
+                            })}
+                        </ul> :
+                        <div>ไม่พบรายการ</div>}
+                </div>
+            </div>
+        </div>
+
+
+    )
+}
 
   render() {
     console.log("gg",localStorage.getItem('user_token'))
@@ -401,12 +462,7 @@ class Dashboard extends Component {
                             ></link>
                             <ButtonGroup>
                               <button
-                                onClick={() =>
-                                  this.setState({
-                                    showModal: true,
-                                    modelIndex: index
-                                  })
-                                }
+                                onClick={() =>this.setModel(element.item_id,index)}
                                 className=" btn btn-primary 	fa fa-search"
                               />
                               <button
@@ -446,7 +502,7 @@ class Dashboard extends Component {
             </Modal.Header>
             <Modal.Body>
               <Row>
-                <Col>
+                <Col sm={5}>
                   <div className="img-resize">
                     <img src={itemModel ? ip + itemModel.item_image : ""} />
                   </div>
@@ -491,6 +547,7 @@ class Dashboard extends Component {
               <br />
               <Card>
                 <p>  หมายเหตุ...</p>
+                {this.renderModel()}
               </Card>
             </Modal.Body>
             <Modal.Footer>
