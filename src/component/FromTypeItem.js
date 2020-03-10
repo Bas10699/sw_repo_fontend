@@ -196,15 +196,16 @@ export default class FromTypeItem extends Component {
 
   render() {
     const { get_data } = this.state;
+    const background = localStorage.getItem('background')
     return (
-      <Container fluid={1} className="bg-fix">
+      <Container className={background === 'true' ? "bg-fix" : ""}    fluid={1}>
         <br />
         <Row>
           <Col sm="3">
-            <Card>
-              <div className="card-header py-3 bg-info">
+            <Card  >
+              <div className={background === 'true' ? "bg-info card-header py-3 " : "card-header py-3"}>
                 <div className="col">
-                  <h6 className="m-0 font-weight-bold text-light">
+                  <h6 className="m-0 font-weight-bold text-dark">
                     เพิ่มประเภทของอุปกรณ์
                   </h6>
                 </div>
@@ -232,7 +233,7 @@ export default class FromTypeItem extends Component {
           </Col>
           <Col className="text-center">
             <Card >
-              <Card.Header  className=" bg-info">
+              <Card.Header  className={background === 'true' ? "bg-info" : ""}>
               <h3 className="m-0 font-weight-bold text-dark ">
                 ตารางแสดงประเภทของอุปกรณ์ทั้งหมด
               </h3>
@@ -240,7 +241,7 @@ export default class FromTypeItem extends Component {
              
            <Card.Body>
 
-           <Table striped bordered hover variant="info">
+           <Table striped bordered hover variant={background === 'true' ? "info" : ""}>
               <thead>
                 <tr>
                   <th>ลำดับ</th>

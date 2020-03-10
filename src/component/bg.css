@@ -2,6 +2,7 @@
 	
 	background-image: url("../const/image/rias1.png");
 	height: 100%;
+	min-height: calc(100vh - calc(3.5rem + 1px));
     background-position: center top;
     background-repeat: no-repeat;
 	background-size: cover;
@@ -15,7 +16,7 @@
 		background-position: center top;
 		background-repeat: no-repeat;
 		background-size: cover;
-	
+		min-height: calc(100vh - calc(3.5rem + 1px));
 		color: rgb(255, 255, 255);
 		}
 
@@ -27,8 +28,10 @@
 		background-position: center;
 		background-repeat: no-repeat;
 	  background-size: cover;
+	  min-height: calc(100vh - calc(3.5rem + 1px));
 	  font-size: 20px;
 		color: rgb(10, 17, 19)
+		
 		}
 	      
 	.bg-top{
@@ -39,6 +42,7 @@
 		background-repeat: no-repeat;
 	  background-size: cover;
 	  font-size: 20px;
+	  min-height: calc(100vh - calc(3.5rem + 1px));
 		color: rgb(10, 17, 19)
 		}
 		.bg-local{
@@ -48,6 +52,7 @@
 			background-position: center;
 			background-repeat: no-repeat;
 		  background-size: cover;
+		  min-height: calc(100vh - calc(3.5rem + 1px));
 		  font-size: 20px;
 			color: rgb(10, 17, 19)
 			}
@@ -150,7 +155,7 @@
 
   .bg-insert{
 	
-	background-image: url(https://media2.giphy.com/media/ekNgxh1qaPey4/giphy.gif?cid=790b7611de749580a26aaa7b7872fca11942a126113916d7&rid=giphy.gif);
+	background-image: url("../const/image/regis.jpg");
 	height: 100vh;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -160,10 +165,10 @@
 	}
 
 
-	b{font-family:arial;background-color:black;
+	.boo{font-family:arial;background-color:black;
 		/*background:#000 -webkit-radial-gradient(circle,rgba(255,255,255,0.9),rgba(255,255,255,0)) no-repeat 0 0;*/
 	  }
-	  s{font-size:0.5em;font-weight:bold;
+	  .titlelight{font-size:0.5em;font-weight:bold;
 		/* background:#333 -webkit-linear-gradient(0deg,rgba(255,255,255,0),rgba(255,255,255,0.9),rgba(255,255,255,0)) no-repeat -50px 0; */
 		/* background: #222 -webkit-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff)) 0 0 no-repeat; */
 		background:#333 -webkit-radial-gradient(circle,rgb(202, 14, 14),rgba(255,255,255,0),rgba(255,255,255,0)) no-repeat -280px -94px;
@@ -301,7 +306,7 @@
 .btn-2:hover,
 .btn-2:active {
 	transition: all 280ms ease-in-out;
-  letter-spacing: 5px;
+  letter-spacing: 3px;
 }
 
 .btn-2:after,
@@ -332,8 +337,8 @@
 }
 
 
-a {
-    background: rgb(17, 14, 206);
+.btnregis{
+   
    font-size: 22px;
     color:rgb(18, 138, 175);
     line-height: 1.4;

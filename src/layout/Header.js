@@ -47,8 +47,8 @@ export default class Header extends Component {
                     </form>
                     <ul className="navbar-nav ml-auto">
                         {background === "true" ?
-                            <button className="btn btn-light btn-sm float-right" onClick={() => this.settoken()}>light mode</button>
-                            : <button className="btn btn-dark btn-sm float-right" onClick={() => this.settoken()}>dark mode</button>}
+                            <button className="btn btn-light btn-sm float-right" onClick={() => this.settoken()}>Normal mode</button>
+                            : <button className="btn btn-dark btn-sm float-right" onClick={() => this.settoken()}>Anime mode</button>}
 
                     </ul>
                     {/* Right navbar links */}

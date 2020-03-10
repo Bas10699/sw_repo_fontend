@@ -193,20 +193,22 @@ try {
 }
   render() {
     const { get_data } = this.state;
+    
+    const background = localStorage.getItem('background')
     return (
-      <Container fluid={1} className="bg-local">
+      <Container className={background === 'true' ? "bg-local" : ""}    fluid={1}>
         <br />
         <Row>
           <Col className="text-center">
             <Card>
-              <Card.Header className=" bg-warning">
+              <Card.Header className={background === 'true' ? "bg-warning" : ""}  >
                 <h3 className="m-0 font-weight-bold text-dark ">
                   ตารางแสดงประเภทของอุปกรณ์ทั้งหมด
                 </h3>
               </Card.Header>
 
               <Card.Body>
-                <Table striped bordered hover variant="warning">
+                <Table striped bordered hover variant={background === 'true' ? "warning" : ""}>
                   <thead>
                     <tr>
                       <th>ลำดับ</th>
@@ -284,7 +286,7 @@ try {
           </Col>
           <Col sm="3">
             <Card>
-              <div className="card-header py-3 bg-warning">
+              <div className={background === 'true' ? "card-header bg-warning" : "card-header"}>
                 <div className="col">
                   <h3 className="m-0 font-weight-bold text-dark ">
                     เพิ่มประเภทของอุปกรณ์

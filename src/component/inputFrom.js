@@ -189,22 +189,30 @@ class UserProfile extends Component {
   };
 
   render() {
+    const background = localStorage.getItem('background')
     const { item_image, item_get_type, get_data } = this.state;
     return (
-      <Col className="bg-insert">
+      <Container  className={background === 'true' ? "bg-insert" : ""}    fluid={1}>
+
+
+     <Row>
+
+    <Col>
+    </Col>
+      <Col sm={8}  >
 
 <ProgressBar now={this.state.now} label={`${this.state.now}%`}></ProgressBar>
         <br />
-        <Card>
-          <Card.Title className="bg-light">
+        
+        
             <Col
               className=" textlight light float-center "
               style={{ textAlign: "center" }}
             >
-              <s>เพิ่มอุปกรณ์</s>{" "}
+              <div className="titlelight">เพิ่มอุปกรณ์</div>
             </Col>
-          </Card.Title>
-          <Card.Body className="bg-light ">
+         
+       
             <Form noValidate>
               <Form.Row>
                 <Form.Group as={Col} md="4" controlId="validationFormik01">
@@ -392,14 +400,17 @@ class UserProfile extends Component {
                   </Col>
                 </Form.Group>
               </Form.Row>
-              <a className="bte btn-2 float-right text-center" onClick={() => this.gogo()}>
+              <div className="btnregis bte btn-2 float-right text-center" onClick={() => this.gogo()}>
                 ลงทะเบียน
-              </a>
+              </div>
             </Form>
-          </Card.Body>
-        </Card>
+         
+       
       </Col>
-      
+      <Col>
+    </Col>
+      </Row>
+      </Container>
     );
   }
 }
