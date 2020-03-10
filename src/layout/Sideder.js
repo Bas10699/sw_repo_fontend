@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 import { withRouter, NavLink } from 'react-router-dom';
+<<<<<<< Updated upstream
 import icon_sw from '../const/image/icon-sw.png'
 
+=======
+import icon_sw from '../const/icon-sw.png'
+import '../App.css'
+>>>>>>> Stashed changes
 class Sideder extends Component {
     render() {
         return (
-            <div>
+            <div >
  {/* Main Sidebar Container */}
- <aside className="main-sidebar sidebar-dark-primary elevation-4">
+ <aside className="main-sidebar sidebar-dark-primary elevation-4" >
     {/* Brand Logo */}
     <NavLink exact to="/" className="brand-link " md="5">
       <img src={icon_sw} alt="SW Logo"  className="brand-image img-Circle  elevation-3 " style={{opacity: '.8' }} />
@@ -25,7 +30,7 @@ class Sideder extends Component {
           <li className="nav-item " >
             <NavLink exact to="/"activeClassName="active" className="nav-link  " >
               <i className="nav-icon fas fa-tachometer-alt" />
-              <p>
+              <p >
                 Dashboard
                 
               </p>
