@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter, NavLink } from 'react-router-dom';
-<<<<<<< Updated upstream
 import icon_sw from '../const/image/icon-sw.png'
 
-=======
-import icon_sw from '../const/icon-sw.png'
-import '../App.css'
->>>>>>> Stashed changes
 class Sideder extends Component {
     render() {
         return (

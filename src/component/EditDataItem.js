@@ -33,6 +33,15 @@ export default class EditDataItem extends Component {
             dataedit: data
         })
     }
+    handleChangeRadio = (e) => {
+  
+        let data = this.state.dataedit
+        data[e.target.name] = e.target.value
+        this.setState({
+            dataedit: data
+        })
+       console.log(this.state.dataedit)
+    }
     notesChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
@@ -232,7 +241,7 @@ export default class EditDataItem extends Component {
         const background = localStorage.getItem('background')
         return (
 
-            spin ? <Container fluid={1} className={background==="true"? "bg-rias":""}>
+            spin ? <Container fluid={1} className={background === "true" ? "bg-rias" : ""}>
                 < br />
                 <Row>
 
@@ -337,7 +346,7 @@ export default class EditDataItem extends Component {
     </Form.Label>
                                 <Col sm={5}>
                                     <Form.Control as="select" id="item_airport" onChange={this.handleChange}>
-                                        <option value={this.state.dataedit.item_airport}>{this.state.dataedit.ap_name}</option>
+                                        <option value={this.state.dataedit.item_airport} selected disabled hidden>{this.state.dataedit.ap_name}</option>
                                         {get_airport.map((element, index) => {
                                             return <option value={element.ap_id} key={index}>{element.ap_name}</option>
                                         })}
@@ -364,7 +373,7 @@ export default class EditDataItem extends Component {
     </Form.Label>
                                 <Col sm={10}>
                                     <Form.Control as="select" id="item_type" onChange={this.handleChange}>
-                                        <option value={this.state.dataedit.item_type}>{this.state.dataedit.TN_name}</option>
+                                        <option value={this.state.dataedit.item_type} selected disabled hidden>{this.state.dataedit.TN_name}</option>
                                         {item_get_type.map((element, index) => {
                                             return <option value={element.TN_id} key={index}>{element.TN_name}</option>
                                         })
@@ -385,36 +394,44 @@ export default class EditDataItem extends Component {
                                 <Col sm={10}>
 
                                     <Form.Check
+                                        custom
                                         type="radio"
                                         label="ติดตั้ง"
-                                        id="item_status"
+                                        id="item_status1"
+                                        name="item_status"
                                         value="1"
                                         checked={this.state.dataedit.item_status == 1}
-                                        onChange={this.handleChange}
+                                        onChange={this.handleChangeRadio}
                                     />
                                     <Form.Check
+                                        custom
                                         type="radio"
                                         label="พร้อมใช้งาน"
-                                        id="item_status"
+                                        id="item_status2"
+                                        name="item_status"
                                         value="2"
                                         checked={this.state.dataedit.item_status == 2}
-                                        onChange={this.handleChange}
+                                        onChange={this.handleChangeRadio}
                                     />
                                     <Form.Check
+                                        custom
                                         type="radio"
                                         label="ส่งซ่อม"
-                                        id="item_status"
+                                        id="item_status3"
+                                        name="item_status"
                                         value="3"
                                         checked={this.state.dataedit.item_status == 3}
-                                        onChange={this.handleChange}
+                                        onChange={this.handleChangeRadio}
                                     />
                                     <Form.Check
+                                        custom
                                         type="radio"
                                         label="เสีย"
-                                        id="item_status"
+                                        id="item_status4"
+                                        name="item_status"
                                         value="4"
                                         checked={this.state.dataedit.item_status == 4}
-                                        onChange={this.handleChange}
+                                        onChange={this.handleChangeRadio}
                                     />
                                 </Col>
                             </Form.Group>
