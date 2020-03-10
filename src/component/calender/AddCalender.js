@@ -31,6 +31,7 @@ export default class AddCalender extends Component {
             cn_time: this.state.cn_time,
             cn_notes: this.state.cn_notes,
             cn_head: this.state.cn_head,
+            cn_color: 0
         }
         console.log(obj)
         try {

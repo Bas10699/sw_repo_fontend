@@ -229,9 +229,10 @@ export default class EditDataItem extends Component {
 
     render() {
         const { spin, get_airport, item_get_type, data_calender } = this.state
+        const background = localStorage.getItem('background')
         return (
 
-            spin ? <Container fluid={1} className="bg-rias">
+            spin ? <Container fluid={1} className={background==="true"? "bg-rias":""}>
                 < br />
                 <Row>
 
@@ -379,7 +380,7 @@ export default class EditDataItem extends Component {
                                     // as="legend" 
                                     column sm={2}
                                 >
-                                    สถานะติดตั้ง
+                                    สถานะอุปกรณ์
       </Form.Label>
                                 <Col sm={10}>
 
@@ -393,7 +394,7 @@ export default class EditDataItem extends Component {
                                     />
                                     <Form.Check
                                         type="radio"
-                                        label="second radio"
+                                        label="พร้อมใช้งาน"
                                         id="item_status"
                                         value="2"
                                         checked={this.state.dataedit.item_status == 2}
@@ -401,10 +402,18 @@ export default class EditDataItem extends Component {
                                     />
                                     <Form.Check
                                         type="radio"
-                                        label="third radio"
+                                        label="ส่งซ่อม"
                                         id="item_status"
                                         value="3"
                                         checked={this.state.dataedit.item_status == 3}
+                                        onChange={this.handleChange}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        label="เสีย"
+                                        id="item_status"
+                                        value="4"
+                                        checked={this.state.dataedit.item_status == 4}
                                         onChange={this.handleChange}
                                     />
                                 </Col>

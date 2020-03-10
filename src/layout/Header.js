@@ -1,27 +1,27 @@
 import React, { Component } from 'react'
 
 export default class Header extends Component {
-    settoken = () =>{
+    settoken = () => {
         var background = localStorage.getItem('background')
 
-        if(background === 'true'){
+        if (background === 'true') {
             background = false
             localStorage.setItem("background", background);
         }
-        else{
+        else {
             background = true
             localStorage.setItem("background", background);
         }
         window.location.reload()
-        
+
     }
     render() {
         const background = localStorage.getItem('background')
         return (
             <div>
                 {/* Navbar */}
-                
-                <nav className={background==="true"? "main-header navbar navbar-expand navbar-dark navbar-dark ":"main-header navbar navbar-expand navbar-white navbar-light "}>
+
+                <nav className={background === "true" ? "main-header navbar navbar-expand navbar-dark navbar-dark " : "main-header navbar navbar-expand navbar-white navbar-light "}>
                     {/* Left navbar links */}
                     <ul className="navbar-nav">
                         <li className="nav-item">
@@ -46,7 +46,10 @@ export default class Header extends Component {
                         </div>
                     </form>
                     <ul className="navbar-nav ml-auto">
-                    <button className="btn btn-primary btn-sm float-right" onClick={()=>this.settoken()}>สี</button>
+                        {background === "true" ?
+                            <button className="btn btn-light btn-sm float-right" onClick={() => this.settoken()}>light mode</button>
+                            : <button className="btn btn-dark btn-sm float-right" onClick={() => this.settoken()}>dark mode</button>}
+
                     </ul>
                     {/* Right navbar links */}
                     {/* <ul className="navbar-nav ml-auto">

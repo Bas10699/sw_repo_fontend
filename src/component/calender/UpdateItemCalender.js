@@ -36,7 +36,7 @@ export default class UpdateItemCalender extends Component {
             cn_time: this.state.cn_time,
             cn_notes: this.state.cn_notes,
             cn_item_id: this.state.item_id,
-            cn_head:this.state.cn_head,
+            cn_head: this.state.cn_head,
             cn_color: 1
         }
         try {
@@ -127,7 +127,31 @@ export default class UpdateItemCalender extends Component {
         console.log(e.target.value)
         // this.get_series(e.target.value)
     }
+    render_status = (status) => {
+        let return_page
+        switch (status) {
+            case 1: return_page = "ติดตั้ง"
 
+                break;
+
+            case 2: return_page = "พร้อมใช้งาน"
+
+                break;
+
+            case 3: return_page = "ส่งซ่อม"
+
+                break;
+
+            case 4: return_page = "เสีย"
+
+                break;
+
+            default: return_page = "อื่นๆ"
+
+                break;
+        }
+        return return_page
+    }
 
     render() {
         const { item_get, snFilter, cn_date, cn_time, FTSn, itemName } = this.state
@@ -180,6 +204,15 @@ export default class UpdateItemCalender extends Component {
                                         }) : item_get.map((element, index) => {
                                             return <option key={index} value={element.item_id} >{element.item_series_number}</option>
                                         })}
+                                    </Form.Control>
+                                </Form.Group>
+                                <Form.Group as={Col}>
+                                    <Form.Label>สถานะอุปกรณ์</Form.Label>
+                                    <Form.Control as="select" onChange={this.selectSn} id="item_id">
+                                        <option >{this.render_status(4)}</option>
+                                        <option >{this.render_status(1)}</option>
+                                        <option >{this.render_status(2)}</option>
+                                        
                                     </Form.Control>
                                 </Form.Group>
                             </Form.Row>

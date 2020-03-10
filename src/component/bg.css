@@ -28,7 +28,8 @@
 	.bg-fix{
 	
 		background-image: url("../const/image/fix.jpg");
-		height: 100vh;
+		height: 100%;
+	min-height: calc(100vh - calc(3.5rem + 1px));
 		background-position: center;
 		background-repeat: no-repeat;
 	  background-size: cover;
@@ -39,7 +40,8 @@
 		.bg-local{
 	
 			background-image: url("../const/image/local.jpg");
-			height: 100vh;
+			height: 100%;
+	min-height: calc(100vh - calc(3.5rem + 1px));
 			background-position: center;
 			background-repeat: no-repeat;
 		  background-size: cover;
@@ -49,7 +51,8 @@
 			.bg-insert{
 	
 				background-image: url(https://media2.giphy.com/media/ekNgxh1qaPey4/giphy.gif?cid=790b7611de749580a26aaa7b7872fca11942a126113916d7&rid=giphy.gif);
-				height: 100vh;
+				height: 100%;
+	min-height: calc(100vh - calc(3.5rem + 1px));
 				background-position: center;
 				background-repeat: no-repeat;
 			  background-size: cover;

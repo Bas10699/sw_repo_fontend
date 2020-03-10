@@ -3,7 +3,7 @@ import { ProgressBar, Button, Col, Form, InputGroup, Image, Container, Row, Card
 import { Formik } from 'formik';
 import { post, get } from '../service/service'
 import swal from 'sweetalert2'
-import ImageDefault from '../const/images.png'
+import ImageDefault from '../const/image/images.png'
 import './bg.css'
 class UserProfile extends Component {
     constructor() {
@@ -205,10 +205,7 @@ class UserProfile extends Component {
         const { item_image, item_get_type, get_data } = this.state
         return (
             <Col className="bg-insert">
-                <div>
-                    <ProgressBar animated  now={this.state.now} label={`${this.state.now}%`} />
-
-                </div>
+                
                 <br />
                 <Card >
                     <Card.Title className="bg-light" >
