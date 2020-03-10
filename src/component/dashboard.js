@@ -212,10 +212,13 @@ class Dashboard extends Component {
         return_data = <div className="text-success">ติดตั้ง</div>;
         break;
       case 2:
-        return_data = <div className="text-warning">พร้อมใช้งาน</div>;
+        return_data = <div className="text-info ">พร้อมใช้งาน</div>;
         break;
       case 3:
-        return_data = <div className="text-danger">ส่งซ่อม</div>;
+        return_data = <div className="text-warning ">ส่งซ่อม</div>;
+        break;
+        case 4:
+          return_data = <div className="text-danger">เสีย</div>;
     }
     return return_data;
   };
@@ -311,7 +314,7 @@ class Dashboard extends Component {
         break;
       case 2: return_page = <div className="col-lg-3">
         {/* small box */}
-        <div className="small-box bg-warning">
+        <div className="small-box bg-info ">
           <div className="inner">
             <h3>{count}</h3>
             <p>พร้อมใช้งาน</p>
@@ -326,7 +329,7 @@ class Dashboard extends Component {
       case 3: return_page =
         <div className="col-lg-3">
           {/* small box */}
-          <div className="small-box bg-danger">
+          <div className="small-box bg-warning">
             <div className="inner">
               <h3>{count}</h3>
               <p>ส่งซ่อม</p>
@@ -335,6 +338,23 @@ class Dashboard extends Component {
               <i className="fas fa-cog" />
             </div>
             <a className="small-box-footer" onClick={() => this.filterStatus(3)}>More info <i className="fas fa-arrow-circle-right" /></a>
+          </div>
+        </div>
+        break;
+
+
+        case 4: return_page =
+        <div className="col-lg-3">
+          {/* small box */}
+          <div className="small-box bg-danger">
+            <div className="inner">
+              <h3>{count}</h3>
+              <p>เสีย</p>
+            </div>
+            <div className="icon">
+            <i class="fas fa-ban"></i>
+            </div>
+            <a className="small-box-footer" onClick={() => this.filterStatus(4)}>More info <i className="fas fa-arrow-circle-right" /></a>
           </div>
         </div>
         break;
