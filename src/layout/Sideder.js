@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter, NavLink } from 'react-router-dom';
-import icon_sw from '../const/icon-sw.png'
+import icon_sw from '../const/image/icon-sw.png'
 
 class Sideder extends Component {
     render() {
@@ -53,35 +53,30 @@ class Sideder extends Component {
                 </NavLink>
               </li>
           
-          <li className="nav-item has-treeview">
-            <NavLink exact to="/g" activeClassName="active" className="nav-link">
-              <i className="nav-icon fas fa-table" />
-              <p>
-                รายการอุปกรณ์
-                <i className="fas fa-angle-left right" />
-              </p>
-            </NavLink>
-            <ul className="nav nav-treeview">
+           
+          
+              <li className="nav-header">รายการอุปกรณ์</li>
+                
+              
               <li className="nav-item">
-                <NavLink exact to="/ggg" activeClassName="active" className="nav-link">
+                <NavLink exact to="/ShowAirport" activeClassName="active" className="nav-link">
                   <i className="far fa-circle nav-icon" />
-                  <p>Simple Tables</p>
+                  <p>สถานที่</p>
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink exact to="/ggg" activeClassName="active" className="nav-link">
                   <i className="far fa-circle nav-icon" />
-                  <p>DataTables</p>
+                  <p>ประเภท</p>
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink exact to="/gg" activeClassName="active" className="nav-link">
                   <i className="far fa-circle nav-icon" />
-                  <p>jsGrid</p>
+                  <p>ยี่ห้อ</p>
                 </NavLink>
               </li>
-            </ul>
-          </li>
+      
           <li className="nav-header">EXAMPLES</li>
           <li className="nav-item">
           <NavLink exact to="/Calender" className="nav-link" activeClassName="active">
@@ -99,18 +94,7 @@ class Sideder extends Component {
               <p className="text">Important</p>
             </a>
           </li>
-          <li className="nav-item">
-            <a href="/" className="nav-link">
-              <i className="nav-icon far fa-circle text-warning" />
-              <p>Warning</p>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="/" className="nav-link">
-              <i className="nav-icon far fa-circle text-info" />
-              <p>Informational</p>
-            </a>
-          </li>
+         
         </ul>
       </nav>
       {/* /.sidebar-menu */}

@@ -13,6 +13,7 @@ import Calender from './component/calender/Calender'
 import FromLocation from './component/FromLocation'
 import FromTypeItem from './component/FromTypeItem';
 import EditDataItem from './component/EditDataItem';
+import ShowAirport from './component/ShowAirport';
 
 
 
@@ -34,6 +35,7 @@ export default class App extends Component {
               <Route exact path='/FromTypeItem' component={FromTypeItem} />
               <Route exact path='/FromLocation' component={FromLocation} />
               <Route exact path='/editdata/:id' component={EditDataItem} />
+              <Route exact path='/ShowAirport' component={ShowAirport} />
         
             {/* </div> */}
           </div>

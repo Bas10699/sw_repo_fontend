@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { Card, Container, Button, Modal, ButtonGroup, Row, Col, FormControl, InputGroup } from 'react-bootstrap';
-import TestBoostarp from './DataTable'
-import imagedefal from '../const/fix.jpg'
+import { Card, Container, Button, Modal, ButtonGroup, Row, Col, FormControl, InputGroup} from 'react-bootstrap';
 import { get, ip, post } from '../service/service'
 import swal from "sweetalert2";
 import moment from "moment";
-
+import { sortData } from '../const/constance'
 import { NavLink } from 'react-router-dom'
+import Pagination from '../const/Pagination'
 import './bg.css'
 
 class Dashboard extends Component {
@@ -26,7 +25,10 @@ class Dashboard extends Component {
       modelIndex: 0,
       get_data: [],
       item_filter_status: [],
-      data_calender:[]
+      data_calender: [],
+      sort: true,
+      currentPage: 1,
+      todosPerPage: 10,
     }
   }
 
@@ -153,25 +155,25 @@ class Dashboard extends Component {
 
   get_calender = async (id) => {
     try {
-        const obj = {
-          item_id : id
+      const obj = {
+        item_id: id
+      }
+      await post(obj, "calender/get_calender_item").then((result) => {
+        if (result.success) {
+          this.setState({
+            data_calender: result.result,
+          })
+          console.log(result.result)
         }
-        await post(obj, "calender/get_calender_item").then((result) => {
-            if (result.success) {
-                this.setState({
-                    data_calender: result.result,
-                })
-                console.log(result.result)
-            }
-            else {
-                swal.fire("", result.error_message, "error");
-            }
-        })
+        else {
+          swal.fire("", result.error_message, "error");
+        }
+      })
     }
     catch (error) {
-        alert("get_canlender: " + error)
+      alert("get_canlender: " + error)
     }
-}
+  }
 
   select_ap = e => {
 
@@ -234,7 +236,7 @@ class Dashboard extends Component {
     }
   };
 
-  setModel = (id,index) =>{
+  setModel = (id, index) => {
     this.setState({
       showModal: true,
       modelIndex: index
@@ -278,6 +280,16 @@ class Dashboard extends Component {
     this.setState({
       item_get_all: updatedList
     });
+  }
+
+  sortItem = (type) => {
+
+    sortData(this.state.item_get_all, type, this.state.sort)
+    this.setState(({ sort }) => (
+      {
+        sort: !sort
+      }
+    ));
   }
 
   render_status = (name, count) => {
@@ -335,38 +347,58 @@ class Dashboard extends Component {
 
     return (
 
-        <div className="container mt-1 mb-5">
-            <div className="row">
-                <div className="col-md-12">
+      <div className="container mt-1 mb-5">
+        <div className="row">
+          <div className="col-md-12">
 
-                    {data_calender[0] ?
-                        <ul className="timelineSet">
-                            {data_calender.map((element, index) => {
-                                return <li key={index}>
-                                    <h5 href="#" >{moment(element.cn_date).format("DD/MM/YYYY") }</h5>
-                                    {/* <button className="btn btn-danger btn-sm float-right" onClick={() => this.alertDelete(element)}>ลบ</button> */}
-                                    {/* <h5>{element.cn_head}</h5> */}
-                                    <p>{element.cn_notes}</p>
-                                </li>
+            {data_calender[0] ?
+              <ul className="timelineSet">
+                {data_calender.map((element, index) => {
+                  return <li key={index}>
+                    <h5 href="#" >{moment(element.cn_date).format("DD/MM/YYYY")}</h5>
+                    {/* <button className="btn btn-danger btn-sm float-right" onClick={() => this.alertDelete(element)}>ลบ</button> */}
+                    {/* <h5>{element.cn_head}</h5> */}
+                    <p>{element.cn_notes}</p>
+                  </li>
 
-                            })}
-                        </ul> :
-                        <div>ไม่พบรายการ</div>}
-                </div>
-            </div>
+                })}
+              </ul> :
+              <div>ไม่พบรายการ</div>}
+          </div>
         </div>
+      </div>
 
 
     )
-}
+  }
+  changeCurrentPage = numPage => {
+    this.setState({ currentPage: numPage });
+    //fetch a data
+    //or update a query to get data
+};
 
   render() {
-    console.log("gg",localStorage.getItem('user_token'))
-    const { item_status, theme, item_get_all, showModal,item_get_all_origin } = this.state
+    const background = localStorage.getItem('background')
+    const { item_status, theme, item_get_all, showModal, item_get_all_origin } = this.state
     const themeClass = theme ? theme.toLowerCase() : "secondary";
     const itemModel = item_get_all[this.state.modelIndex];
+
+    let todos = []
+    const { currentPage, todosPerPage } = this.state;
+    item_get_all.map((element, index) => {
+      todos.push({
+        num: index + 1,
+        ...element
+      })
+    })
+
+    // Logic for displaying todos
+    const indexOfLastTodo = currentPage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
+
     return (
-      <Container fluid={true} className="bg-akeno">
+      <Container fluid={true} className={background === 'true' ? "bg-akeno" : ""}>
         <br />
         {/* <Row>
           <Col sm={1}>
@@ -387,7 +419,7 @@ class Dashboard extends Component {
                 <p>ทั้งหมด</p>
               </div>
               <div className="icon">
-                <i className="fas fa-cog" />
+                <i className="fas fa-wine-bottle" />
               </div>
               <a className="small-box-footer" onClick={() => this.setState({ item_get_all: item_get_all_origin })}>More info <i className="fas fa-arrow-circle-right" /></a>
             </div>
@@ -434,25 +466,26 @@ class Dashboard extends Component {
               >
                 <thead>
                   <tr>
-                    <th>ลำดับ</th>
-                    <th>ชื่อ</th>
-                    <th>series number</th>
-                    <th>ประเภท</th>
-                    <th>สถานะ</th>
-                    <th>สถานที่ติดตั้ง</th>
+                    <th >ลำดับ</th>
+                    <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("item_name")}>ชื่อ</th>
+                    <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("item_series_number")}>series number</th>
+                    <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("TN_name")}>ประเภท</th>
+                    <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("ap_name")}>สถานที่ติดตั้ง</th>
+                    <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("item_status")}>สถานะ</th>
                     <th>ตัวเลือก</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {item_get_all.map((element, index) => {
+                  {currentTodos.map((element, index) => {
+
                     return (
                       <tr key={index}>
-                        <td>{index + 1}</td>
+                        <td>{element.num}</td>
 
                         <td>{element.item_name}</td>
                         <td>{element.item_series_number}</td>
                         <td>{element.TN_name}</td>
-                        <td>{element.item_airport}</td>
+                        <td>{element.ap_name}</td>
                         <td>{this.status_item(element.item_status)}</td>
                         <td>
                           <div className="btn-toolbar">
@@ -462,7 +495,7 @@ class Dashboard extends Component {
                             ></link>
                             <ButtonGroup>
                               <button
-                                onClick={() =>this.setModel(element.item_id,index)}
+                                onClick={() => this.setModel(element.item_id, index)}
                                 className=" btn btn-primary 	fa fa-search"
                               />
                               <button
@@ -483,8 +516,19 @@ class Dashboard extends Component {
                   })}
                 </tbody>
               </table>
+              <Row >
+                <Col></Col>
+               <Pagination 
+                urrentPage={currentPage}
+                totalPages={Math.ceil(todos.length / todosPerPage)}
+                changeCurrentPage={this.changeCurrentPage}
+                theme="square-fill"
+              />
+              <Col></Col>
               {/* </div> */}
+              </Row>
             </div>
+           
           </div>
 
           <Modal

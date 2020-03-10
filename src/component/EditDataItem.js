@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Spinner, Form, Image, Button, Accordion } from 'react-bootstrap'
-import ImageDefault from "../const/bg-rias.jpg";
 import queryString from 'query-string'
 import { post, ip, get } from '../service/service';
 import swal from 'sweetalert2'
@@ -414,7 +413,7 @@ export default class EditDataItem extends Component {
 
                             <Form.Group as={Row}>
                                 <Col sm={{ span: 10, offset: 2 }}>
-                                    <Button onClick={() => this.submitData()}>Sign in</Button>
+                                    <Button onClick={() => this.submitData()}>อัปเดตข้อมูล</Button>
                                 </Col>
                             </Form.Group>
                         </Form>

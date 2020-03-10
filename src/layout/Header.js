@@ -2,15 +2,26 @@ import React, { Component } from 'react'
 
 export default class Header extends Component {
     settoken = () =>{
-        const token = localStorage.getItem('user_token')+1
-        localStorage.setItem("user_token", token);
+        var background = localStorage.getItem('background')
+
+        if(background === 'true'){
+            background = false
+            localStorage.setItem("background", background);
+        }
+        else{
+            background = true
+            localStorage.setItem("background", background);
+        }
+        window.location.reload()
+        
     }
     render() {
+        const background = localStorage.getItem('background')
         return (
             <div>
                 {/* Navbar */}
                 
-                <nav className="main-header navbar navbar-expand navbar-white navbar-light ">
+                <nav className={background==="true"? "main-header navbar navbar-expand navbar-dark navbar-dark ":"main-header navbar navbar-expand navbar-white navbar-light "}>
                     {/* Left navbar links */}
                     <ul className="navbar-nav">
                         <li className="nav-item">

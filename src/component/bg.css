@@ -1,20 +1,25 @@
 .bg-rias {
 	
-	background-image: url("../const/rias1.png");
+	background-image: url("../const/image/rias1.png");
 	height: 100%;
+	min-height: calc(100vh - calc(3.5rem + 1px));
     background-position: center top;
     background-repeat: no-repeat;
 	background-size: cover;
+	background-attachment: fixed;
+	
 
 	color: rgb(238, 233, 164);
 	}
 	.bg-akeno {
 	
-		background-image: url("../const/akeno.png");
+		background-image: url("../const/image/akeno.png");
 		height: 100%;
+		min-height: calc(100vh - calc(3.5rem + 1px));
 		background-position: center top;
 		background-repeat: no-repeat;
 		background-size: cover;
+		background-attachment: fixed;
 	
 		color: rgb(255, 255, 255);
 		}
@@ -22,7 +27,7 @@
     
 	.bg-fix{
 	
-		background-image: url("../const/fix.jpg");
+		background-image: url("../const/image/fix.jpg");
 		height: 100vh;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -33,7 +38,7 @@
 	  
 		.bg-local{
 	
-			background-image: url("../const/local.jpg");
+			background-image: url("../const/image/local.jpg");
 			height: 100vh;
 			background-position: center;
 			background-repeat: no-repeat;
