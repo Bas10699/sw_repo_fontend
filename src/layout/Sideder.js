@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter, NavLink } from 'react-router-dom';
+import icon_sw1 from '../const/logo.png'
 import icon_sw from '../const/image/icon-sw.png'
 import '../component/bg.css'
 class Sideder extends Component {
@@ -9,10 +10,19 @@ class Sideder extends Component {
  {/* Main Sidebar Container */}
  <aside className="main-sidebar sidebar-dark-primary elevation-4" >
     {/* Brand Logo */}
-    <NavLink exact to="/" className="brand-link " md="5">
+   
+    <ul className="nav nav-pills nav-sidebar flex-column"   data-accordion="false">
+    <NavLink exact to="/profile" className="nav-link  " md="5" >
+    
+    <img src={icon_sw1} alt="SW Logo"  className="brand-image img-Circle  elevation-3 " style={{opacity: '.8' }} />
+      <p>
       <img src={icon_sw} alt="SW Logo"  className="brand-image img-Circle  elevation-3 " style={{opacity: '.8' }} />
       <br></br>
+      </p>
+      
     </NavLink>
+    </ul>
+   
     {/* Sidebar */}
     <div className="sidebar">
       {/* Sidebar user panel (optional) */}
