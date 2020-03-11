@@ -6,7 +6,8 @@ import { NavLink } from 'react-router-dom'
 import Pagination from '../const/Pagination'
 import { status_item, status_item_color, sortData } from '../const/constance'
 
-export default class ShowAirport extends Component {
+
+export default class ShowItemType extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -16,7 +17,6 @@ export default class ShowAirport extends Component {
             currentPage: 1,
             todosPerPage: 10,
             showTable: false,
-            airportName: null,
         }
     }
     componentWillMount() {
@@ -24,7 +24,7 @@ export default class ShowAirport extends Component {
     }
     get_airport = async () => {
         try {
-            await get("airport/get_airport").then(result => {
+            await get("typeName/get_typeName").then(result => {
                 if (result.success) {
                     this.setState({
                         airport_all: result.result,
@@ -40,68 +40,70 @@ export default class ShowAirport extends Component {
             alert("get_airport: " + error)
         }
     }
-
     delete_item = data => {
         swal
-          .fire({
-            title: "Are you sure?",
-            text: "ต้องการลบ " + data.item_name + " หรือไม่?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-          })
-          .then(result => {
-            // console.log(result);
-            if (result.value) {
-              this.delete_item_post(data);
-            }
-          });
-      };
-    
-      delete_item_post = async data => {
-        try {
-          const obj = {
-            item_id: data.item_id
-          };
-    
-          await post(obj, "item/delete_item").then(result => {
-            if (result.success) {
-              swal
-                .fire({
-                  icon: "success",
-                  title: "Your file has been deleted.",
-                  showConfirmButton: false,
-                  timer: 1500
-                })
-                .then(() => {
-                  window.location.reload();
-                });
-            }
-          });
-        } catch (error) {
-          alert("delete_item: " + error);
-        }
-      };
+            .fire({
+                title: "Are you sure?",
+                text: "ต้องการลบ " + data.item_name + " หรือไม่?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            })
+            .then(result => {
+                // console.log(result);
+                if (result.value) {
+                    this.delete_item_post(data);
+                }
+            });
+    };
 
-    filterAirport = async (id, name) => {
+    delete_item_post = async data => {
+        try {
+            const obj = {
+                item_id: data.item_id
+            };
+
+            await post(obj, "item/delete_item").then(result => {
+                if (result.success) {
+                    swal
+                        .fire({
+                            icon: "success",
+                            title: "Your file has been deleted.",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        .then(() => {
+                            window.location.reload();
+                        });
+                }
+            });
+        } catch (error) {
+            alert("delete_item: " + error);
+        }
+    };
+
+    filterAirport = async (id) => {
         this.setState({
             showTable: true
         })
         try {
             const obj = {
-                ap_id: id
+                item_type: id
             }
-            await post(obj, 'item/get_item_airport').then((result) => {
+            await post(obj, 'item/get_item_type').then((result) => {
                 if (result.success) {
                     this.setState({
                         item_get_all: result.result,
-                        item_get_all_origin: result.result,
-                        item_filter_status: result.result,
-                        airportName: name
 
                     })
+                }
+                else {
+                    swal.fire("", result.error_message, "error").then(() => {
+                        window.location.reload()
+                    })
+
                 }
             })
         }
@@ -109,22 +111,6 @@ export default class ShowAirport extends Component {
             alert('filterAirport: ' + error)
         }
 
-    }
-
-    filteritem = (e) => {
-        const dateSearch = e.target.value
-        // console.log(dateSearch)
-
-        var updatedList = this.state.item_filter_status;
-        // console.log(updatedList)
-        updatedList = updatedList.filter((item) => {
-            let data = item.item_name.toLowerCase() + item.item_series_number.toLowerCase() + item.TN_name.toLowerCase() + item.item_gen.toLowerCase()
-            return data.search(dateSearch) !== -1;
-        });
-        // console.log(updatedList)
-        this.setState({
-            item_get_all: updatedList
-        });
     }
 
     sortItem = (type) => {
@@ -145,7 +131,7 @@ export default class ShowAirport extends Component {
     renderItemAirport() {
 
         let todos = []
-        const { currentPage, todosPerPage, item_get_all, airportName } = this.state;
+        const { currentPage, todosPerPage, item_get_all } = this.state;
         item_get_all.map((element, index) => {
             todos.push({
                 num: index + 1,
@@ -170,9 +156,7 @@ export default class ShowAirport extends Component {
                         </select>
                     </div>
                     {/* </Col> */}
-                    <Col style={{textAlign:"center"}}>
-                        <h5>{airportName}</h5>
-                    </Col>
+                    <Col ></Col>
                     <Col lg={3}>
                         <InputGroup className="mb-3">
                             <FormControl
@@ -206,7 +190,7 @@ export default class ShowAirport extends Component {
                                 <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("item_name")}>ชื่อ</th>
                                 <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("item_series_number")}>series number</th>
                                 <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("TN_name")}>ประเภท</th>
-                                <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("item_gen")}>รุ่น</th>
+                                <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("ap_name")}>สถานที่ติดตั้ง</th>
                                 <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("item_status")}>สถานะ</th>
                                 <th>ตัวเลือก</th>
                             </tr>
@@ -220,9 +204,8 @@ export default class ShowAirport extends Component {
 
                                         <td>{element.item_name}</td>
                                         <td>{element.item_series_number}</td>
-                                        <td>{element.item_gen}</td>
                                         <td>{element.TN_name}</td>
-
+                                        <td>{element.ap_name}</td>
                                         <td className={status_item_color(element.item_status)}>{status_item(element.item_status)}</td>
                                         <td>
                                             <div className="btn-toolbar">
@@ -282,10 +265,9 @@ export default class ShowAirport extends Component {
                 <br />
 
                 {/* small box */}
-                <div onClick={() => this.setState({ item_get_all: item_get_all_origin })}>
+                <div >
 
-                    <h3>{airport_all.length}</h3>
-                    <p>สถานที่ติดตั้งทั้งหมด</p>
+                    <h4>ทั้งหมด {airport_all.length} ประเภท</h4>
 
 
                 </div>
@@ -295,10 +277,10 @@ export default class ShowAirport extends Component {
                     {airport_all.map((element, index) => {
                         return <div className="col-lg-3">
                             {/* small box */}
-                            <a href='#section1' className="small-box bg-secondary" onClick={() => this.filterAirport(element.ap_id, element.ap_name)}>
+                            <a href='#section1' className="small-box bg-secondary" onClick={() => this.filterAirport(element.TN_id)}>
                                 <div className="inner">
-                                    <h3>{element.count_item}</h3>
-                                    <p>{element.ap_name}</p>
+                                    <h3>{element.count_id}</h3>
+                                    <p>{element.TN_name}</p>
                                 </div>
                                 <div className="icon">
                                     <i className="fas fa-wine-bottle" />

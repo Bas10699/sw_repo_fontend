@@ -201,7 +201,7 @@ class UserProfile extends Component {
     </Col>
       <Col sm={8}  >
 
-<ProgressBar now={this.state.now} label={`${this.state.now}%`}></ProgressBar>
+{/* <ProgressBar now={this.state.now} label={`${this.state.now}%`}></ProgressBar> */}
         <br />
         
         
@@ -251,7 +251,7 @@ class UserProfile extends Component {
                     id="TN_id"
                     onChange={this.select_type}
                   >
-                    <option>กรุณาเลือกประเภท</option>
+                    <option selected disabled hidden>กรุณาเลือกประเภท</option>
 
                     {item_get_type.map((element, index) => {
                       return (
@@ -300,7 +300,7 @@ class UserProfile extends Component {
                   <Form.Label className=" collight">นำเข้าจาก</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="ขโมยมา"
+                    placeholder="USA"
                     name="item_place_of_birth"
                     onChange={this.handleChange}
                   />
@@ -315,7 +315,7 @@ class UserProfile extends Component {
                     id="ap_name"
                     onChange={this.select_ap}
                   >
-                    <option>กรุณาเลือกสถานที่ติดตั้ง</option>
+                    <option selected disabled hidden>กรุณาเลือกสถานที่ติดตั้ง</option>
                     {get_data.map((element, index) => {
                       return (
                         <option value={element.ap_id} key={index}>

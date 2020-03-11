@@ -6,13 +6,13 @@ import { NavLink } from 'react-router-dom'
 import Pagination from '../const/Pagination'
 import { status_item, status_item_color, sortData } from '../const/constance'
 
-export default class ShowAirport extends Component {
+export default class ShowItemBrand extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            airport_all: [],
-            airport_all_origin: [],
-            item_get_all: [],
+            brand_all: [],
+            brand_all_origin: [],
+            item_get_brand: [],
             currentPage: 1,
             todosPerPage: 10,
             showTable: false,
@@ -24,13 +24,13 @@ export default class ShowAirport extends Component {
     }
     get_airport = async () => {
         try {
-            await get("airport/get_airport").then(result => {
+            await get("item/get_item_brand_count").then(result => {
                 if (result.success) {
                     this.setState({
-                        airport_all: result.result,
-                        airport_all_origin: result.result
+                        brand_all: result.result,
+                        brand_all_origin: result.result
                     });
-                    console.log(this.state.airport_all);
+                    console.log(this.state.brand_all);
                 } else {
                     swal.fire("", result.error_message, "error");
                 }
@@ -91,13 +91,13 @@ export default class ShowAirport extends Component {
         })
         try {
             const obj = {
-                ap_id: id
+                item_brand: id
             }
-            await post(obj, 'item/get_item_airport').then((result) => {
+            await post(obj, 'item/get_item_brand').then((result) => {
                 if (result.success) {
                     this.setState({
-                        item_get_all: result.result,
-                        item_get_all_origin: result.result,
+                        item_get_brand: result.result,
+                        item_get_brand_origin: result.result,
                         item_filter_status: result.result,
                         airportName: name
 
@@ -123,13 +123,13 @@ export default class ShowAirport extends Component {
         });
         // console.log(updatedList)
         this.setState({
-            item_get_all: updatedList
+            item_get_brand: updatedList
         });
     }
 
     sortItem = (type) => {
 
-        sortData(this.state.item_get_all, type, this.state.sort)
+        sortData(this.state.item_get_brand, type, this.state.sort)
         this.setState(({ sort }) => (
             {
                 sort: !sort
@@ -145,8 +145,8 @@ export default class ShowAirport extends Component {
     renderItemAirport() {
 
         let todos = []
-        const { currentPage, todosPerPage, item_get_all, airportName } = this.state;
-        item_get_all.map((element, index) => {
+        const { currentPage, todosPerPage, item_get_brand, airportName } = this.state;
+        item_get_brand.map((element, index) => {
             todos.push({
                 num: index + 1,
                 ...element
@@ -170,7 +170,7 @@ export default class ShowAirport extends Component {
                         </select>
                     </div>
                     {/* </Col> */}
-                    <Col style={{textAlign:"center"}}>
+                    <Col style={{ textAlign: "center" }}>
                         <h5>{airportName}</h5>
                     </Col>
                     <Col lg={3}>
@@ -276,29 +276,29 @@ export default class ShowAirport extends Component {
 
     render() {
         const background = localStorage.getItem('background')
-        const { airport_all, airport_all_origin, showTable, item_get_all_origin } = this.state
+        const { brand_all, brand_all_origin, showTable, item_get_brand_origin } = this.state
         return (
             <Container fluid={true} className={background === 'true' ? "bg-akeno" : ""}>
                 <br />
 
                 {/* small box */}
-                <div onClick={() => this.setState({ item_get_all: item_get_all_origin })}>
+                <div onClick={() => this.setState({ item_get_brand: item_get_brand_origin })}>
 
-                    <h3>{airport_all.length}</h3>
-                    <p>สถานที่ติดตั้งทั้งหมด</p>
+                    <h3>{brand_all.length} Brand</h3>
+                   
 
 
                 </div>
 
                 <div className="row">
 
-                    {airport_all.map((element, index) => {
+                    {brand_all.map((element, index) => {
                         return <div className="col-lg-3">
                             {/* small box */}
-                            <a href='#section1' className="small-box bg-secondary" onClick={() => this.filterAirport(element.ap_id, element.ap_name)}>
+                            <a href='#section1' className="small-box bg-secondary" onClick={() => this.filterAirport(element.item_brand, element.ap_name)}>
                                 <div className="inner">
-                                    <h3>{element.count_item}</h3>
-                                    <p>{element.ap_name}</p>
+                                    <h3>{element.count_brand}</h3>
+                                    <p>{element.item_brand}</p>
                                 </div>
                                 <div className="icon">
                                     <i className="fas fa-wine-bottle" />

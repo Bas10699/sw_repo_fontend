@@ -35,7 +35,7 @@ export default class Header extends Component {
                         </li> */}
                     </ul>
                     {/* SEARCH FORM */}
-                    <form className="form-inline ml-3">
+                    {/* <form className="form-inline ml-3">
                         <div className="input-group input-group-sm">
                             <input className="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" />
                             <div className="input-group-append">
@@ -44,7 +44,7 @@ export default class Header extends Component {
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form> */}
                     <ul className="navbar-nav ml-auto">
                         {background === "true" ?
                             <button className="btn btn-light btn-sm float-right" onClick={() => this.settoken()}>Normal mode</button>

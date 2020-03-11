@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter, NavLink } from 'react-router-dom';
 import icon_sw from '../const/image/icon-sw.png'
+import icon_sw1 from '../const/image/icon-sw1.png'
 import '../component/bg.css'
 class Sideder extends Component {
     render() {
@@ -32,6 +33,18 @@ class Sideder extends Component {
               </p>
             </NavLink >
           </div>
+
+          {/* <li className=" nav-header">EXAMPLES</li> */}
+          <div className="height nav-item">
+          <NavLink exact to="/Calender" className="nav-link" activeClassName="active">
+              <i className="nav-icon far fa-calendar-alt" />
+              <p>
+                Calendar
+                {/* <span className="badge badge-info right">2</span> */}
+              </p>
+            </NavLink>
+          </div>
+
           <li className="nav-header">Device</li>
           
               <div className="height nav-item">
@@ -66,35 +79,27 @@ class Sideder extends Component {
                 </NavLink>
               </div>
               <div className="height nav-item">
-                <NavLink exact to="/ggg" activeClassName="active" className="nav-link">
+                <NavLink exact to="/ShowItemType" activeClassName="active" className="nav-link">
                   <i className="far fa-circle nav-icon" />
                   <p>ประเภท</p>
                 </NavLink>
               </div>
               <div className="height nav-item">
-                <NavLink exact to="/gg" activeClassName="active" className="nav-link">
+                <NavLink exact to="/ShowItemBrand" activeClassName="active" className="nav-link">
                   <i className="far fa-circle nav-icon" />
                   <p>ยี่ห้อ</p>
                 </NavLink>
               </div>
       
-          <li className=" nav-header">EXAMPLES</li>
-          <div className="height nav-item">
-          <NavLink exact to="/Calender" className="nav-link" activeClassName="active">
-              <i className="nav-icon far fa-calendar-alt" />
-              <p>
-                Calendar
-                <span className="badge badge-info right">2</span>
-              </p>
-            </NavLink>
-          </li>
-          <li className="nav-header">LABELS</li>
+          
+          {/* <li className="nav-header">LABELS</li>
           <li className="nav-item">
             <NavLink exact to="/Important" className="nav-link">
               <i className="nav-icon far fa-circle text-danger" />
               <p className="text">Important</p>
             </NavLink>
-          </li>
+          </li> */}
+          <br/>
          
         </ul>
       </nav>

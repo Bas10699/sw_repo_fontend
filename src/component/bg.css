@@ -156,7 +156,8 @@
   .bg-insert{
 	
 	background-image: url("../const/image/regis.jpg");
-	height: 100vh;
+	height: 100%;
+	min-height: calc(100vh - calc(3.5rem + 1px));
 	background-position: center;
 	background-repeat: no-repeat;
   background-size: cover;
@@ -453,7 +454,7 @@ background-position: 0;
 }
 .height:hover
 {
-	transform: scale(1.1);
+	transform: scale(1.07);
 	opacity: 1;
 	filter: blur(0.5);
 }

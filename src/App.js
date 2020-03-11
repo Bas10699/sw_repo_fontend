@@ -14,6 +14,8 @@ import FromLocation from './component/FromLocation'
 import FromTypeItem from './component/FromTypeItem';
 import EditDataItem from './component/EditDataItem';
 import ShowAirport from './component/ShowAirport';
+import ShowItemType from './component/ShowItemType';
+import ShowItemBrand from './component/ShowItemBrand';
 
 
 
@@ -28,15 +30,17 @@ export default class App extends Component {
           <div className="content-wrapper">
 
             {/* <div className="content-header"> */}
-              {/* <div className="container-fluid"></div> */}
-              <Route exact path='/' component={Dashbord} />
-              <Route exact path='/InputFrom' component={InputFrom} />
-              <Route exact path='/Calender' component={Calender} />
-              <Route exact path='/FromTypeItem' component={FromTypeItem} />
-              <Route exact path='/FromLocation' component={FromLocation} />
-              <Route exact path='/editdata/:id' component={EditDataItem} />
-              <Route exact path='/ShowAirport' component={ShowAirport} />
-        
+            {/* <div className="container-fluid"></div> */}
+            <Route exact path='/' component={Dashbord} />
+            <Route exact path='/InputFrom' component={InputFrom} />
+            <Route exact path='/Calender' component={Calender} />
+            <Route exact path='/FromTypeItem' component={FromTypeItem} />
+            <Route exact path='/FromLocation' component={FromLocation} />
+            <Route exact path='/editdata/:id' component={EditDataItem} />
+            <Route exact path='/ShowAirport' component={ShowAirport} />
+            <Route exact path='/ShowItemType' component={ShowItemType} />
+            <Route exact path='/ShowItemBrand' component={ShowItemBrand} />
+
             {/* </div> */}
           </div>
           {/* Control Sidebar */}

@@ -52,6 +52,10 @@ export const status_item = data => {
             break;
         case 3:
             return_data = 'ส่งซ่อม';
+            break;
+        case 4:
+            return_data = 'เสีย';
+            break;
     }
     return return_data;
 };
@@ -60,13 +64,17 @@ export const status_item_color = data => {
     let return_data;
     switch (data) {
         case 1:
-            return_data = 'text-success';
+            return_data = 'text-primary';
             break;
         case 2:
-            return_data = 'text-warning';
+            return_data = 'text-success';
             break;
         case 3:
+            return_data = 'text-warning';
+            break;
+        case 4:
             return_data = 'text-danger';
+            break;
     }
     return return_data;
 };

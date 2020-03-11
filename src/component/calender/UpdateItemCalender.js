@@ -17,7 +17,8 @@ export default class UpdateItemCalender extends Component {
             item_get: [],
             snFilter: [],
             FTSn: false,
-            itemName: []
+            itemName: [],
+            item_status_name:''
         }
     }
 
@@ -37,7 +38,8 @@ export default class UpdateItemCalender extends Component {
             cn_notes: this.state.cn_notes,
             cn_item_id: this.state.item_id,
             cn_head: this.state.cn_head,
-            cn_color: 1
+            cn_color: 1,
+            item_status:this.state.item_status
         }
         try {
             await post(obj, 'calender/add_calender').then((result) => {
@@ -124,7 +126,16 @@ export default class UpdateItemCalender extends Component {
         this.setState({
             [e.target.id]: e.target.value
         })
+        let item = this.state.item_get
+        item.map((element)=>{
+            if(element.item_id == e.target.value){
+                this.setState({
+                    item_status:element.item_status
+                })
+            }
+        })
         console.log(e.target.value)
+        
         // this.get_series(e.target.value)
     }
     render_status = (status) => {
@@ -208,11 +219,13 @@ export default class UpdateItemCalender extends Component {
                                 </Form.Group>
                                 <Form.Group as={Col}>
                                     <Form.Label>สถานะอุปกรณ์</Form.Label>
-                                    <Form.Control as="select" onChange={this.selectSn} id="item_id">
-                                        <option >{this.render_status(4)}</option>
-                                        <option >{this.render_status(1)}</option>
-                                        <option >{this.render_status(2)}</option>
-                                        
+                                    <Form.Control as="select" onChange={this.selectSn} id="item_status">
+                                    <option  selected disabled hidden>{this.render_status(this.state.item_status)}</option>
+                                        <option value="1">{this.render_status(1)}</option>
+                                        <option value="2">{this.render_status(2)}</option>
+                                        <option value="3">{this.render_status(3)}</option>
+                                        <option value="4">{this.render_status(4)}</option>
+
                                     </Form.Control>
                                 </Form.Group>
                             </Form.Row>

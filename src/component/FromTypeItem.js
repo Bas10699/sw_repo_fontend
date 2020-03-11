@@ -267,7 +267,7 @@ export default class FromTypeItem extends Component {
 
                           <button
                             onClick={() => this.delete_type(element)}
-                            className=" btn btn-danger btn-lg	fas fa-trash-alt "
+                            className=" btn btn-danger btn-lg	fas fa-trash-alt btn-sm"
                           />
                           <ButtonToolbar>
                             {["top"].map(placement => (
@@ -300,7 +300,7 @@ export default class FromTypeItem extends Component {
                                   </Popover>
                                 }
                               >
-                                <Button className=" btn btn-primary btn-lg fa fa-pencil "></Button>
+                                <Button size="sm" className=" btn btn-primary btn-lg fa fa-pencil "></Button>
                               </OverlayTrigger>
                             ))}
                           </ButtonToolbar>

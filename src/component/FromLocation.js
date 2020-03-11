@@ -36,7 +36,7 @@ export default class FromLocation extends Component {
           this.setState({
             get_data: result.result
           });
-          console.log("getdatais"+this.state.get_data);
+          console.log("getdatais" + this.state.get_data);
         } else {
           swal("", "", "error");
         }
@@ -46,7 +46,7 @@ export default class FromLocation extends Component {
     }
   };
 
-  
+
   handleChange = e => {
     console.log(e.target.value);
     this.setState({
@@ -55,54 +55,54 @@ export default class FromLocation extends Component {
     console.log(this.state.airport);
   };
 
-  
-add_airport = () => {
-swal
-  .fire({
-    title: "Are you sure?",
-    text: "ต้องการเพิ่ม " + this.state.airport + " หรือไม่?",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, add it!"
-  })
-  .then(result => {
-    console.log(result);
-    if (result.value) {
-      this.add_ariport_location();
-    }
-  });
-};
 
-add_ariport_location = async () => {
-const obj = {
-  ap_name: this.state.airport
-};
-console.log(obj);
-try {
-  await post(obj, "airport/add_airport").then(result => {
-    if (result.success) {
-      swal
-        .fire({
-          icon: "success",
-          title: "เพิ่มสถานที่สำเร็จ",
-          showConfirmButton: false,
-          timer: 1500
-        })
-        .then(() => {
-          window.location.reload();
-        });
-    } else {
-      swal.fire("", result.error_message, "error");
-    }
-  });
-} catch (error) {
-  alert("add_ariport_location" + error);
-}
-};
+  add_airport = () => {
+    swal
+      .fire({
+        title: "Are you sure?",
+        text: "ต้องการเพิ่ม " + this.state.airport + " หรือไม่?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, add it!"
+      })
+      .then(result => {
+        console.log(result);
+        if (result.value) {
+          this.add_ariport_location();
+        }
+      });
+  };
 
-  
+  add_ariport_location = async () => {
+    const obj = {
+      ap_name: this.state.airport
+    };
+    console.log(obj);
+    try {
+      await post(obj, "airport/add_airport").then(result => {
+        if (result.success) {
+          swal
+            .fire({
+              icon: "success",
+              title: "เพิ่มสถานที่สำเร็จ",
+              showConfirmButton: false,
+              timer: 1500
+            })
+            .then(() => {
+              window.location.reload();
+            });
+        } else {
+          swal.fire("", result.error_message, "error");
+        }
+      });
+    } catch (error) {
+      alert("add_ariport_location" + error);
+    }
+  };
+
+
   delete_item = data => {
     swal
       .fire({
@@ -145,15 +145,15 @@ try {
     } catch (error) {
       alert("delete_item: " + error);
     }
-  };    
+  };
 
 
-  
+
   updateloca = (data) => {
     swal
       .fire({
         title: "Are you sure?",
-        text: "ต้องการอัพเดท " + data.ap_name + " เป็น"+this.state.airport,
+        text: "ต้องการอัพเดท " + data.ap_name + " เป็น" + this.state.airport,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -166,37 +166,37 @@ try {
           this.update_airport();
         }
       });
-    };
-    
+  };
+
 
   update_airport = async (data) => {
 
     const obj = {
-        ap_id: data.ap_id,
-        ap_name:this.state.airport,
-       
+      ap_id: data.ap_id,
+      ap_name: this.state.airport,
+
 
     };
     console.log("gg", obj)
     try {
-        await post(obj, "airport/update_airport").then(result => {
-            if (result.success) {
-                window.location.reload();
-            } else {
-                swal.fire("", result.error_message, "error");
-            }
-        });
+      await post(obj, "airport/update_airport").then(result => {
+        if (result.success) {
+          window.location.reload();
+        } else {
+          swal.fire("", result.error_message, "error");
+        }
+      });
     } catch (error) {
-        alert("update_airport" + error);
+      alert("update_airport" + error);
 
     }
-}
+  }
   render() {
     const { get_data } = this.state;
-    
+
     const background = localStorage.getItem('background')
     return (
-      <Container className={background === 'true' ? "bg-local" : ""}    fluid={1}>
+      <Container className={background === 'true' ? "bg-local" : ""} fluid={1}>
         <br />
         <Row>
           <Col className="text-center">
@@ -221,10 +221,10 @@ try {
                     {get_data.map((element, index) => {
                       return (
                         <tr>
-                             <td> {index + 1}</td>
-                                                    <td> {element.ap_name}</td>
+                          <td> {index + 1}</td>
+                          <td> {element.ap_name}</td>
 
-                                                    <td> {element.count_item}</td>
+                          <td> {element.count_item}</td>
                           <td>
                             <div className="btn-toolbar ">
                               <link
@@ -233,6 +233,7 @@ try {
                               ></link>
 
                               <Button
+                                size="sm"
                                 onClick={() => this.delete_item(element)}
                                 className=" btn btn-danger btn-lg	fas fa-trash-alt "
                               />
@@ -258,6 +259,7 @@ try {
                                             defaultValue={element.ap_name}
                                           ></input>
                                           <Button
+
                                             variant="primary "
                                             className=" fa fa-plus bg-warning"
                                             id="TN_id"
@@ -270,7 +272,7 @@ try {
                                       </Popover>
                                     }
                                   >
-                                    <Button className=" btn btn-primary btn-lg fa fa-pencil "></Button>
+                                    <Button size="sm" className=" btn btn-primary btn-lg fa fa-pencil "></Button>
                                   </OverlayTrigger>
                                 ))}
                               </ButtonToolbar>

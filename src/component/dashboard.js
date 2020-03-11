@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { Card, Container, Button, Modal, ButtonGroup, Row, Col, FormControl, InputGroup} from 'react-bootstrap';
+import { Card, Container, Button, Modal, ButtonGroup, Row, Col, FormControl, InputGroup } from 'react-bootstrap';
 import { get, ip, post } from '../service/service'
 import swal from "sweetalert2";
 import moment from "moment";
 import { sortData } from '../const/constance'
 import { NavLink } from 'react-router-dom'
 import Pagination from '../const/Pagination'
+import { status_item, status_item_color } from '../const/constance'
 import './bg.css'
 
 class Dashboard extends Component {
@@ -205,20 +206,6 @@ class Dashboard extends Component {
   };
 
 
-  status_item = data => {
-    let return_data;
-    switch (data) {
-      case 1:
-        return_data = <div className="text-success">ติดตั้ง</div>;
-        break;
-      case 2:
-        return_data = <div className="text-warning">พร้อมใช้งาน</div>;
-        break;
-      case 3:
-        return_data = <div className="text-danger">ส่งซ่อม</div>;
-    }
-    return return_data;
-  };
 
   uploadpicture = e => {
     let reader = new FileReader();
@@ -273,7 +260,7 @@ class Dashboard extends Component {
     var updatedList = this.state.item_filter_status;
     // console.log(updatedList)
     updatedList = updatedList.filter((item) => {
-      let data = item.item_name.toLowerCase() + item.item_series_number.toLowerCase() + item.TN_name.toLowerCase()
+      let data = item.item_name.toLowerCase() + item.item_series_number.toLowerCase() + item.TN_name.toLowerCase() + item.item_gen.toLowerCase()
       return data.search(dateSearch) !== -1;
     });
     // console.log(updatedList)
@@ -297,7 +284,7 @@ class Dashboard extends Component {
     switch (name) {
       case 1: return_page = <div className="col-lg-3 ">
         {/* small box */}
-        <div className="small-box bg-success">
+        <a  onClick={() => this.filterStatus(1)} className="small-box bg-primary">
           <div className="inner">
             <h3>{count}</h3>
             <p>ติดตั้ง</p>
@@ -305,13 +292,13 @@ class Dashboard extends Component {
           <div className="icon">
             <i className="ion ion-paper-airplane" />
           </div>
-          <a className="small-box-footer" onClick={() => this.filterStatus(1)}>More info <i className="fas fa-arrow-circle-right" /></a>
-        </div>
+         
+        </a>
       </div>
         break;
       case 2: return_page = <div className="col-lg-3">
         {/* small box */}
-        <div className="small-box bg-warning">
+        <a  onClick={() => this.filterStatus(2)} className="small-box bg-success">
           <div className="inner">
             <h3>{count}</h3>
             <p>พร้อมใช้งาน</p>
@@ -319,14 +306,13 @@ class Dashboard extends Component {
           <div className="icon">
             <i className="ion ion-ios-home-outline" />
           </div>
-          <a className="small-box-footer" onClick={() => this.filterStatus(2)}>More info <i className="fas fa-arrow-circle-right" /></a>
-        </div>
+        </a>
       </div>
         break;
       case 3: return_page =
         <div className="col-lg-3">
           {/* small box */}
-          <div className="small-box bg-danger">
+          <a  onClick={() => this.filterStatus(3)} className="small-box bg-warning">
             <div className="inner">
               <h3>{count}</h3>
               <p>ส่งซ่อม</p>
@@ -334,8 +320,23 @@ class Dashboard extends Component {
             <div className="icon">
               <i className="fas fa-cog" />
             </div>
-            <a className="small-box-footer" onClick={() => this.filterStatus(3)}>More info <i className="fas fa-arrow-circle-right" /></a>
-          </div>
+            
+          </a>
+        </div>
+        break;
+      case 4: return_page =
+        <div className="col-lg-3">
+          {/* small box */}
+          <a  onClick={() => this.filterStatus(4)} className="small-box bg-danger">
+            <div className="inner">
+              <h3>{count}</h3>
+              <p>เสีย</p>
+            </div>
+            <div className="icon">
+              <i className="fas fa-ban" />
+            </div>
+            
+          </a>
         </div>
         break;
     }
@@ -375,9 +376,10 @@ class Dashboard extends Component {
     this.setState({ currentPage: numPage });
     //fetch a data
     //or update a query to get data
-};
+  };
 
   render() {
+
     const background = localStorage.getItem('background')
     const { item_status, theme, item_get_all, showModal, item_get_all_origin } = this.state
     const themeClass = theme ? theme.toLowerCase() : "secondary";
@@ -405,14 +407,17 @@ class Dashboard extends Component {
           </Col>
           <Col>
             <CardDeck> */}
+            <h3 style={{cursor:"pointer"}} onClick={() => this.setState({ item_get_all: item_get_all_origin })}>
+              จำนวนอุปกรณ์ทั้งหมด {item_get_all_origin.length}
+              </h3>
+                
         <div className="row">
 
           {item_status.map((element, index) => {
             return this.render_status(element.item_status, element.count_status)
           })}
 
-          <div className="col-lg-3">
-            {/* small box */}
+          {/* <div className="col-lg-3">
             <div className="small-box bg-secondary">
               <div className="inner">
                 <h3>{item_get_all_origin.length}</h3>
@@ -421,9 +426,9 @@ class Dashboard extends Component {
               <div className="icon">
                 <i className="fas fa-wine-bottle" />
               </div>
-              <a className="small-box-footer" onClick={() => this.setState({ item_get_all: item_get_all_origin })}>More info <i className="fas fa-arrow-circle-right" /></a>
+              <a  onClick={() => this.setState({ item_get_all: item_get_all_origin })}>More info <i className="fas fa-arrow-circle-right" /></a>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* </CardDeck>
@@ -436,7 +441,15 @@ class Dashboard extends Component {
 
         <div >
           <Row>
-            <Col lg={9}></Col>
+            <div class="col-auto my-1">
+              <select class="custom-select" id="todosPerPage" onChange={this.handleChange} >
+                <option selected value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </div>
+            <Col ></Col>
             <Col lg={3}>
               <InputGroup className="mb-3">
                 <FormControl
@@ -470,7 +483,8 @@ class Dashboard extends Component {
                     <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("item_name")}>ชื่อ</th>
                     <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("item_series_number")}>series number</th>
                     <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("TN_name")}>ประเภท</th>
-                    <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("ap_name")}>สถานที่ติดตั้ง</th>
+                    <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("item_gen")}>รุ่น</th>
+                    {/* <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("ap_name")}>สถานที่ติดตั้ง</th> */}
                     <th style={{ cursor: "pointer" }} onClick={() => this.sortItem("item_status")}>สถานะ</th>
                     <th>ตัวเลือก</th>
                   </tr>
@@ -485,8 +499,9 @@ class Dashboard extends Component {
                         <td>{element.item_name}</td>
                         <td>{element.item_series_number}</td>
                         <td>{element.TN_name}</td>
-                        <td>{element.ap_name}</td>
-                        <td>{this.status_item(element.item_status)}</td>
+                        <td>{element.item_gen}</td>
+                        {/* <td>{element.ap_name}</td> */}
+                        <td><div className={status_item_color(element.item_status)}>{status_item(element.item_status)}</div></td>
                         <td>
                           <div className="btn-toolbar">
                             <link
@@ -518,17 +533,17 @@ class Dashboard extends Component {
               </table>
               <Row >
                 <Col></Col>
-               <Pagination 
-                urrentPage={currentPage}
-                totalPages={Math.ceil(todos.length / todosPerPage)}
-                changeCurrentPage={this.changeCurrentPage}
-                theme="square-fill"
-              />
-              <Col></Col>
-              {/* </div> */}
+                <Pagination
+                  urrentPage={currentPage}
+                  totalPages={Math.ceil(todos.length / todosPerPage)}
+                  changeCurrentPage={this.changeCurrentPage}
+                  theme="square-fill"
+                />
+                <Col></Col>
+                {/* </div> */}
               </Row>
             </div>
-           
+
           </div>
 
           <Modal
@@ -552,8 +567,8 @@ class Dashboard extends Component {
                   </div>
                 </Col>
 
-                <table>
-                  <td>
+                
+                  <Col sm={2}>
                     <tr>ชื่อ </tr>
                     <tr>ยี่ห้อ </tr>
                     <tr>รุ่น </tr>
@@ -564,27 +579,27 @@ class Dashboard extends Component {
                     <tr>วันที่นำเข้า </tr>
                     <tr>นำเข้ามาจาก </tr>
                     <tr>สถานะ </tr>
-                  </td>
-                  <td>
+                  </Col>
+                  <Col>
                     {/* {console.log(itemModel)} */}
-                    <tr>{itemModel ? itemModel.item_name : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_brand : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_gen : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_series_number : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_type : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_airport : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_airport_date : ""}</tr>
+                    <tr>{itemModel ? itemModel.item_name : "-"}</tr>
+                    <tr>{itemModel ? itemModel.item_brand : "-"}</tr>
+                    <tr>{itemModel ? itemModel.item_gen : "-"}</tr>
+                    <tr>{itemModel ? itemModel.item_series_number : "-"}</tr>
+                    <tr>{itemModel ? itemModel.item_type : "-"}</tr>
+                    <tr>{itemModel ? itemModel.item_airport : "-"}</tr>
+                    <tr>{itemModel ? itemModel.item_airport_date? moment(itemModel.item_airport_date).format("DD/MM/YYYY") : "-" : "-"}</tr>
                     <tr>
                       {itemModel
                         ? moment(itemModel.item_date_of_birth).format(
                           "DD/MM/YYYY"
                         )
-                        : ""}
+                        : "-"}
                     </tr>
-                    <tr>{itemModel ? itemModel.item_place_of_birth : ""}</tr>
-                    <tr>{itemModel ? itemModel.item_status : ""}</tr>
-                  </td>
-                </table>
+                    <tr>{itemModel ? itemModel.item_place_of_birth : "-"}</tr>
+                    <tr>{itemModel ? itemModel.item_status : "-"}</tr>
+                  </Col>
+            
 
 
               </Row>
