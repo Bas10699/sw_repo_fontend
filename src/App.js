@@ -16,6 +16,7 @@ import EditDataItem from './component/EditDataItem';
 import ShowAirport from './component/ShowAirport';
 import ShowItemType from './component/ShowItemType';
 import ShowItemBrand from './component/ShowItemBrand';
+import profile from './component/profile';
 
 
 
@@ -41,6 +42,7 @@ export default class App extends Component {
             <Route exact path='/ShowItemType' component={ShowItemType} />
             <Route exact path='/ShowItemBrand' component={ShowItemBrand} />
 
+              <Route exact path='/profile' component={profile} />
             {/* </div> */}
           </div>
           {/* Control Sidebar */}
