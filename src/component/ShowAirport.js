@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, InputGroup, ButtonGroup, FormControl } from 'react-bootstrap'
 import swal from 'sweetalert'
-import { get } from '../service/service'
+import { get, post } from '../service/service'
 import { NavLink } from 'react-router-dom'
 import Pagination from '../const/Pagination'
 import { status_item, status_item_color, sortData } from '../const/constance'
@@ -15,6 +15,7 @@ export default class ShowAirport extends Component {
             item_get_all: [],
             currentPage: 1,
             todosPerPage: 10,
+            showTable: false,
         }
     }
     componentWillMount() {
@@ -58,15 +59,38 @@ export default class ShowAirport extends Component {
         }
     };
 
+    filterAirport = async (id) => {
+        this.setState({
+            showTable: true
+        })
+        try {
+            const obj = {
+                ap_id: id
+            }
+            await post(obj, 'item/get_item_airport').then((result) => {
+                if (result.success) {
+                    this.setState({
+                        item_get_all: result.result,
+
+                    })
+                }
+            })
+        }
+        catch (error) {
+            alert('filterAirport: ' + error)
+        }
+
+    }
+
     sortItem = (type) => {
 
         sortData(this.state.item_get_all, type, this.state.sort)
         this.setState(({ sort }) => (
-          {
-            sort: !sort
-          }
+            {
+                sort: !sort
+            }
         ));
-      }
+    }
 
     changeCurrentPage = numPage => {
         this.setState({ currentPage: numPage });
@@ -194,30 +218,20 @@ export default class ShowAirport extends Component {
 
     render() {
         const background = localStorage.getItem('background')
-        const { airport_all, airport_all_origin } = this.state
+        const { airport_all, airport_all_origin, showTable,item_get_all_origin } = this.state
         return (
             <Container fluid={true} className={background === 'true' ? "bg-akeno" : ""}>
                 <br />
-                {/* <Row>
-          <Col sm={1}>
-          </Col>
-          <Col>
-            <CardDeck> */}
-                <Row>
-                    <div className="col-lg-3">
+                
                         {/* small box */}
-                        <div className="small-box bg-light">
-                            <div className="inner">
+                        <div onClick={()=>this.setState({item_get_all:item_get_all_origin})}>
+                          
                                 <h3>{airport_all.length}</h3>
                                 <p>สถานที่ติดตั้งทั้งหมด</p>
-                            </div>
-                            <div className="icon">
-                                <i className="fas fa-location-arrow" />
-                            </div>
+
 
                         </div>
-                    </div>
-                </Row>
+ 
                 <div className="row">
 
                     {airport_all.map((element, index) => {
@@ -231,14 +245,17 @@ export default class ShowAirport extends Component {
                                 <div className="icon">
                                     <i className="fas fa-wine-bottle" />
                                 </div>
-                                <a className="small-box-footer" onClick={() => this.setState({ airport_all: airport_all_origin })}>More info <i className="fas fa-arrow-circle-right" /></a>
+                                <a href='#section1' className="small-box-footer" onClick={() => this.filterAirport(element.ap_id)}>More info <i className="fas fa-arrow-circle-right" /></a>
                             </div>
                         </div>
                     })}
 
 
                 </div>
-                {this.renderItemAirport()}
+                <section id='section1' style={showTable ? { display: "block" } : { display: "none" }}>
+                    {this.renderItemAirport()}
+                </section>
+
 
             </Container >
         )

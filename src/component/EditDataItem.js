@@ -446,11 +446,7 @@ export default class EditDataItem extends Component {
                     </Col>
 
                 </Row>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
+              
 
             </Container >
                 :

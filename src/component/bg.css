@@ -24,7 +24,7 @@
 	.bg-fix{
 	
 		background-image: url("../const/image/fix.jpg");
-		height: 100vh;
+		height: 100%;
 		background-position: center;
 		background-repeat: no-repeat;
 	  background-size: cover;
@@ -37,7 +37,7 @@
 	.bg-top{
 	
 		background-image: url("../const/3.png");
-		height: 100vh;
+		height: 100%;
 		background-position: center;
 		background-repeat: no-repeat;
 	  background-size: cover;
@@ -48,7 +48,7 @@
 		.bg-local{
 	
 			background-image: url("../const/image/local.jpg");
-			height: 100vh;
+			height: 100%;
 			background-position: center;
 			background-repeat: no-repeat;
 		  background-size: cover;
