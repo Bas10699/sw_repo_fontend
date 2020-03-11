@@ -436,28 +436,28 @@ background-position: 1360px;
 background-position: 0;
 	}
 }
-li{
+.height{
 	list-style: none;
 	
 	transition: 0.5s;
 }
-li a{
+.height{
 	display: block;
 	position: relative;
 	text-decoration: none;
 	padding: 5px;
-	font-size: 16px;
+	font-size: 15px;
 	font-family: sans-serif;
 	color: #fff;
 	
 }
-li a:hover
+.height:hover
 {
 	transform: scale(1.1);
 	opacity: 1;
-	filter: blur(5);
+	filter: blur(0.5);
 }
-li a:before{
+.height:before{
 	content: '';
 	position: absolute;
 	top: 0;
