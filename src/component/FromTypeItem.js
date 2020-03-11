@@ -194,6 +194,18 @@ export default class FromTypeItem extends Component {
     }
 }
 
+
+readURL=(data)=>{
+  var file = document.getElementById("getval").files[0];
+  var reader = new FileReader();
+  reader.onloadend = function(){
+     document.getElementById('clock').style.backgroundImage = "url(" + reader.result + ")";        
+  }
+  if(file){
+     reader.readAsDataURL(file);
+   }else{
+   }
+}
   render() {
     const { get_data } = this.state;
     const background = localStorage.getItem('background')
@@ -269,6 +281,7 @@ export default class FromTypeItem extends Component {
                             onClick={() => this.delete_type(element)}
                             className=" btn btn-danger btn-lg	fas fa-trash-alt btn-sm"
                           />
+                          
                           <ButtonToolbar>
                             {["top"].map(placement => (
                               <OverlayTrigger
