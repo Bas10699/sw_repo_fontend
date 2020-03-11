@@ -212,7 +212,7 @@ class UserProfile extends Component {
               <div className="titlelight">เพิ่มอุปกรณ์</div>
             </Col>
          
-       
+       <br/>
             <Form noValidate>
               <Form.Row>
                 <Form.Group as={Col} md="4" controlId="validationFormik01">
@@ -358,7 +358,7 @@ class UserProfile extends Component {
                 <Form.Group as={Col} md="3" controlId="validationFormik05">
                   <Form.Label className=" collight">สถานะอุปกรณ์</Form.Label>
                   <Col sm={10}>
-                    <span class="custom-dropdown ">
+                    <span class={background === 'true' ? "custom-dropdown " : "xuttom-dropdown"}>
                       <select
                         className="neon"
                         onChange={this.sta}
@@ -410,8 +410,11 @@ class UserProfile extends Component {
       <Col>
     </Col>
       </Row>
+      <div className={background === 'true' ? "wave" : ""}></div>
       </Container>
+     
     );
+  
   }
 }
 

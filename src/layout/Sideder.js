@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter, NavLink } from 'react-router-dom';
 import icon_sw from '../const/image/icon-sw.png'
-import icon_sw1 from '../const/image/icon-sw1.png'
-
+import '../component/bg.css'
 class Sideder extends Component {
     render() {
         return (
@@ -24,7 +23,7 @@ class Sideder extends Component {
         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           {/* Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library */}
-          <li className="nav-item " >
+          <div className="height nav-item " >
             <NavLink exact to="/"activeClassName="active" className="nav-link  " >
               <i className="nav-icon fas fa-tachometer-alt" />
               <p >
@@ -32,55 +31,55 @@ class Sideder extends Component {
                 
               </p>
             </NavLink >
-          </li>
+          </div>
           <li className="nav-header">Device</li>
           
-              <li className="nav-item">
+              <div className="height nav-item">
                 <NavLink exact to="/InputFrom" activeClassName="active" className="nav-link ">
                   <i className="nav-icon fas fa-warehouse" />
                   <p>Register device</p>
                 </NavLink>
-              </li>
-              <li className="nav-item">
+              </div>
+              <div className="height nav-item">
                 <NavLink exact to="/FromTypeItem" activeClassName="active" className="nav-link ">
                   <i className="nav-icon fas fa-edit" />
                   <p>ประเภทอุปกรณ์</p>
                 </NavLink>
-              </li>
+              </div>
           
-              <li className="nav-item">
+              <div className="height nav-item">
                 <NavLink exact to="/FromLocation" activeClassName="active" className="nav-link ">
-                  <i className="nav-icon fas fa-edit" />
-                  <p>สถานที่ติดติดตั้งอุปกรณ์</p>
+                <i class="fas fa-building"></i>
+                           <p>สถานที่ติดติดตั้งอุปกรณ์</p>
                 </NavLink>
-              </li>
+              </div>
           
            
           
-              <li className="nav-header">รายการอุปกรณ์</li>
+              <li className=" nav-header">รายการอุปกรณ์</li>
                 
               
-              <li className="nav-item">
+              <div className="height nav-item">
                 <NavLink exact to="/ShowAirport" activeClassName="active" className="nav-link">
                   <i className="far fa-circle nav-icon" />
                   <p>สถานที่</p>
                 </NavLink>
-              </li>
-              <li className="nav-item">
+              </div>
+              <div className="height nav-item">
                 <NavLink exact to="/ggg" activeClassName="active" className="nav-link">
                   <i className="far fa-circle nav-icon" />
                   <p>ประเภท</p>
                 </NavLink>
-              </li>
-              <li className="nav-item">
+              </div>
+              <div className="height nav-item">
                 <NavLink exact to="/gg" activeClassName="active" className="nav-link">
                   <i className="far fa-circle nav-icon" />
                   <p>ยี่ห้อ</p>
                 </NavLink>
-              </li>
+              </div>
       
-          <li className="nav-header">EXAMPLES</li>
-          <li className="nav-item">
+          <li className=" nav-header">EXAMPLES</li>
+          <div className="height nav-item">
           <NavLink exact to="/Calender" className="nav-link" activeClassName="active">
               <i className="nav-icon far fa-calendar-alt" />
               <p>
