@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Container, Row, Col, InputGroup, ButtonGroup, FormControl } from 'react-bootstrap'
+import { Container, Row, Col, InputGroup, ButtonGroup, FormControl, Button } from 'react-bootstrap'
 import swal from 'sweetalert2'
 import { get, post } from '../service/service'
 import { NavLink } from 'react-router-dom'
 import Pagination from '../const/Pagination'
 import { status_item, status_item_color, sortData } from '../const/constance'
+import moment from 'moment'
 
 export default class ShowAirport extends Component {
     constructor(props) {
@@ -43,47 +44,80 @@ export default class ShowAirport extends Component {
 
     delete_item = data => {
         swal
-          .fire({
-            title: "Are you sure?",
-            text: "ต้องการลบ " + data.item_name + " หรือไม่?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-          })
-          .then(result => {
-            // console.log(result);
-            if (result.value) {
-              this.delete_item_post(data);
-            }
-          });
-      };
-    
-      delete_item_post = async data => {
+            .fire({
+                title: "Are you sure?",
+                text: "ต้องการลบ " + data.item_name + " หรือไม่?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            })
+            .then(result => {
+                // console.log(result);
+                if (result.value) {
+                    this.delete_item_post(data);
+                }
+            });
+    };
+
+    delete_item_post = async data => {
         try {
-          const obj = {
-            item_id: data.item_id
-          };
-    
-          await post(obj, "item/delete_item").then(result => {
-            if (result.success) {
-              swal
-                .fire({
-                  icon: "success",
-                  title: "Your file has been deleted.",
-                  showConfirmButton: false,
-                  timer: 1500
-                })
-                .then(() => {
-                  window.location.reload();
-                });
-            }
-          });
+            const obj = {
+                item_id: data.item_id
+            };
+
+            await post(obj, "item/delete_item").then(result => {
+                if (result.success) {
+                    swal
+                        .fire({
+                            icon: "success",
+                            title: "Your file has been deleted.",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        .then(() => {
+                            window.location.reload();
+                        });
+                }
+            });
         } catch (error) {
-          alert("delete_item: " + error);
+            alert("delete_item: " + error);
         }
-      };
+    };
+
+    exportToCSV = () => {
+        const airportName = this.state.airportName
+        let csvRow = []
+        let A = [['อุปกรณ์ทั้งหมดของ Secure Work ที่อยู่ใน' + airportName],
+        [],
+        ['ลำดับ', 'ชื่อ', 'ยี่ห้อ', 'รุ่น', 'ซีเรียล', 'ประเภท', 'สถานที่ติดตั้ง', 'วันที่ติดตั้ง', 'วันที่นำเข้า', 'นำเข้ามาจาก', 'สถานะ']]
+        let data = this.state.item_get_all_origin
+        data.map((element, index) => {
+            A.push([index + 1,
+            element.item_name,
+            element.item_brand,
+            element.item_gen,
+            element.item_series_number,
+            element.TN_name,
+            element.ap_name,
+            moment(element.item_airport_date).format("DD/MM/YYYY"),
+            moment(element.item_date_of_birth).format("DD/MM/YYYY"),
+            element.item_place_of_birth,
+            status_item(element.item_status)])
+        })
+        A.map((eleA) => {
+            csvRow.push(eleA.join(','))
+        })
+
+        let csvString = csvRow.join('%0A')
+        let a = document.createElement("a")
+        a.href = 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + csvString
+        a.target = "_Blank"
+        a.download = 'SW-Item'+airportName+'.csv'
+        document.body.appendChild(a)
+        a.click()
+    }
 
     filterAirport = async (id, name) => {
         this.setState({
@@ -101,6 +135,11 @@ export default class ShowAirport extends Component {
                         item_filter_status: result.result,
                         airportName: name
 
+                    })
+                }
+                else {
+                    swal.fire("", result.error_message, "error").then(() => {
+                        window.location.reload()
                     })
                 }
             })
@@ -170,9 +209,9 @@ export default class ShowAirport extends Component {
                         </select>
                     </div>
                     {/* </Col> */}
-                    <Col style={{textAlign:"center"}}>
+                    <Col style={{ textAlign: "center" }}> </Col>
                         <h5>{airportName}</h5>
-                    </Col>
+                   
                     <Col lg={3}>
                         <InputGroup className="mb-3">
                             <FormControl
@@ -282,13 +321,21 @@ export default class ShowAirport extends Component {
                 <br />
 
                 {/* small box */}
-                <div onClick={() => this.setState({ item_get_all: item_get_all_origin })}>
+                <Row>
+                    <Col>
 
-                    <h3>{airport_all.length}</h3>
-                    <p>สถานที่ติดตั้งทั้งหมด</p>
+                        <h3>{airport_all.length}</h3>
+                        <p>สถานที่ติดตั้งทั้งหมด</p>
 
+                    </Col>
+                    <Col></Col>
+                    <Col >
+                        {showTable ?
+                            <Button className="float-right" variant="success" onClick={() => this.exportToCSV()}>export to CSV</Button>
+                            : ""}
 
-                </div>
+                    </Col>
+                </Row>
 
                 <div className="row">
 
