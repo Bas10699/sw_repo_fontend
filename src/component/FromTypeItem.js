@@ -224,7 +224,8 @@ export default class FromTypeItem extends Component {
                 ></link>
                 <Button
                   variant="primary "
-                  className=" fa fa-plus bg-dark"
+                  
+                  className={background === 'true' ? "fa fa-plus bg-info" : "fa fa-plus"} 
                   onClick={() => this.additem()}
                   size="lg"
                 ></Button>
@@ -317,6 +318,7 @@ export default class FromTypeItem extends Component {
 
           </Col>
         </Row>
+        <div className={background === 'true' ? "wave" : ""}></div>
       </Container>
     );
   }

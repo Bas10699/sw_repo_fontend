@@ -307,7 +307,7 @@ try {
                 ></link>
                 <Button
                   variant="primary "
-                  className=" fa fa-plus bg-warning"
+                  className={background === 'true' ? "fa fa-plus bg-warning" : "fa fa-plus"}
                   onClick={() => this.add_airport()}
                   size="lg"
                 ></Button>
@@ -315,6 +315,7 @@ try {
             </Card>
           </Col>
         </Row>
+        <div className={background === 'true' ? "wave" : ""}></div>
       </Container>
     );
   }

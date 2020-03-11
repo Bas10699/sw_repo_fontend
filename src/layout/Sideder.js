@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter, NavLink } from 'react-router-dom';
-<<<<<<< Updated upstream
 import icon_sw from '../const/image/icon-sw.png'
-
-=======
-import icon_sw from '../const/icon-sw.png'
-import '../App.css'
->>>>>>> Stashed changes
+import '../component/bg.css'
 class Sideder extends Component {
     render() {
         return (
@@ -53,8 +48,8 @@ class Sideder extends Component {
           
               <li className="nav-item">
                 <NavLink exact to="/FromLocation" activeClassName="active" className="nav-link ">
-                  <i className="nav-icon fas fa-edit" />
-                  <p>สถานที่ติดติดตั้งอุปกรณ์</p>
+                <i class="fas fa-building"></i>
+                           <p>สถานที่ติดติดตั้งอุปกรณ์</p>
                 </NavLink>
               </li>
           
