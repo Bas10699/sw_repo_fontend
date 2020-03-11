@@ -56,7 +56,7 @@ export default class EditDataItem extends Component {
                     this.setState({
                         data_calender: result.result,
                     })
-                    console.log(result.result)
+                    console.log(this.state.data_calender)
                 }
                 else {
                     swal.fire("", result.error_message, "error");
