@@ -53,15 +53,15 @@ class Calendar extends Component {
     return (
 
       <div className="header row flex-middle">
-        <div className="col col-start">
+        <div className="coll coll-start">
           <div className="icon" onClick={this.prevMonth}>
             chevron_left
             </div>
         </div>
-        <div className="col col-center">
+        <div className="coll coll-center">
           <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span>
         </div>
-        <div className="col col-end" onClick={this.nextMonth}>
+        <div className="coll coll-end" onClick={this.nextMonth}>
           <div className="icon">chevron_right</div>
         </div>
       </div>
@@ -76,7 +76,7 @@ class Calendar extends Component {
 
     for (let i = 0; i < 7; i++) {
       days.push(
-        <div className="col col-center" key={i}>
+        <div className="coll coll-center" key={i}>
           {dateFns.format(dateFns.addDays(startDate, i), dateFormat)}
         </div>
       );
@@ -108,7 +108,7 @@ class Calendar extends Component {
 
         days.push(
           <div
-            className={`col cell ${
+            className={`coll cell ${
               !dateFns.isSameMonth(day, monthStart)
                 ? "disabled"
                 : dateFns.isSameDay(day, selectedDate) ? "selected" : ""
@@ -125,7 +125,7 @@ class Calendar extends Component {
                 if (dateFns.format(element.cn_date, "DD/MM/YYYY") === dateFns.format(day, "DD/MM/YYYY")) {
 
 
-                  return <i key={index} className={'fas fa-circle color-' + element.cn_color} />
+                  return <i key={index} className={'fas fa-circle collor-' + element.cn_color} />
                     {/* <div className="badge badge-pill badge-secondary">55555</div> */}
 
                   

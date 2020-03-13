@@ -89,6 +89,22 @@ export default class ShowItemType extends Component {
         }
     };
 
+    filteritem = (e) => {
+        const dateSearch = e.target.value
+        // console.log(dateSearch)
+
+        var updatedList = this.state.item_filter_status;
+        // console.log(updatedList)
+        updatedList = updatedList.filter((item) => {
+            let data = item.item_name.toLowerCase() + item.item_series_number.toLowerCase() + item.TN_name.toLowerCase() + item.item_gen.toLowerCase()
+            return data.search(dateSearch) !== -1;
+        });
+        // console.log(updatedList)
+        this.setState({
+            item_get_all: updatedList
+        });
+    }
+
     filterAirport = async (id, name) => {
         this.setState({
             showTable: true
@@ -101,6 +117,7 @@ export default class ShowItemType extends Component {
                 if (result.success) {
                     this.setState({
                         item_get_all: result.result,
+                        item_filter_status: result.result,
                         airportName: name
                     })
                 }

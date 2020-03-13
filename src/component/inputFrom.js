@@ -44,17 +44,12 @@ class UserProfile extends Component {
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
-      xx: e.target.value
+
     });
-    console.log(this.state.xx);
+
   };
 
-  sta = e => {
-    this.setState({
-      st: e.target.value
-    });
-    console.log(this.state.st);
-  };
+
 
   componentWillMount() {
     this.get_item_all();
@@ -91,7 +86,7 @@ class UserProfile extends Component {
       item_series_number: this.state.item_series_number,
       item_date_of_birth: this.state.item_date_of_birth,
       item_place_of_birth: this.state.item_place_of_birth,
-      item_status: this.state.st,
+      item_status: this.state.item_status,
       item_image: this.state.item_image,
 
       item_airport: this.state.selectap,
@@ -194,7 +189,14 @@ class UserProfile extends Component {
     return (
       <Container className={background === 'true' ? "bg-insert" : ""} fluid={1}>
 
-
+        <Row>
+          <Col
+            className=" textlight light float-center "
+            style={{ textAlign: "center" }}
+          >
+            <div className="titlelight">เพิ่มอุปกรณ์</div>
+          </Col>
+        </Row>
         <Row>
 
           <Col sm={3}>
@@ -218,191 +220,185 @@ class UserProfile extends Component {
             <br />
 
 
-            <Col
-              className=" textlight light float-center "
-              style={{ textAlign: "center" }}
-            >
-              <div className="titlelight">เพิ่มอุปกรณ์</div>
-            </Col>
+
 
             <br />
-            <Form noValidate>
-              <Form.Row>
-                <Form.Group as={Row} controlId="validationFormik01">
-                  <Form.Label column sm={2} className=" collight">ชื่ออุปกรณ์</Form.Label>
-                  <Col sm={10}>
-                    <Form.Control
-                      type="text"
-                      name="item_name"
-                      onChange={this.handleChange}
-                    />
-                  </Col>
+            <Form n>
+
+              <Form.Group as={Row}>
+                <Form.Label column sm={2} className=" collight">ชื่ออุปกรณ์</Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    type="text"
+                    name="item_name"
+                    onChange={this.handleChange}
+                  />
+                </Col>
 
 
-                </Form.Group>
-                <Form.Group as={Row} controlId="validationFormik02">
-                  <Form.Label column sm={2} className=" collight2">ยี่ห้อ</Form.Label>
-                  <Col sm={10}>
-                    <Form.Control
-                      type="text"
-                      name="item_brand"
-                      onChange={this.handleChange}
-                    />
-                  </Col>
+              </Form.Group>
+              <Form.Group as={Row} >
+                <Form.Label column sm={2} className=" collight2">ยี่ห้อ</Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    type="text"
+                    name="item_brand"
+                    onChange={this.handleChange}
+                  />
+                </Col>
 
-                </Form.Group>
-                <Form.Group as={Row} controlId="validationFormik01">
-                  <Form.Label column sm={2} className=" collight">รุ่น</Form.Label>
-                  <Col sm={10}>
-                    <Form.Control
-                      type="text"
-                      name="item_gen"
-                      onChange={this.handleChange}
-                    />
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} controlId="validationFormik02">
-                  <Form.Label column sm={2} className=" collight2">ประเภท</Form.Label>
-                  <Col sm={10}>
-                    <Form.Control
-                      as="select"
-                      id="TN_id"
-                      onChange={this.select_type}
-                    >
-                      <option selected disabled hidden>กรุณาเลือกประเภท</option>
+              </Form.Group>
+              <Form.Group as={Row} >
+                <Form.Label column sm={2} className=" collight">รุ่น</Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    type="text"
+                    name="item_gen"
+                    onChange={this.handleChange}
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} >
+                <Form.Label column sm={2} className=" collight2">ประเภท</Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    as="select"
+                    id="TN_id"
+                    onChange={this.select_type}
+                  >
+                    <option selected disabled hidden>กรุณาเลือกประเภท</option>
 
-                      {item_get_type.map((element, index) => {
-                        return (
-                          <option value={element.TN_id} key={index}>
-                            {element.TN_name}
-                          </option>
-                        );
-                      })}
-                    </Form.Control>
-                  </Col>
+                    {item_get_type.map((element, index) => {
+                      return (
+                        <option value={element.TN_id} key={index}>
+                          {element.TN_name}
+                        </option>
+                      );
+                    })}
+                  </Form.Control>
+                </Col>
 
-                </Form.Group>
-                <Form.Group as={Row} controlId="validationFormikUsername">
-                  <Form.Label column sm={2} className=" collight">Series Number</Form.Label>
-                  <Col sm={10}>
-                    <InputGroup>
-                      <InputGroup.Prepend>
-                        <InputGroup.Text id="inputGroupPrepend">
-                          S/N
+              </Form.Group>
+              <Form.Group as={Row} >
+                <Form.Label column sm={2} className=" collight">Series Number</Form.Label>
+                <Col sm={10}>
+                  <InputGroup>
+                    <InputGroup.Prepend>
+                      <InputGroup.Text id="inputGroupPrepend">
+                        S/N
                       </InputGroup.Text>
-                      </InputGroup.Prepend>
-                      <Form.Control
-                        type="text"
-                        placeholder=""
-                        aria-describedby="inputGroupPrepend"
-                        name="item_series_number"
-                        onChange={this.handleChange}
-                      />
-
-                    </InputGroup>
-                  </Col>
-                </Form.Group>
-
-
-
-                <Form.Group as={Row} controlId="validationFormik05">
-                  <Form.Label column sm={2} className=" collight">นำเข้าจาก</Form.Label>
-                  <Col sm={5}>
+                    </InputGroup.Prepend>
                     <Form.Control
                       type="text"
-                      placeholder="USA"
-                      name="item_place_of_birth"
+                      placeholder=""
+                      aria-describedby="inputGroupPrepend"
+                      name="item_series_number"
                       onChange={this.handleChange}
                     />
-                  </Col>
-                  <Form.Label column sm={1} className=" collight2">วันที่</Form.Label>
-                  <Col sm={4}>
-                    <Form.Control
-                      type="date"
-                      name="item_date_of_birth"
-                      onChange={this.handleChange}
-                    />
-                  </Col>
-                </Form.Group>
 
-                <Form.Group as={Row} >
-                  <Form.Label column sm={2} className=" collight2">สถานที่ติดตั้ง</Form.Label>
-                  <Col sm={5}>
-                    <Form.Control
-                      as="select"
-                      id="ap_name"
-                      onChange={this.select_ap}
-                    >
-                      <option selected disabled hidden>กรุณาเลือกสถานที่ติดตั้ง</option>
-                      {get_data.map((element, index) => {
-                        return (
-                          <option value={element.ap_id} key={index}>
-                            {element.ap_name}
-                          </option>
-                        );
-                      })}
-                    </Form.Control>
-                  </Col>
-                  <Form.Label column sm={1} className=" collight">วันที่</Form.Label>
-                  <Col sm={4}>
-                    <Form.Control
-                      type="date"
-                      placeholder="AirportSakon"
-                      name="item_airport_date"
-                      id="item_airport_date"
-                      onChange={this.handleChange}
-                    />
-                  </Col>
-                </Form.Group>
-                
-              </Form.Row>
-              <Form.Row>
+                  </InputGroup>
+                </Col>
+              </Form.Group>
 
-                <Form.Group as={Row} md="3" controlId="validationFormik05">
-                  <Form.Label column sm={2} className=" collight">สถานะอุปกรณ์</Form.Label>
-                  <Col sm={10}>
-                    <span class={background === 'true' ? "custom-dropdown " : "xuttom-dropdown"}>
-                      <select
-                        className="neon"
-                        onChange={this.sta}
-                        id="item_status"
-                        name="item_status"
-                      >
-                        <option>กรุณาเลือก</option>
-                        <option
-                          value="1"
-                          label="ติดตั้ง"
-                          name="item_status"
-                          id="item_status"
-                          value="1"
-                          onChange={this.sta}
-                        ></option>
-                        <option
-                          label="พร้อมใช้งาน"
-                          name="item_status"
-                          id="item_status"
-                          value="2"
-                          onChange={this.sta}
-                        ></option>
-                        <option
-                          label="ส่งซ่อม"
-                          name="item_status"
-                          id="item_status"
-                          value="3"
-                          onChange={this.sta}
-                        ></option>
-                        <option
-                          label="เสีย"
-                          id="item_status"
-                          name="item_status"
-                          value="4"
-                          onChange={this.sta}
-                        ></option>
-                      </select>
-                    </span>
-                  </Col>
-                </Form.Group>
-              </Form.Row>
+
+
+              <Form.Group as={Row} >
+                <Form.Label column sm={2} className=" collight">นำเข้าจาก</Form.Label>
+                <Col sm={5}>
+                  <Form.Control
+                    type="text"
+                    name="item_place_of_birth"
+                    onChange={this.handleChange}
+                  />
+                </Col>
+                <Form.Label column sm={1} className=" collight2">วันที่</Form.Label>
+                <Col sm={4}>
+                  <Form.Control
+                    type="date"
+                    name="item_date_of_birth"
+                    onChange={this.handleChange}
+                  />
+                </Col>
+              </Form.Group>
+
+              <Form.Group as={Row} >
+                <Form.Label column sm={2} className=" collight2">สถานที่ติดตั้ง</Form.Label>
+                <Col sm={5}>
+                  <Form.Control
+                    as="select"
+                    id="ap_name"
+                    onChange={this.select_ap}
+                  >
+                    <option selected disabled hidden>กรุณาเลือกสถานที่ติดตั้ง</option>
+                    {get_data.map((element, index) => {
+                      return (
+                        <option value={element.ap_id} key={index}>
+                          {element.ap_name}
+                        </option>
+                      );
+                    })}
+                  </Form.Control>
+                </Col>
+                <Form.Label column sm={1} className=" collight">วันที่</Form.Label>
+                <Col sm={4}>
+                  <Form.Control
+                    type="date"
+                    placeholder="AirportSakon"
+                    name="item_airport_date"
+                    id="item_airport_date"
+                    onChange={this.handleChange}
+                  />
+                </Col>
+              </Form.Group>
+
+              <Form.Group as={Row}>
+                <Form.Label
+                  // as="legend" 
+                  column sm={2}
+                >
+                  สถานะอุปกรณ์
+      </Form.Label>
+                <Col sm={10}>
+
+                  <Form.Check
+                    custom
+                    type="radio"
+                    label="ติดตั้ง"
+                    id="item_status1"
+                    name="item_status"
+                    value="1"
+                    onChange={this.handleChange}
+                  />
+                  <Form.Check
+                    custom
+                    type="radio"
+                    label="พร้อมใช้งาน"
+                    id="item_status2"
+                    name="item_status"
+                    value="2"
+                    onChange={this.handleChange}
+                  />
+                  <Form.Check
+                    custom
+                    type="radio"
+                    label="ส่งซ่อม"
+                    id="item_status3"
+                    name="item_status"
+                    value="3"
+                    onChange={this.handleChange}
+                  />
+                  <Form.Check
+                    custom
+                    type="radio"
+                    label="เสีย"
+                    id="item_status4"
+                    name="item_status"
+                    value="4"
+                    onChange={this.handleChange}
+                  />
+                </Col>
+              </Form.Group>
+
               <div className="btnregis bte btn-2 float-right text-center" onClick={() => this.gogo()}>
                 ลงทะเบียน
               </div>

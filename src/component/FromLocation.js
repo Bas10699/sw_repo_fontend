@@ -52,7 +52,7 @@ export default class FromLocation extends Component {
     this.setState({
       airport: e.target.value
     });
-    console.log(this.state.airport);
+    // console.log(this.state.airport);
   };
 
 
@@ -257,6 +257,7 @@ export default class FromLocation extends Component {
                                             onChange={this.handleChange}
                                             id="TN_name"
                                             defaultValue={element.ap_name}
+                                           
                                           ></input>
                                           <Button
 
