@@ -463,7 +463,7 @@ background-position: 0;
 }
 .height:hover
 {
-	transform: scale(1.1);
+	transform: scale(1.05);
 	opacity: 1;
 	filter: blur(0.5);
 }

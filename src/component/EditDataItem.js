@@ -34,13 +34,13 @@ export default class EditDataItem extends Component {
         })
     }
     handleChangeRadio = (e) => {
-  
+
         let data = this.state.dataedit
         data[e.target.name] = e.target.value
         this.setState({
             dataedit: data
         })
-       console.log(this.state.dataedit)
+        console.log(this.state.dataedit)
     }
     notesChange = (e) => {
         this.setState({
@@ -300,6 +300,21 @@ export default class EditDataItem extends Component {
                             </Form.Group>
                             <Form.Group as={Row} >
                                 <Form.Label column sm={2}>
+                                    ประเภทอุปกรณ์
+    </Form.Label>
+                                <Col sm={10}>
+                                    <Form.Control as="select" id="item_type" onChange={this.handleChange}>
+                                        <option value={this.state.dataedit.item_type} selected disabled hidden>{this.state.dataedit.TN_name}</option>
+                                        {item_get_type.map((element, index) => {
+                                            return <option value={element.TN_id} key={index}>{element.TN_name}</option>
+                                        })
+                                        }
+
+                                    </Form.Control>
+                                </Col>
+                            </Form.Group>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm={2}>
                                     ซีเรียล
     </Form.Label>
                                 <Col sm={10}>
@@ -367,21 +382,7 @@ export default class EditDataItem extends Component {
                                     />
                                 </Col>
                             </Form.Group>
-                            <Form.Group as={Row} >
-                                <Form.Label column sm={2}>
-                                    ประเภทอุปกรณ์
-    </Form.Label>
-                                <Col sm={10}>
-                                    <Form.Control as="select" id="item_type" onChange={this.handleChange}>
-                                        <option value={this.state.dataedit.item_type} selected disabled hidden>{this.state.dataedit.TN_name}</option>
-                                        {item_get_type.map((element, index) => {
-                                            return <option value={element.TN_id} key={index}>{element.TN_name}</option>
-                                        })
-                                        }
 
-                                    </Form.Control>
-                                </Col>
-                            </Form.Group>
 
                             {/* <fieldset> */}
                             <Form.Group as={Row}>
@@ -446,7 +447,7 @@ export default class EditDataItem extends Component {
                     </Col>
 
                 </Row>
-              
+
 
             </Container >
                 :
