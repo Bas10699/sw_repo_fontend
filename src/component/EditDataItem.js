@@ -362,7 +362,7 @@ export default class EditDataItem extends Component {
                                     <Form.Control
                                         type="date"
                                         id="item_airport_date"
-                                        value={dateFns.format(this.state.dataedit.item_airport_date, "YYYY-MM-DD")}
+                                        value={this.state.dataedit.item_airport_date ? dateFns.format(this.state.dataedit.item_airport_date, "YYYY-MM-DD") : ""}
                                         onChange={this.handleChange}
                                     />
                                 </Col>

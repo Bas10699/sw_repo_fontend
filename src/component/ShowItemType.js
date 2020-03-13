@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
-import { Container, Row, Col, InputGroup, ButtonGroup, FormControl } from 'react-bootstrap'
+import { Container, Row, Col, InputGroup, ButtonGroup, FormControl, Button } from 'react-bootstrap'
 import swal from 'sweetalert2'
 import { get, post } from '../service/service'
 import { NavLink } from 'react-router-dom'
 import Pagination from '../const/Pagination'
 import { status_item, status_item_color, sortData } from '../const/constance'
+import moment from 'moment'
 
+var sectionStyle = {
+    backgroundImage: "url(" + "https://images.pexels.com/photos/34153/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350" + ")",
+
+};
 
 export default class ShowItemType extends Component {
     constructor(props) {
@@ -84,7 +89,7 @@ export default class ShowItemType extends Component {
         }
     };
 
-    filterAirport = async (id) => {
+    filterAirport = async (id, name) => {
         this.setState({
             showTable: true
         })
@@ -96,7 +101,7 @@ export default class ShowItemType extends Component {
                 if (result.success) {
                     this.setState({
                         item_get_all: result.result,
-
+                        airportName: name
                     })
                 }
                 else {
@@ -111,6 +116,39 @@ export default class ShowItemType extends Component {
             alert('filterAirport: ' + error)
         }
 
+    }
+
+    exportToCSV = () => {
+        const airportName = this.state.airportName
+        let csvRow = []
+        let A = [['อุปกรณ์ประเภท ' + airportName + ' ทั้งหมดของ Secure Work'],
+        [],
+        ['ลำดับ', 'ชื่อ', 'ยี่ห้อ', 'รุ่น', 'ซีเรียล', 'ประเภท', 'สถานที่ติดตั้ง', 'วันที่ติดตั้ง', 'วันที่นำเข้า', 'นำเข้ามาจาก', 'สถานะ']]
+        let data = this.state.item_get_all
+        data.map((element, index) => {
+            A.push([index + 1,
+            element.item_name,
+            element.item_brand,
+            element.item_gen,
+            element.item_series_number,
+            element.TN_name,
+            element.ap_name,
+            moment(element.item_airport_date).format("DD/MM/YYYY"),
+            moment(element.item_date_of_birth).format("DD/MM/YYYY"),
+            element.item_place_of_birth,
+            status_item(element.item_status)])
+        })
+        A.map((eleA) => {
+            csvRow.push(eleA.join(','))
+        })
+
+        let csvString = csvRow.join('%0A')
+        let a = document.createElement("a")
+        a.href = 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + csvString
+        a.target = "_Blank"
+        a.download = 'SW-Item' + airportName + '.csv'
+        document.body.appendChild(a)
+        a.click()
     }
 
     sortItem = (type) => {
@@ -131,7 +169,7 @@ export default class ShowItemType extends Component {
     renderItemAirport() {
 
         let todos = []
-        const { currentPage, todosPerPage, item_get_all } = this.state;
+        const { currentPage, todosPerPage, item_get_all, airportName } = this.state;
         item_get_all.map((element, index) => {
             todos.push({
                 num: index + 1,
@@ -156,7 +194,9 @@ export default class ShowItemType extends Component {
                         </select>
                     </div>
                     {/* </Col> */}
-                    <Col ></Col>
+                    
+                    <Col style={{ textAlign: "center" }}></Col>
+                    <h5>{airportName}</h5>
                     <Col lg={3}>
                         <InputGroup className="mb-3">
                             <FormControl
@@ -265,19 +305,26 @@ export default class ShowItemType extends Component {
                 <br />
 
                 {/* small box */}
-                <div >
+                <Row>
+                    <Col>
 
-                    <h4>ทั้งหมด {airport_all.length} ประเภท</h4>
+                        <h4>ทั้งหมด {airport_all.length} ประเภท</h4>
+                    </Col>
+                    <Col></Col>
+                    <Col >
+                        {showTable ?
+                            <Button className="float-right" variant="success" onClick={() => this.exportToCSV()}>export to CSV</Button>
+                            : ""}
 
-
-                </div>
+                    </Col>
+                </Row>
 
                 <div className="row">
 
                     {airport_all.map((element, index) => {
                         return <div className="col-lg-3">
                             {/* small box */}
-                            <a href='#section1' className="small-box bg-secondary" onClick={() => this.filterAirport(element.TN_id)}>
+                            <a href='#section1' className="small-box bg-secondary" onClick={() => this.filterAirport(element.TN_id, element.TN_name)}>
                                 <div className="inner">
                                     <h3>{element.count_id}</h3>
                                     <p>{element.TN_name}</p>

@@ -176,6 +176,39 @@ class Dashboard extends Component {
     }
   }
 
+  exportToCSV = () => {
+    let csvRow = []
+    let A = [['อุปกรณ์ทั้งหมดของ Secure Work'],
+    [],
+    ['ลำดับ', 'ชื่อ', 'ยี่ห้อ', 'รุ่น', 'ซีเรียล', 'ประเภท', 'สถานที่ติดตั้ง', 'วันที่ติดตั้ง', 'วันที่นำเข้า', 'นำเข้ามาจาก', 'สถานะ']]
+    let data = this.state.item_get_all
+    data.map((element, index) => {
+      A.push([index + 1,
+      element.item_name,
+      element.item_brand,
+      element.item_gen,
+      element.item_series_number,
+      element.TN_name,
+      element.ap_name,
+      moment(element.item_airport_date).format("DD/MM/YYYY"),
+      moment(element.item_date_of_birth).format("DD/MM/YYYY"),
+      element.item_place_of_birth,
+      status_item(element.item_status)])
+    })
+    A.map((eleA) => {
+      csvRow.push(eleA.join(','))
+    })
+
+    let csvString = csvRow.join('%0A')
+    let a = document.createElement("a")
+    a.href = 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + csvString
+    a.target = "_Blank"
+    a.download = 'SW-Item.csv'
+    document.body.appendChild(a)
+    a.click()
+  }
+
+
   select_ap = e => {
 
 
@@ -203,6 +236,12 @@ class Dashboard extends Component {
       [e.target.id]: e.target.value
     });
     // console.log(e.target.value);
+  };
+  handleChangePerPage = e => {
+    this.setState({
+      [e.target.id]: e.target.value,
+      currentPage: 1,
+    });
   };
 
 
@@ -284,7 +323,7 @@ class Dashboard extends Component {
     switch (name) {
       case 1: return_page = <div className="col-lg-3 ">
         {/* small box */}
-        <a  onClick={() => this.filterStatus(1)} className="small-box bg-primary">
+        <a onClick={() => this.filterStatus(1)} className="small-box bg-primary">
           <div className="inner">
             <h3>{count}</h3>
             <p>ติดตั้ง</p>
@@ -292,13 +331,13 @@ class Dashboard extends Component {
           <div className="icon">
             <i className="ion ion-paper-airplane" />
           </div>
-         
+
         </a>
       </div>
         break;
       case 2: return_page = <div className="col-lg-3">
         {/* small box */}
-        <a  onClick={() => this.filterStatus(2)} className="small-box bg-success">
+        <a onClick={() => this.filterStatus(2)} className="small-box bg-success">
           <div className="inner">
             <h3>{count}</h3>
             <p>พร้อมใช้งาน</p>
@@ -312,7 +351,7 @@ class Dashboard extends Component {
       case 3: return_page =
         <div className="col-lg-3">
           {/* small box */}
-          <a  onClick={() => this.filterStatus(3)} className="small-box bg-warning">
+          <a onClick={() => this.filterStatus(3)} className="small-box bg-warning">
             <div className="inner">
               <h3>{count}</h3>
               <p>ส่งซ่อม</p>
@@ -320,14 +359,14 @@ class Dashboard extends Component {
             <div className="icon">
               <i className="fas fa-cog" />
             </div>
-            
+
           </a>
         </div>
         break;
       case 4: return_page =
         <div className="col-lg-3">
           {/* small box */}
-          <a  onClick={() => this.filterStatus(4)} className="small-box bg-danger">
+          <a onClick={() => this.filterStatus(4)} className="small-box bg-danger">
             <div className="inner">
               <h3>{count}</h3>
               <p>เสีย</p>
@@ -335,7 +374,7 @@ class Dashboard extends Component {
             <div className="icon">
               <i className="fas fa-ban" />
             </div>
-            
+
           </a>
         </div>
         break;
@@ -407,10 +446,17 @@ class Dashboard extends Component {
           </Col>
           <Col>
             <CardDeck> */}
-            <h3 style={{cursor:"pointer"}} onClick={() => this.setState({ item_get_all: item_get_all_origin })}>
+        <Row>
+          <Col>
+            <h3 style={{ cursor: "pointer" }} onClick={() => this.setState({ item_get_all: item_get_all_origin })}>
               จำนวนอุปกรณ์ทั้งหมด {item_get_all_origin.length}
-              </h3>
-                
+            </h3>
+          </Col>
+          <Col></Col>
+          <Col >
+            <Button className="float-right" variant="secondary" onClick={() => this.exportToCSV()}>export to CSV</Button>
+          </Col>
+        </Row>
         <div className="row">
 
           {item_status.map((element, index) => {
@@ -442,7 +488,7 @@ class Dashboard extends Component {
         <div >
           <Row>
             <div class="col-auto my-1">
-              <select class="custom-select" id="todosPerPage" onChange={this.handleChange} >
+              <select class="custom-select" id="todosPerPage" onChange={this.handleChangePerPage} >
                 <option selected value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
@@ -510,7 +556,7 @@ class Dashboard extends Component {
                             ></link>
                             <ButtonGroup>
                               <button
-                                onClick={() => this.setModel(element.item_id, index)}
+                                onClick={() => this.setModel(element.item_id, element.num - 1)}
                                 className=" btn btn-primary 	fa fa-search"
                               />
                               <button
@@ -567,39 +613,39 @@ class Dashboard extends Component {
                   </div>
                 </Col>
 
-                
-                  <Col sm={2}>
-                    <tr>ชื่อ </tr>
-                    <tr>ยี่ห้อ </tr>
-                    <tr>รุ่น </tr>
-                    <tr>ซีเรียล </tr>
-                    <tr>ประเภท </tr>
-                    <tr>สถานที่ติดตั้ง </tr>
-                    <tr>วันที่ติดตั้ง </tr>
-                    <tr>วันที่นำเข้า </tr>
-                    <tr>นำเข้ามาจาก </tr>
-                    <tr>สถานะ </tr>
-                  </Col>
-                  <Col>
-                    {/* {console.log(itemModel)} */}
-                    <tr>{itemModel ? itemModel.item_name : "-"}</tr>
-                    <tr>{itemModel ? itemModel.item_brand : "-"}</tr>
-                    <tr>{itemModel ? itemModel.item_gen : "-"}</tr>
-                    <tr>{itemModel ? itemModel.item_series_number : "-"}</tr>
-                    <tr>{itemModel ? itemModel.item_type : "-"}</tr>
-                    <tr>{itemModel ? itemModel.item_airport : "-"}</tr>
-                    <tr>{itemModel ? itemModel.item_airport_date? moment(itemModel.item_airport_date).format("DD/MM/YYYY") : "-" : "-"}</tr>
-                    <tr>
-                      {itemModel
-                        ? moment(itemModel.item_date_of_birth).format(
-                          "DD/MM/YYYY"
-                        )
-                        : "-"}
-                    </tr>
-                    <tr>{itemModel ? itemModel.item_place_of_birth : "-"}</tr>
-                    <tr>{itemModel ? itemModel.item_status : "-"}</tr>
-                  </Col>
-            
+
+                <Col sm={2}>
+                  <tr>ชื่อ </tr>
+                  <tr>ยี่ห้อ </tr>
+                  <tr>รุ่น </tr>
+                  <tr>ซีเรียล </tr>
+                  <tr>ประเภท </tr>
+                  <tr>สถานที่ติดตั้ง </tr>
+                  <tr>วันที่ติดตั้ง </tr>
+                  <tr>วันที่นำเข้า </tr>
+                  <tr>นำเข้ามาจาก </tr>
+                  <tr>สถานะ </tr>
+                </Col>
+                <Col>
+                  {/* {console.log(itemModel)} */}
+                  <tr>{itemModel ? itemModel.item_name : "-"}</tr>
+                  <tr>{itemModel ? itemModel.item_brand : "-"}</tr>
+                  <tr>{itemModel ? itemModel.item_gen : "-"}</tr>
+                  <tr>{itemModel ? itemModel.item_series_number : "-"}</tr>
+                  <tr>{itemModel ? itemModel.item_type : "-"}</tr>
+                  <tr>{itemModel ? itemModel.item_airport : "-"}</tr>
+                  <tr>{itemModel ? itemModel.item_airport_date ? moment(itemModel.item_airport_date).format("DD/MM/YYYY") : "-" : "-"}</tr>
+                  <tr>
+                    {itemModel
+                      ? moment(itemModel.item_date_of_birth).format(
+                        "DD/MM/YYYY"
+                      )
+                      : "-"}
+                  </tr>
+                  <tr>{itemModel ? itemModel.item_place_of_birth : "-"}</tr>
+                  <tr>{itemModel ? itemModel.item_status : "-"}</tr>
+                </Col>
+
 
 
               </Row>
