@@ -48,7 +48,7 @@ export default class Header extends Component {
                     <ul className="navbar-nav ml-auto">
                         {background === "true" ?
                             <button className="btn btn-light btn-sm float-right" onClick={() => this.settoken()}>Normal mode</button>
-                            : <button className="btn btn-dark btn-sm float-right" onClick={() => this.settoken()}>Anime mode</button>}
+                            : <button className="btn btn-dark btn-sm float-right" onClick={() => this.settoken()}>Dark mode</button>}
 
                     </ul>
                     {/* Right navbar links */}

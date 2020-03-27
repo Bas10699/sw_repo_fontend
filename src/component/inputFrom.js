@@ -32,7 +32,7 @@ class UserProfile extends Component {
   };
   progre = () => {
     this.state.now = this.state.now + 100;
-    console.log(this.state.now);
+    // console.log(this.state.now);
     if (this.state.now >= 100) {
       this.state.now = 100;
     }

@@ -321,7 +321,7 @@ class Dashboard extends Component {
   render_status = (name, count) => {
     let return_page
     switch (name) {
-      case 1: return_page = <div className="col-lg-3 ">
+      case 1: return_page = <div className="col-lg-3 col-6">
         {/* small box */}
         <a onClick={() => this.filterStatus(1)} className="small-box bg-primary">
           <div className="inner">
@@ -335,7 +335,7 @@ class Dashboard extends Component {
         </a>
       </div>
         break;
-      case 2: return_page = <div className="col-lg-3">
+      case 2: return_page = <div className="col-lg-3 col-6">
         {/* small box */}
         <a onClick={() => this.filterStatus(2)} className="small-box bg-success">
           <div className="inner">
@@ -349,7 +349,7 @@ class Dashboard extends Component {
       </div>
         break;
       case 3: return_page =
-        <div className="col-lg-3">
+        <div className="col-lg-3 col-6">
           {/* small box */}
           <a onClick={() => this.filterStatus(3)} className="small-box bg-warning">
             <div className="inner">
@@ -364,7 +364,7 @@ class Dashboard extends Component {
         </div>
         break;
       case 4: return_page =
-        <div className="col-lg-3">
+        <div className="col-lg-3 col-6">
           {/* small box */}
           <a onClick={() => this.filterStatus(4)} className="small-box bg-danger">
             <div className="inner">
